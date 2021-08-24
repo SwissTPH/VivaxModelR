@@ -1,0 +1,119 @@
+[
+	{
+		"id": "galactionova2015",
+		"type": "article-journal",
+		"container-title": "PLOS ONE",
+		"DOI": "10.1371/journal.pone.0127818",
+		"ISSN": "1932-6203",
+		"issue": "5",
+		"journalAbbreviation": "PLoS ONE",
+		"language": "en",
+		"page": "e0127818",
+		"source": "DOI.org (Crossref)",
+		"title": "Effective Coverage and Systems Effectiveness for Malaria Case Management in Sub-Saharan African Countries",
+		"URL": "https://dx.plos.org/10.1371/journal.pone.0127818",
+		"volume": "10",
+		"author": [
+			{
+				"family": "Galactionova",
+				"given": "Katya"
+			},
+			{
+				"family": "Tediosi",
+				"given": "Fabrizio"
+			},
+			{
+				"family": "Savigny",
+				"given": "Don",
+				"non-dropping-particle": "de"
+			},
+			{
+				"family": "Smith",
+				"given": "Thomas"
+			},
+			{
+				"family": "Tanner",
+				"given": "Marcel"
+			}
+		],
+		"editor": [
+			{
+				"family": "Snounou",
+				"given": "Georges"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2019",
+					8,
+					6
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2015",
+					5,
+					22
+				]
+			]
+		}
+	},
+	{
+		"id": "white2016",
+		"type": "article-journal",
+		"abstract": "There is substantial variation in the relapse frequency of Plasmodium vivax malaria, with fast-relapsing strains in tropical areas, and slow-relapsing strains in temperate areas with seasonal transmission. We hypothesize that much of the phenotypic diversity in P. vivax relapses arises from selection of relapse frequency to optimize transmission potential in a given environment, in a process similar to the virulence trade-off hypothesis. We develop mathematical models of P. vivax transmission and calculate the basic reproduction number R0 to investigate how transmission potential varies with relapse frequency and seasonality. In tropical zones with year-round transmission, transmission potential is optimized at intermediate relapse frequencies of two to three months: slower-relapsing strains increase the opportunity for onward transmission to mosquitoes, but also increase the risk of being outcompeted by faster-relapsing strains. Seasonality is an important driver of relapse frequency for temperate strains, with the time to first relapse predicted to be six to nine months, coinciding with the duration between seasonal transmission peaks. We predict that there is a threshold degree of seasonality, below which fast-relapsing tropical strains are selected for, and above which slow-relapsing temperate strains dominate, providing an explanation for the observed global distribution of relapse phenotypes.",
+		"container-title": "Proceedings of the Royal Society B: Biological Sciences",
+		"DOI": "10.1098/rspb.2016.0048",
+		"issue": "1827",
+		"journalAbbreviation": "Proceedings of the Royal Society B: Biological Sciences",
+		"note": "publisher: Royal Society",
+		"page": "20160048",
+		"source": "royalsocietypublishing.org (Atypon)",
+		"title": "Variation in relapse frequency and the transmission potential of Plasmodium vivax malaria",
+		"URL": "https://royalsocietypublishing.org/doi/10.1098/rspb.2016.0048",
+		"volume": "283",
+		"author": [
+			{
+				"family": "White",
+				"given": "Michael T."
+			},
+			{
+				"family": "Shirreff",
+				"given": "George"
+			},
+			{
+				"family": "Karl",
+				"given": "Stephan"
+			},
+			{
+				"family": "Ghani",
+				"given": "Azra C."
+			},
+			{
+				"family": "Mueller",
+				"given": "Ivo"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2020",
+					5,
+					12
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2016",
+					3,
+					30
+				]
+			]
+		}
+	}
+]

@@ -1,0 +1,37 @@
+Package: VivaxModelR
+Title: Simulation of Plasmodium Vivax dynamics
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Clara",
+           family = "Champagne",
+           role = c("aut", "cre"),
+           email = "clara.champagne@swisstph.ch"),
+    person(given = "Emilie",
+           family = "Pothin",
+           role = c("aut"),
+           email = "emilie.pothin@swisstph.ch"),
+    person(given = "Maximilian",
+           family = "Gerhards",
+           role = c("aut"),
+           email = "maximilian.gerhards@gmx.de"))
+Description: This packages contains functions to simulate Plasmodium Vivax dynamics using a compartmental model.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    deSolve,
+    tidyr,
+    magrittr,
+    dplyr,
+    utils,
+    stats
+Suggests: 
+    testthat (>= 2.0.0),
+    knitr,
+    rmarkdown,
+    ggplot2,
+    covr
+Config/testthat/edition: 2
+VignetteBuilder: knitr
