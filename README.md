@@ -9,7 +9,12 @@ The package can be installed using the devtools package:
 
 ```{r}
 library(devtools)  
-install_github("SwissTPH/VivaxModelR")  
+install_github("SwissTPH/VivaxModelR",build_vignettes = TRUE)
 ```
 
-The scripts necessary to reproduce the manuscript figures are situated under demo/figures_UsingObservedIncidence.
+The scripts necessary to reproduce the manuscript figures are situated under demo/figures_UsingObservedIncidence.  
+
+The vignette presenting how to use the package can be accessed with the following command:
+```{r}
+browseVignettes("VivaxModelR")
+```
