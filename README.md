@@ -1,3 +1,5 @@
+![Build status: main](https://img.shields.io/github/workflow/status/SwissTPH/VivaxModelR/R-CMD-check/main?style=flat-square)
+
 # VivaxModelR
 
 Simulations and calculations on a compartmental model for Plasmodium Vivax dynamics.
