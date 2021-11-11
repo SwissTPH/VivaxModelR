@@ -1,6 +1,6 @@
 ![Build status: main](https://img.shields.io/github/workflow/status/SwissTPH/VivaxModelR/R-CMD-check/main?style=flat-square)
 ![Latest commit](https://img.shields.io/github/last-commit/SwissTPH/VivaxModelR/main?style=flat-square)
-![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/clchampag/707efd2ae8c68b74d64456c6bc6206cc/raw/cover.json)
+![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/clchampag/2108e95fe85595e27d9ec4c35957d723/raw/cover_vivax.json)
 
 # VivaxModelR
 
