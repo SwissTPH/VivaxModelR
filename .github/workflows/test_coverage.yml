@@ -45,8 +45,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: 2108e95fe85595e27d9ec4c35957d723
-          filename: cover_vivax.json
+          gistID: f66fda014589a897f852edc85f4059fc
+          filename: vivax.json
           label: coverage
           message: ${{ env.TOTAL }}
           color: ${{ env.COLOR }}
