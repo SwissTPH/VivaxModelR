@@ -68,13 +68,11 @@ test_that("test correct data frame dimension when adding uncertainty", {
 
   mydata=data.frame(cases=c(12, 45,3,12, 45,3),
                     population=c(10000,10000,10000,1500,1500,1500),
-                    cases_local=c(10,3,1,10,3,1),
-                    alpha=c(0,0,0,0.4,0.4,0.4),
-                    beta=c(1,1,1,0.7,0.7,0.7))
+                    cases_local=c(10,3,1,10,3,1))
 
   data_uncertainty=sample_uncertainty_incidence_import(mydata, ndraw = 100)
 
-  expect_equal(dim(data_uncertainty), c(600,7) , label = "dimension, return.all=F ")
+  expect_equal(dim(data_uncertainty), c(600,5) , label = "dimension, return.all=F ")
 
 })
 
@@ -84,6 +82,7 @@ test_that("test correct data frame dimension when adding uncertainty", {
 test_that("test simulation of future scenarios", {
   mydata=data.frame(incidence=c(23,112,267)) %>%
     dplyr::mutate(rho=c(0.18,0.13,0.08) ,
+                  rho.old=rho ,
                   beta.old=c(0.431,0.429,0.422),
                   TQ_effect=c(0.59,0.605,0.619),
                   alpha.old=0.95*rho,
@@ -91,15 +90,15 @@ test_that("test simulation of future scenarios", {
                   I=c(0.01741279 ,0.12413235 ,0.50693425 ),
                   id=c(1,2,3))
 
-  simul.PQ=simulate_from_equilibrium_fromdata(mydata,
+  simul.PQ=simulate_from_data(mydata,
                                           f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.PQ)=c("time",paste0(names(simul.PQ)[c(-1,-10)], "_PQ"), "id")
+  names(simul.PQ)=c("time",paste0(names(simul.PQ)[! names(simul.PQ) %in% c("time","id")], "_PQ"), "id")
 
-  simul.TQ=simulate_from_equilibrium_fromdata(mydata %>% dplyr::mutate(beta.new=TQ_effect),
+  simul.TQ=simulate_from_data(mydata %>% dplyr::mutate(beta.new=TQ_effect),
                                           f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.TQ)=c("time",paste0(names(simul.TQ)[c(-1,-10)], "_TQ"), "id")
+  names(simul.TQ)=c("time",paste0(names(simul.TQ)[! names(simul.TQ) %in% c("time","id")], "_TQ"), "id")
 
   db_compare=simul.PQ %>% dplyr::left_join(simul.TQ) %>%
     dplyr::mutate(effect_size=-(h_TQ-h_PQ)/h_PQ,year=time/365+2020)
@@ -123,6 +122,7 @@ test_that("test simulation of future scenarios, with importation", {
   mydata=data.frame(incidence=c(23,112,267)) %>%
     dplyr::mutate(
       rho=c(0.18,0.13,0.08) ,
+      rho.old=rho,
       beta.old=c(0.431,0.429,0.422),
       TQ_effect=c(0.59,0.605,0.619),
       alpha.old=0.95*rho,
@@ -131,15 +131,14 @@ test_that("test simulation of future scenarios, with importation", {
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3))
 
-  simul.PQ=simulate_from_equilibrium_fromdata(mydata,
-                                          f=1/69, gamma=1/383, r=1/60,
+  simul.PQ=simulate_from_data(mydata, f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.PQ)=c("time",paste0(names(simul.PQ)[c(-1,-11)], "_PQ"), "id")
+  names(simul.PQ)=c("time",paste0(names(simul.PQ)[! names(simul.PQ) %in% c("time","id")], "_PQ"), "id")
 
-  simul.TQ=simulate_from_equilibrium_fromdata(mydata %>% dplyr::mutate(beta.new=TQ_effect),
+  simul.TQ=simulate_from_data(mydata %>% dplyr::mutate(beta.new=TQ_effect),
                                           f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.TQ)=c("time",paste0(names(simul.TQ)[c(-1,-11)], "_TQ"), "id")
+  names(simul.TQ)=c("time",paste0(names(simul.TQ)[! names(simul.TQ) %in% c("time","id")], "_TQ"), "id")
 
   db_compare=simul.PQ %>% dplyr::left_join(simul.TQ) %>%
     dplyr::mutate(effect_size=-(h_TQ-h_PQ)/h_PQ,year=time/365+2020)
@@ -164,6 +163,7 @@ test_that("test simulation of future scenarios, with importation and vector cont
   mydata=data.frame(incidence=c(23,112,267)) %>%
     dplyr::mutate(
       rho=c(0.18,0.13,0.08) ,
+      rho.old=rho,
       beta.old=c(0.431,0.429,0.422),
       TQ_effect=c(0.59,0.605,0.619),
       alpha.old=0.95*rho,
@@ -173,15 +173,15 @@ test_that("test simulation of future scenarios, with importation and vector cont
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7))
 
-  simul.PQ=simulate_from_equilibrium_fromdata(mydata,
+  simul.PQ=simulate_from_data(mydata,
                                           f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.PQ)=c("time",paste0(names(simul.PQ)[c(-1,-11)], "_PQ"), "id")
+  names(simul.PQ)=c("time",paste0(names(simul.PQ)[! names(simul.PQ) %in% c("time","id")], "_PQ"), "id")
 
-  simul.TQ=simulate_from_equilibrium_fromdata(mydata %>% dplyr::mutate(beta.new=TQ_effect, omega.new=omega.old*0.9),
+  simul.TQ=simulate_from_data(mydata %>% dplyr::mutate(beta.new=TQ_effect, omega.new=omega.old*0.9),
                                           f=1/69, gamma=1/383, r=1/60,
                                           maxtime=2000,year=T)
-  names(simul.TQ)=c("time",paste0(names(simul.TQ)[c(-1,-11)], "_TQ"), "id")
+  names(simul.TQ)=c("time",paste0(names(simul.TQ)[! names(simul.TQ) %in% c("time","id")], "_TQ"), "id")
 
   db_compare=simul.PQ %>% dplyr::left_join(simul.TQ) %>%
     dplyr::mutate(effect_size=-(h_TQ-h_PQ)/h_PQ,year=time/365+2020)
@@ -203,38 +203,71 @@ test_that("test simulation of future scenarios, with importation and vector cont
 
 
 
-test_that("test formating data for intervention simulation", {
+test_that("test simulation of future scenarios starting from initial condition, at equilibrium", {
 
-  df0=data.frame(id=c("regionA","regionB"))
-  df=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13))
+  mydata=data.frame(incidence=c(23,112,267)) %>%
+    dplyr::mutate(
+      rho=c(0.18,0.13,0.08) ,
+      rho.old=rho,
+      beta.old=c(0.431,0.429,0.422),
+      TQ_effect=c(0.59,0.605,0.619),
+      alpha.old=0.95*rho,
+      lambda=c(0.006260546  ,0.007086074  ,0.022004378 ),
+      I=c(0.01741279 ,0.12413235 ,0.50693425 ),
+      delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
+      id=c(1,2,3),
+      omega.old=c(0.7,0.7,0.7))
 
-  interv0=list(intervention_name="0", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
-  intervA=list(intervention_name="A", "alpha.new"=0.7, "beta.new"=0.8, "omega.new"=0.6 )
+  simul_no_rcd=simulate_from_data(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=F, rcd=F)
 
-  expectdata0=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13),
-                         alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                         alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13),
-                         intervention="0")
+  my_initial_state=simul_no_rcd[simul_no_rcd$time==2000,c("Il", "I0","Sl", "S0","h", "hr", "hl", "hh", "hhl", "id")]
+  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","h_init", "hr_init", "hl_init", "hh_init", "hhl_init", "id")
+  simul_no_rcd_chain=simulate_from_data(df=mydata, from_equilibrium = FALSE,
+                                        initial_states = my_initial_state,
+                                        f=1/69, gamma=1/383, r=1/60,  maxtime=2000,year=F, rcd=F)
 
-  expectdata0_0=data.frame(id=c("regionA","regionB"), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
-                           alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
-                           alpha.new=c(0,0), beta.new=c(1,1), omega.new=c(1, 1),
-                           intervention="0")
+  expect_equal(simul_no_rcd, simul_no_rcd_chain,tolerance = 1e-07, label = "chaining from equilibrium is the same as simulating from equilibrium")
 
-  expectdataA=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13),
-                         alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                         alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                         intervention="A")
-
-  expectdataA_0=data.frame(id=c("regionA","regionB"), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
-                           alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
-                           alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                           intervention="A")
+})
 
 
-  expect_equal(format_data_simulation(df, interv0), expectdata0, label = " no intervention")
-  expect_equal(format_data_simulation(df, intervA), expectdataA, label = " intervention A")
-  expect_equal(format_data_simulation(df0, interv0), expectdata0_0, label = " no intervention default")
-  expect_equal(format_data_simulation(df0, intervA), expectdataA_0, label = " intervention A default")
+test_that("test simulation of future scenarios starting from initial condition, not at equilibrium", {
+
+  mydata=data.frame(incidence=c(23,112,267)) %>%
+    dplyr::mutate(
+      rho=c(0.18,0.13,0.08) ,
+      rho.old=rho,
+      beta.old=c(0.431,0.429,0.422),
+      TQ_effect=c(0.59,0.605,0.619),
+      alpha.old=0.95*rho,
+      lambda=c(0.007  ,0.009  ,0.04 ),
+      I=c(0.01741279 ,0.12413235 ,0.50693425 ),
+      delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
+      id=c(1,2,3),
+      omega.old=c(0.7,0.7,0.7))
+
+  simul_no_rcd=simulate_from_data(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=F)
+
+  my_initial_state=simul_no_rcd[simul_no_rcd$time==100,c("Il", "I0","Sl", "S0","h", "hr","hl","hh", "hhl", "id")]
+  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","h_init", "hr_init", "hl_init", "hh_init", "hhl_init", "id")
+  simul_no_rcd_chain=simulate_from_data(df=mydata, from_equilibrium = FALSE,
+                                        initial_states = my_initial_state,
+                                        f=1/69, gamma=1/383, r=1/60,  maxtime=900,year=F, rcd=F) %>%
+    dplyr::mutate(time=time+100)
+
+
+  expect_equal(simul_no_rcd %>% dplyr::filter(time>=100), simul_no_rcd_chain,tolerance = 1e-07,
+               label = "chaining does not change the trajectory")
+
+
+  simul_no_rcd_chain_newalpha=simulate_from_data(df=mydata %>% dplyr::mutate(alpha.new=0.5), from_equilibrium = FALSE,
+                                        initial_states = my_initial_state,
+                                        f=1/69, gamma=1/383, r=1/60,  maxtime=900,year=F, rcd=F) %>%
+    dplyr::mutate(time=time+100)
+
+  expect_lt(simul_no_rcd_chain_newalpha$I[900], simul_no_rcd_chain$I[900],
+               label = "cadding an intervention changes the trajectory")
+
+
 })
 

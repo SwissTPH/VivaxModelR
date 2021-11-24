@@ -52,3 +52,53 @@ sample_uncertainty_incidence_import=function(df, ndraw=100){
 
   return(this.data)
 }
+
+
+
+
+#' @title Creates linear interpolation
+#'
+#' @param x time points
+#' @param y values to interpolate
+#' @param start rescales the x to x-start (useful to chain interventions properly)
+#'
+#' @return An interpolation function, like the one created by approxfun (stats package)
+#' @export
+create_approximation=function(x, y, start=0){
+  return(stats::approxfun(x=x-start, y=y, method = "linear"))
+}
+
+
+
+#' @title Creates vector control exponential decay
+#'
+#' @param initial_omega the reduction in vectorial capacity at time=0
+#' @param half_life half life of the exponential decay (in years)
+#' @param every_x_years frequency at which the intervention is renewed (default is every 3 years)
+#' @param maxtime maximum time point to be included in the database (from 0 to maxtime days)
+#'
+#' @return An interpolation function, like the one created by approxfun (stats package)
+#' @export
+vector_control_exponential_decay=function(initial_omega, half_life, every_x_years=3, maxtime){
+  my_omega=data.frame(time=seq(0, maxtime))
+  my_omega$value=1-(1-initial_omega)*exp(-log(2)*((my_omega$time/365)%%(every_x_years))/half_life)
+  return(my_omega)
+}
+
+
+
+
+#' @title Function for time varying tau
+#' @description From Chitnis et al. 2019 (supplementary information)
+#' @param nu time
+#' @param pr prevalence
+#' @param N population
+#'
+#' @return A scalar value for tau
+#' @export
+varying_tau=function(nu, pr, N=10000){
+  a1=0.23
+  a2=-1.4
+  a3=2.87
+  return( exp((-a1*log(pr)+a2/nu-a3*log(pr)/nu)*(N-nu)/N))
+}

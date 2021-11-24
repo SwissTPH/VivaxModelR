@@ -115,5 +115,142 @@
 				]
 			]
 		}
+	},
+		{
+		"id": "chitnis2019",
+		"type": "article-journal",
+		"abstract": "Reactive case detection (RCD) is an integral part of many malaria control and elimination programmes and can be conceived of as a way of gradually decreasing transmission. However, it is unclear under what circumstances RCD may have a substantial impact on prevalence, how likely it is to lead to local elimination, or how effective it needs to be to prevent reintroduction after transmission has been interrupted.",
+		"container-title": "Malaria Journal",
+		"DOI": "10.1186/s12936-019-2882-z",
+		"ISSN": "1475-2875",
+		"issue": "1",
+		"journalAbbreviation": "Malaria Journal",
+		"page": "266",
+		"source": "BioMed Central",
+		"title": "Theory of reactive interventions in the elimination and control of malaria",
+		"URL": "https://doi.org/10.1186/s12936-019-2882-z",
+		"volume": "18",
+		"author": [
+			{
+				"family": "Chitnis",
+				"given": "Nakul"
+			},
+			{
+				"family": "Pemberton-Ross",
+				"given": "Peter"
+			},
+			{
+				"family": "Yukich",
+				"given": "Josh"
+			},
+			{
+				"family": "Hamainza",
+				"given": "Busiku"
+			},
+			{
+				"family": "Miller",
+				"given": "John"
+			},
+			{
+				"family": "Reiker",
+				"given": "Theresa"
+			},
+			{
+				"family": "Eisele",
+				"given": "Thomas P."
+			},
+			{
+				"family": "Smith",
+				"given": "Thomas A."
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2020",
+					7,
+					23
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2019",
+					8,
+					2
+				]
+			]
+		}
+	},
+	{
+		"id": "das2021",
+		"type": "article-journal",
+		"title": "The impact of human mobility and reactive case detection on malaria transmission in Zanzibar",
+		"author": [
+			{
+				"family": "Das",
+				"given": "Aatreyee M."
+			},
+			{
+				"family": "Chitnis",
+				"given": "Nakul"
+			}
+		],
+		"issued": {
+			"literal": "in prep"
+		}
+	},
+		{
+		"id": "champagne2022",
+		"type": "article-journal",
+		"title": "Using observed incidence to calibrate the transmission level of a mathematical model for Plasmodium vivax dynamics including case management and importation",
+		"container-title": "Mathematical Biosciences",
+		"journalAbbreviation": "Mathematical Biosciences",
+		"author": [
+			{
+				"family": "Champagne",
+				"given": "Clara"
+			},
+			{
+				"family": "Gerhards",
+				"given": "Maximilian"
+			},
+			{
+				"family": "Lana",
+				"given": "Justin"
+			},
+			{
+				"family": "García Espinosa",
+				"given": "Bernardo"
+			},
+			{
+				"family": "Bradley",
+				"given": "Christina"
+			},
+			{
+				"family": "González",
+				"given": "Óscar"
+			},
+			{
+				"family": "Cohen",
+				"given": "Justin"
+			},
+			{
+				"family": "Le Menach",
+				"given": "Arnaud"
+			},
+			{
+				"family": "White",
+				"given": "Michael"
+			},
+			{
+				"family": "Pothin",
+				"given": "Emilie"
+			}
+		],
+		"issued": {
+			"literal": "In press"
+		}
 	}
 ]

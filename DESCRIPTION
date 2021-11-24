@@ -33,5 +33,4 @@ Suggests:
     rmarkdown,
     ggplot2,
     covr
-Config/testthat/edition: 2
 VignetteBuilder: knitr

@@ -15,8 +15,8 @@ ode_vivax_cm_importation_vc <- function(t, y, parameters) {
   alpha=parameters["alpha"][[1]]
   beta=parameters["beta"][[1]]
   rho=parameters["rho"][[1]]
-  delta=parameters["delta"][[1]]
-  omega=parameters["omega"][[1]]
+  delta=parameters["delta"][[1]](t)
+  omega=parameters["omega"][[1]](t)
 
 
   Il=y[1]
@@ -25,6 +25,9 @@ ode_vivax_cm_importation_vc <- function(t, y, parameters) {
   S0=y[4]
   h=y[5]
   hr=y[6]
+  hl=y[7]
+  hh=y[8]
+  hhl=y[9]
 
   dIl= (1-alpha)*(omega*lambda*(Il+I0)+delta)*(S0+Sl) + (omega*lambda*(Il+I0)+delta)*I0 + (1-alpha)*f*Sl - gamma*Il - r*Il
   dI0= -(omega*lambda*(Il+I0)+delta)*(I0) +  gamma*Il - r*I0
@@ -32,7 +35,10 @@ ode_vivax_cm_importation_vc <- function(t, y, parameters) {
   dS0= -(1-alpha*beta)*(omega*lambda*(Il+I0)+delta)*(S0) + (omega*lambda*(Il+I0)+delta)*alpha*beta*Sl +alpha*beta*f*Sl +  gamma*Sl + r*I0
   dh= rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)
   dhr= rho*f*Sl
-  res=c(dIl, dI0, dSl, dS0, dh, dhr)
+  dhl= rho*((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)
+  dhh= ((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)
+  dhhl=((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)
+  res=c(dIl, dI0, dSl, dS0, dh, dhr, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -52,25 +58,45 @@ ode_vivax_cm_importation_vc <- function(t, y, parameters) {
 #'
 simulate_vivax_ode <- function(parameters, ODEmodel=ode_vivax_cm_importation_vc, maxtime=1465, year=FALSE){
 
+  # if omega is a scalar, make it a constant function
+  if(is.numeric(parameters$omega)){
+    omega_t <- stats::approxfun(data.frame(t=seq(0, maxtime+1)) %>% dplyr::mutate(vc=parameters$omega))
+    parameters$omega=omega_t
+  }
+  # if delta is a scalar, make it a constant function
+  if(is.numeric(parameters$delta)){
+    delta_t <- stats::approxfun(data.frame(t=seq(0, maxtime+1)) %>% dplyr::mutate(val=parameters$delta))
+    parameters$delta=delta_t
+  }
   #simulation
   state      = c(parameters["Il"][[1]],
                   parameters["I0"][[1]],
                   parameters["Sl"][[1]],
                   parameters["S0"][[1]],
                   parameters["h"][[1]],
-                  parameters["hr"][[1]])
+                  parameters["hr"][[1]],
+                 parameters["hl"][[1]],
+                 parameters["hh"][[1]],
+                 parameters["hhl"][[1]])
+
   times = seq(0, maxtime, by = 1)
-  solveSIS = deSolve::ode(y = state, times = times, func = ODEmodel, parms =parameters, method = "rk4")
+  solveSIS = deSolve::ode(y = state, times = times, func = ODEmodel, parms =parameters, method = "lsoda")
   solutionVivax=as.data.frame(solveSIS)
-  names(solutionVivax)=c("time", "Il", "I0", "Sl", "S0", "h", "hr")
+  names(solutionVivax)=c("time", "Il", "I0", "Sl", "S0", "h", "hr", "hl", "hh", "hhl")
   if(year){solutionVivax=solutionVivax[(solutionVivax$time %%365 ==0),]}
   h0=ifelse(year, parameters["h"][[1]]*365, parameters["h"][[1]])
   hr0=ifelse(year, parameters["hr"][[1]]*365, parameters["hr"][[1]])
   solutionVivax$h=c(h0,diff(solutionVivax$h))
   solutionVivax$hr=c(hr0,diff(solutionVivax$hr))
+  hl0=ifelse(year, parameters["hl"][[1]]*365, parameters["hl"][[1]])
+  solutionVivax$hl=c(hl0,diff(solutionVivax$hl))
+  hh0=ifelse(year, parameters["hh"][[1]]*365, parameters["hh"][[1]])
+  solutionVivax$hh=c(hh0,diff(solutionVivax$hh))
+  hhl0=ifelse(year, parameters["hhl"][[1]]*365, parameters["hhl"][[1]])
+  solutionVivax$hhl=c(hhl0,diff(solutionVivax$hhl))
 
   solutionVivax$I=solutionVivax$Il+solutionVivax$I0
-  solutionVivax$p=parameters["delta"][[1]]*parameters["rho"][[1]]*(1-solutionVivax$I)/(solutionVivax$h/ifelse(year,365,1))
+  solutionVivax$p=(solutionVivax$h-solutionVivax$hl)/solutionVivax$h
 
   return(solutionVivax)
 }
@@ -246,7 +272,11 @@ get_equilibrium_states_vivax <- function(I, lambda, r, gamma, f, alpha, beta, rh
   S0=1-I-Sl
   h=rho*((lambda*(I0+Il)+delta)*(S0+Sl)+f*Sl)
   hr=rho*f*Sl
-  return(list("Il"=Il, "I0"=I0, "Sl"=Sl, "S0"=S0, "h"=h, "hr"=hr))
+  hl=rho*((lambda*(I0+Il))*(S0+Sl)+f*Sl)
+  hh=((lambda*(I0+Il)+delta)*(S0+Sl)+f*Sl)
+  hhl=((lambda*(I0+Il))*(S0+Sl)+f*Sl)
+  return(list("Il"=Il, "I0"=I0, "Sl"=Sl, "S0"=S0,
+              "h"=h, "hr"=hr, "hl"=hl, "hh"=hh, "hhl"=hhl))
 }
 
 

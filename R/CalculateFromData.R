@@ -101,9 +101,10 @@ calculate_r0_rc_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
 
 
 
-#' @title Simulate from equilibrium
+
+#' @title Simulate the model for several values in a database
 #'
-#' @description Uses the compartmental model to simulate a trajectory, starting from equilibrium variable
+#' @description Uses the compartmental model to simulate a trajectory, starting from equilibrium equilibrium state or a given initial condition
 #'
 #' @param df a dataframe containing the data, with one column called I containing the proportion
 #' of infectious individuals (I0+Il) at equilibrium, one column called lambda containing the transmission rate,
@@ -112,11 +113,18 @@ calculate_r0_rc_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
 #' rho (reporting rate), delta (importation rate) \cr
 #' intervention levels in the past (when lambda was calculated):  alpha.old (effective care), beta.old (proportion of liver stage cure), omega.old (intensity of vector control)
 #' intervention levels in the future (in the simulation):  alpha.new (effective care), beta.new (proportion of liver stage cure), omega.new (intensity of vector control)
+#' @param from_equilibrium boolean indicating if the model is run from equilibrium (TRUE, default) or from a pre-specified initial condition, which should be specified in initial_states
+#' @param initial_states given initial condition, as a dataframe containing the variables
+#' "Il_init", "I0_init", "Sl_init", "S0_init", "h_init", "hr_init",
+#' with one variable called id which identifies uniquely each row in the dataset. This input is not used when from_equilibrium=TRUE (default).
 #' @param f relapse frequency
 #' @param r blood clearance rate
 #' @param gamma liver clearance rate
 #' @param maxtime number of time steps for simulation
 #' @param year if TRUE, aggregates the outputs per year (h would be in cases per person year). if FALSE, returns daily outputs (h would be in cases per person day).
+#' @param rcd if TRUE, includes RCD in the model. Default is FALSE (no RCD)
+#' @param mda a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA
+#' @param rcd_at_baseline a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline
 #'
 #' @return A dataframe with the simulated state variables for each parameter combination in df
 #'
@@ -131,19 +139,19 @@ calculate_r0_rc_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
 #' mydata$alpha.old=c(0.17, 0.12)
 #' mydata$delta=c(0,0)
 #' mydata$omega.old=c(1,1)
-#' simulate_from_equilibrium_fromdata(df=mydata, f=1/69, gamma=1/383, r=1/60,maxtime=2000,year=TRUE)
+#' simulate_from_data(df=mydata, f=1/69, gamma=1/383, r=1/60,maxtime=2000,year=TRUE)
 #'
 #' @export
 #'
-simulate_from_equilibrium_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
-                                        maxtime,year){
+simulate_from_data=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/72, gamma=1/223, r=1/60,  maxtime, year, rcd=FALSE, mda=FALSE, rcd_at_baseline=FALSE){
 
-  if(!"I" %in% names(df)){ stop("no I variable in df")}
+  ####################################
+  # sanity checks on the inputs
   if(!"id" %in% names(df)){ stop("no id variable in df")}
   if(!"lambda" %in% names(df)){ stop("no lambda variable in df")}
-  if(!"rho" %in% names(df)){
-    df$rho=1
-    warning("no rho in df, assumed rho=1")
+  if(!"rho.old" %in% names(df)){
+    df$rho.old=1
+    warning("no rho.old in df, assumed rho.old=1")
   }
   if(!"omega.old" %in% names(df)){
     df$omega.old=1
@@ -156,6 +164,10 @@ simulate_from_equilibrium_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
   if(!"beta.old" %in% names(df)){
     df$beta.old=1
     warning("no beta.old in df, assumed beta.old=1")
+  }
+  if(!"rho.new" %in% names(df)){
+    df$rho.new=df$rho.old
+    warning("no rho.new in df, assumed rho.new=rho.old")
   }
   if(!"omega.new" %in% names(df)){
     df$omega.new=df$omega.old
@@ -173,24 +185,128 @@ simulate_from_equilibrium_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
     df$delta=0
     warning("no delta in df, assumed delta=0")
   }
+  if(!"delta.new" %in% names(df)){
+    df$delta.new=df$delta
+    warning("no delta.new in df, assumed delta.new=delta")
+  }
 
+  if((!"iota.new" %in% names(df) | !"tau.new" %in% names(df) | !"nu.new" %in% names(df) | !"eta.new" %in% names(df)| !"kappa.new" %in% names(df)) & rcd==TRUE){
+    stop("RCD parameters are missing, please add them or use model without RCD")
+  }
+
+  if((!"iota.old" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df)| !"kappa.old" %in% names(df)) & rcd_at_baseline==TRUE){
+    stop("RCD parameters are missing at baseline, please add them or use model without RCD (rcd_at_baseline=F)")
+  }
+
+  if((!"MDAcov.new" %in% names(df) | !"MDAp_length.new" %in% names(df) | !"MDArad_cure.new" %in% names(df)  ) & mda==TRUE){
+    stop("MDA parameters are missing, please add them or use model without MDA")
+  }
+
+  # further sanity checks, depending if equilibrium or non equilibrium is used
+  if(from_equilibrium==FALSE){
+    if(is.null(initial_states)){ stop("initial_states is missing")}
+    if(!"id" %in% names(initial_states)){ stop("no id variable in initial_states")}
+    if((!"Il_init" %in% names(initial_states) | !"I0_init" %in% names(initial_states) | !"Sl_init" %in% names(initial_states) |
+        !"S0_init" %in% names(initial_states)|
+        !"h_init" %in% names(initial_states)| !"hr_init" %in% names(initial_states)|
+        !"hl_init" %in% names(initial_states)| !"hh_init" %in% names(initial_states)| !"hhl_init" %in% names(initial_states))){
+      stop("missing state variables or wrong names in initial_states")}
+    if(nrow(df) != nrow(initial_states) ){ stop("mydata and myinitialstate don't have the same number of rows")}
+    if( any((initial_states$Il_init+initial_states$I0_init+initial_states$Sl_init+initial_states$S0_init)-1>1e-10)){ stop("initial states do not sum to 1")}
+
+    ######################
+    # processing the initial condition, if from_equilibrium=FALSE
+    df=merge(df, initial_states)
+
+  } else{
+    message("simulating from equilibrium")
+    if(!"I" %in% names(df)){ stop("no I variable in df")}
+    if(rcd){message("We start from the equilibrium without RCD")}
+  }
+
+
+  #####################################
+  # indicate the model to simulate from (rcd or not, mda or not)
+  my_ode_model=ifelse(rcd, ode_vivax_rcd, ode_vivax_cm_importation_vc)
+
+  if(mda){
+    my_ode_model_mda=ifelse(rcd, ode_vivax_rcd_mda, ode_vivax_mda)
+  }
+
+  #####################################
+  # Large loop over all areas/scenarios
   db_all=data.frame()
   for(i in 1:nrow(df)){
-    # get equilibrium values for Sl, S0, Il and I0
-    equ_states=get_equilibrium_states_vivax(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
-                                      alpha=df$alpha.old[i], beta=df$beta.old[i], rho=df$rho[i], delta=df$delta[i], omega=df$omega.old[i])
 
-    # simul approx model delay
-    this.simul=simulate_vivax_ode(parameters=list("r"=r,"gamma"=gamma, "f"=f, "lambda"=as.numeric(df[i,]$lambda), "delta"=df$delta[i],
-                                                  "alpha"=df$alpha.new[i],
-                                                 "beta"=df$beta.new[i],"rho"=df$rho[i],"omega"=df$omega.new[i],
-                                                 "I0"=equ_states$I0, "S0"=equ_states$S0, "Sl"=equ_states$Sl, "Il"=equ_states$Il,
-                                                 "h"=equ_states$h, "hr"=equ_states$hr),
-                                 ODEmodel =ode_vivax_cm_importation_vc , maxtime = maxtime, year=year)
+    # create parameter object
+    myparameters=list("r"=r,"gamma"=gamma, "f"=f, "lambda"=as.numeric(df[i,]$lambda), "delta"=df$delta.new[i][[1]],
+                      "alpha"=df$alpha.new[i],
+                      "beta"=df$beta.new[i],"rho"=df$rho.new[i],"omega"=df$omega.new[i][[1]])
+
+    if(rcd){
+      myparameters$iota=df$iota.new[i]
+      myparameters$tau=ifelse(is.list(df$tau.new[i]),df$tau.new[i][[1]],df$tau.new[i])
+      myparameters$nu=df$nu.new[i]
+      myparameters$eta=df$eta.new[i]
+      myparameters$kappa=df$kappa.new[i]
+    }
+    if(mda){
+      myparameters$MDAcov=df$MDAcov.new[i]
+      myparameters$MDAp_length=df$MDAp_length.new[i]
+      myparameters$MDArad_cure=df$MDArad_cure.new[i]
+    }
+
+    if(from_equilibrium==TRUE){
+      # get equilibrium values for Sl, S0, Il and I0
+      equ_states=get_equilibrium_states_vivax(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
+                                              alpha=df$alpha.old[i], beta=df$beta.old[i], rho=df$rho.old[i],
+                                              delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
+                                              omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)))
+
+      if(rcd_at_baseline){
+        equ_states=get_equilibrium_states_vivax_rcd(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
+                                                alpha=df$alpha.old[i], beta=df$beta.old[i], rho=df$rho.old[i],
+                                                delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
+                                                omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)),
+                                                iota_star =df$iota_star[i], nu=df$nu.old[i], tau=df$tau.old[i],eta=df$eta.old[i],kappa=df$kappa.old[i])
+      }
+
+      myparameters$I0=equ_states$I0
+      myparameters$S0=equ_states$S0
+      myparameters$Il=equ_states$Il
+      myparameters$Sl=equ_states$Sl
+      myparameters$h=equ_states$h
+      myparameters$hr=equ_states$hr
+      myparameters$hl=equ_states$hl
+      myparameters$hh=equ_states$hh
+      myparameters$hhl=equ_states$hhl
+    } else{
+      # extract from file
+      myparameters$I0=df$I0_init[i]
+      myparameters$S0=df$S0_init[i]
+      myparameters$Il=df$Il_init[i]
+      myparameters$Sl=df$Sl_init[i]
+      myparameters$h=df$h_init[i]
+      myparameters$hr=df$hr_init[i]
+      myparameters$hl=df$hl_init[i]
+      myparameters$hh=df$hh_init[i]
+      myparameters$hhl=df$hhl_init[i]
+    }
+
+    # simulate the model
+
+    if(mda){
+      this.simul=simulate_vivax_mda_ode(parameters=myparameters, ODEmodel =my_ode_model, ODEmodel_mda = my_ode_model_mda , maxtime = maxtime, year=year)
+    } else{
+      this.simul=simulate_vivax_ode(parameters=myparameters, ODEmodel =my_ode_model , maxtime = maxtime, year=year)
+    }
+
+    # post-process
     if(year) {
       this.simul$incidence= this.simul$h*1000
-      } else { this.simul$incidence = incidence_day2year(this.simul$h)}
+    } else { this.simul$incidence = incidence_day2year(this.simul$h)}
     this.simul$id=df[i,]$id
+
     # combine the files
     db_all=rbind(db_all, this.simul)
 
@@ -200,110 +316,3 @@ simulate_from_equilibrium_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
 
 }
 
-
-
-#' @title Formating intervention parameters within a database
-#'
-#' @description Helper function to format dataframes
-#'
-#' @param df a dataframe containing at least 3 variables : alpha, beta and omega
-#' @param intervention_object an named list containing the intervention description. It should have the follwing structure:
-#' list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
-#' where NA can be replaced by scalars or kepts as such.
-#'
-#' @return A dataframe with the required input parameters for future simulation
-#'
-#' @details If alpha.new is not provided in intervention_object it is equal to alpha.
-#' If beta.new is not provided in intervention_object it is equal to beta.
-#' If omega.new is not provided in intervention_object it is equal to omega.
-#'
-format_data_simulation=function(df, intervention_object){
-
-  if(!"alpha" %in% names(df)){
-    df$alpha=0
-    warning("no alpha in df, assumed alpha=0")
-  }
-  if(!"beta" %in% names(df)){
-    df$beta=1
-    warning("no beta in df, assumed beta=1")
-  }
-  if(!"omega" %in% names(df)){
-    df$omega=1
-    warning("no omega in df, assumed omega=1")
-  }
-
-  new_df=df
-  new_df$alpha.old=new_df$alpha
-  new_df$beta.old=new_df$beta
-  new_df$omega.old=new_df$omega
-
-  if(is.na(intervention_object$alpha.new)) new_df$alpha.new = new_df$alpha else new_df$alpha.new = intervention_object$alpha.new
-  if(is.na(intervention_object$beta.new)) new_df$beta.new = new_df$beta else new_df$beta.new = intervention_object$beta.new
-  if(is.na(intervention_object$omega.new)) new_df$omega.new = new_df$omega else new_df$omega.new = intervention_object$omega.new
-
-  new_df$intervention=intervention_object$intervention_name
-  return(new_df)
-}
-
-
-#' @title Simulate the effect of several interventions
-#'
-#' @description Uses the compartmental model to simulate the effect of interventions
-#'
-#' @param df a dataframe containing the data, with one column called I containing the proportion
-#' of infectious individuals (I0+Il) at equilibrium, one column called lambda containing the transmission rate,
-#' and one variable called id which identifies uniquely each row in the dataset.
-#' Additional optional variables are: \cr
-#' rho (reporting rate), delta (importation rate) \cr
-#' intervention levels in the past (when lambda was calculated):  alpha.old (effective care), beta.old (proportion of liver stage cure), omega.old (intensity of vector control)
-#' intervention levels in the future (in the simulation):  alpha.new (effective care), beta.new (proportion of liver stage cure), omega.new (intensity of vector control)
-#' In practice, this dataframe can be the output of the function calculate_r0_rc_fromdata
-#' @param intervention_list a list of intervention objects.
-#' @param f relapse frequency
-#' @param r blood clearance rate
-#' @param gamma liver clearance rate
-#' @param maxtime number of time steps for simulation
-#' @param year if TRUE, aggregates the outputs per year (h would be in cases per person year). if FALSE, returns daily outputs (h would be in cases per person day).
-#'
-#' @return A dataframe with the simulated state variables for each parameter combination in df
-#'
-#' @examples
-#' mydata=data.frame(incidence=c(23,112),lambda=c(0.0063,0.0071),I=c(0.017,0.12),id=c(1,2))
-#' mydata$rho=c(0.18,0.13)
-#' mydata$beta.old=c(0.43,0.42)
-#' mydata$alpha.old=c(0.17, 0.12)
-#' mydata$delta=c(0,0)
-#' mydata$omega.old=c(1,1)
-#' int_0=list(intervention_name="0", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
-#' int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=0.6, "omega.new"=NA )
-#' my_intervention_list=list(int_0, int_A)
-#' simulate_vivax_interventions(df=mydata, my_intervention_list)
-#'
-#' @export
-#'
-#' @details
-#' An intervention object is named list containing the intervention description. It should have the follwing structure:
-#' list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
-#' where NA can be replaced by scalars or kepts as such.
-#' If alpha.new is not provided in intervention_object it is equal to alpha.
-#' If beta.new is not provided in intervention_object it is equal to beta.
-#' If omega.new is not provided in intervention_object it is equal to omega.
-#'
-simulate_vivax_interventions=function(df, intervention_list, f=1/72, gamma=1/223, r=1/60, year=T,maxtime=2000){
-
-  df_full=data.frame()
-  for (interv in intervention_list){
-    df_full=rbind(df_full, format_data_simulation(df, interv ))
-  }
-  df_full$id0=df_full$id
-  df_full$id=paste0(df_full$id0, df_full$intervention)
-  merging_table=df_full[c("id", "id0", "intervention")]
-
-  simulation_model= simulate_from_equilibrium_fromdata(df=df_full, f=f, gamma=gamma, r=r,maxtime=maxtime,year=year)
-  simulation_model=merge(simulation_model,merging_table )
-  simulation_model$id=simulation_model$id0
-  simulation_model$id0=NULL
-
-  return(simulation_model)
-
-}

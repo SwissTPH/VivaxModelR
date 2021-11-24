@@ -3,7 +3,7 @@ test_that("test solve model with CM", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.0155531,"delta"=0,
                   "alpha"=0.4, "beta"=0.7, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0)
+                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0, "hh"=0, "hhl"=0)
 
   simul=simulate_vivax_ode(parameters, ODEmodel =ode_vivax_cm_importation_vc , maxtime = 500000)
 
@@ -47,7 +47,7 @@ test_that("test solve model with CM and importation", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.02,"delta"=0.01,
                   "alpha"=0.4, "beta"=0.7, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0)
+                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0, "hh"=0, "hhl"=0)
 
   simul=simulate_vivax_ode(parameters, ODEmodel =ode_vivax_cm_importation_vc , maxtime = 500000)
 
@@ -93,7 +93,7 @@ test_that("test solve model with CM, importation and vector control", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.02,"delta"=0.01,
                   "alpha"=0.4, "beta"=0.7, "rho"=0.4,"omega"=0.7,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0)
+                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0, "hh"=0, "hhl"=0)
 
   simul=simulate_vivax_ode(parameters, ODEmodel =ode_vivax_cm_importation_vc , maxtime = 500000)
 
