@@ -1,6 +1,5 @@
 ---
-title: "VivaxModelR"
-subtitle: "An R package to simulate *P. vivax* dynamics, model with delayed access to treatment"
+title: "Vignette delays"
 author: "Clara Champagne, Maximilian Gerhards, Emilie Pothin"
 output: rmarkdown::html_vignette
 bibliography: bibliography.json
@@ -10,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This package contains functions to simulate a compartmental model for *Plasmodium vivax* and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases.
+This package contains functions to simulate a compartmental model for Plasmodium Vivax and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases.
 The model includes case management and vector control.
 
 
@@ -21,6 +20,8 @@ knitr::include_graphics("models_delay_cartoon.png")
 where $I_L$ is the proportion of untreated individuals with both blood and liver stage parasites, $I_0$ is the proportion of untreated individuals with blood stage parasites only, $T_L$ is the proportion of treated individuals with both blood and liver stage parasites, $T_0$ is the proportion of treated individuals with blood stage parasites only, $S_L$ is the proportion of individuals with liver stage parasites only, and $S_0$ is the  proportion of susceptible individuals. 
 
 As in @white2016, it requires 4 biological parameters: $\lambda$ (transmission rate, called "lambda" in the package), $r$ (blood parasites clearance rate), $\gamma_L$ (liver  parasites clearance rate, called "gamma") and $f$ (relapse frequency). Values from the literature can be found for $r$, $\gamma_L$ and $f$. The parameter $\lambda$ is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: $R_0$ (in the absence of control intervention) and $R_c$ (considering current control interventions).
+
+For more information, please refer to the associated document.
 
 ## How to use the package
 
@@ -358,14 +359,38 @@ This database includes 100 replicates of the $R_0$ and $R_c$ calculation, includ
 #nrow(mydata_withR0RC_u)
 ```
 
-### Limitations of the model
+
+
+### Including demographic stochasticity
+The default version of the model is based on ordinary differential equations, and is therefore deterministic. It neglects the randomness in very small populations. For very low transmission settings (< 20 reported cases annually), a stochastic implementation of the model simulations relying on the **TiPS** package (@tips_cran, @tips_biorxiv) is available with the option **sto=TRUE**.  
+For each area, the population size **N** needs to be indicated in the input database:
+
+```{r}
+mydata_withR0RC$N=c(50000,20000)
+```
+
+The number of model draws can be chosen with the parameter *runs* and the simulation algorithm with the option **sto_method**, for which the default is the Gillespie algorithm ("exact").
+```{r}
+simulation_model_sto= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list, delay = T, sto=T, year=F, runs=2)
+```
+
+
+The model outputs can be represented graphically, for each simulation run.
+```{r , fig.width = 7}
+library(ggplot2)
+ggplot(simulation_model_sto %>% dplyr::left_join(mydata_withR0RC[c("id","N")]))+
+  geom_line(aes(x=time/365,y=I/N, color=intervention, group=interaction(intervention,run)), lwd=0.5)+
+  geom_line(data=simulation_model, aes(x=time/365,y=I, color=intervention, group=interaction(intervention)), lwd=1)+
+  facet_wrap(id ~., scales = "free_y")+xlab("Year since baseline")+ylab("Prevalence")
+```
+
+
+## Limitations of the model
 The model is a simplified representation of reality, and has therefore some limitations.
 
 Firstly, the model does not include any form of immunity. This simplifcation is acceptable for settings with low to moderate transmission intensity. For high transmission settings (roughly observed annual incidence > 200), other models should be used instead.
 
-Secondly, the model is deterministic and therefore neglects the randomness in very small populations. For very low transmission settings (< 20 reported cases annually), other models should be used instead.
-
-Finally, in some instances, the models cannot provide $R_0$ and $R_c$ estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.
+Secondly, in some instances, the models cannot provide $R_0$ and $R_c$ estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.
 
 
 ## References

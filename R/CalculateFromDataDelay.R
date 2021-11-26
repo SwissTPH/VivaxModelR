@@ -125,6 +125,12 @@ calculate_r0_rc_fromdata_delay=function(df, f=1/72, gamma=1/223, r=1/60,
 #' @param referral a boolean indicating if the rcd model includes referral. Default (FALSE) is the model without referral for RCD. This parameter is used only if rcd==TRUE.
 #' @param mda a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA
 #' @param rcd_at_baseline a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline
+#' @param sto a boolean indicating if the stochastic model is used. Default (FALSE) is the deterministic (ODE) model
+#' @param sto_method a scalarindicating which simulation method is used.
+#' Default ("exact") is Gillespie's direct method. Other options are "approximate" (tau-leap) or "mixed".
+#' cf. the documentation of the TiPS package for more information.
+#' @param runs number of draws of the stochastic model
+#' @param seeds a vector of the length of runs containing the seeds for each simulation (don't use "0" which has another use in TiPS)
 #'
 #' @return A dataframe with the simulated state variables for each parameter combination in df
 #'
@@ -144,7 +150,8 @@ calculate_r0_rc_fromdata_delay=function(df, f=1/72, gamma=1/223, r=1/60,
 #'
 #' @export
 #'
-simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/72, gamma=1/223, r=1/60,   maxtime, year, rcd=FALSE, referral=FALSE, mda=FALSE, rcd_at_baseline=FALSE){
+simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/72, gamma=1/223, r=1/60,   maxtime, year, rcd=FALSE, referral=FALSE, mda=FALSE, rcd_at_baseline=FALSE, sto=FALSE,
+                                  sto_method="exact", runs=1, seeds=NULL){
 
   ####################################
   # sanity checks on the inputs
@@ -210,6 +217,10 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
     stop("MDA parameters are missing, please add them or use model without MDA")
   }
 
+  if((!"N" %in% names(df) ) & sto==TRUE){
+    stop("population size N is missing for stochastic model. Please add it or use deterministic model")
+  }
+
   # further sanity checks, depending if equilibrium or non equilibrium is used
   if(from_equilibrium==FALSE){
     if(is.null(initial_states)){ stop("initial_states is missing")}
@@ -220,11 +231,16 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
        !"hh_init" %in% names(initial_states) |!"hhl_init" %in% names(initial_states))) {
       stop("missing state variables or wrong names in initial_states")}
     if(nrow(df) != nrow(initial_states) ){ stop("mydata and myinitialstate don't have the same number of rows")}
-    if( any((initial_states$Il_init+initial_states$I0_init+initial_states$Sl_init+initial_states$S0_init+initial_states$Tl_init+initial_states$T0_init)-1>1e-10)){ stop("initial states do not sum to 1")}
 
     ######################
     # processing the initial condition, if from_equilibrium=FALSE
     df=merge(df, initial_states)
+
+    if(sto){
+      df[,c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init")]=df[,c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init")]/df$N
+    }
+    if( any(abs((df$Il_init+df$I0_init+df$Sl_init+df$S0_init+df$Tl_init+df$T0_init)-1)>1e-10)){ stop("initial states do not sum to 1")}
+
 
   } else{
     message("simulating from equilibrium")
@@ -233,12 +249,39 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
   }
   #####################################
   # indicate the model to simulate from (rcd or not, mda or not)
+
+  if(sto==TRUE & rcd==TRUE & any(is.numeric(df$tau))==FALSE){stop("stochastic version of RCD model with time varying tau is not implemented yet")}
+
   my_ode_model=ifelse(rcd, ifelse(referral,ode_vivax_delay_rcd_referral,ode_vivax_delay_rcd_no_referral),
-                      ode_vivax_delay)
+                     ode_vivax_delay)
+
+  if(sto){
+    if(rcd){
+      if(referral){
+        my_sto_model=model_sto_vivax_delay_rcd_referral()
+      } else{
+        my_sto_model=model_sto_vivax_delay_rcd_no_referral()
+      }
+    } else {
+      my_sto_model=  model_sto_vivax_delay()
+    }
+  }
 
   if(mda){
     my_ode_model_mda=ifelse(rcd, ifelse(referral,ode_vivax_delay_rcd_referral_mda, ode_vivax_delay_rcd_no_referral_mda),
                             ode_vivax_delay_mda)
+
+    if(sto){
+      if(rcd){
+        if(referral){
+          my_sto_model_mda=model_sto_vivax_delay_rcd_referral_mda()
+        } else{
+          my_sto_model_mda=model_sto_vivax_delay_rcd_no_referral_mda()
+        }
+      } else {
+        my_sto_model_mda=  model_sto_vivax_delay_mda()
+      }
+    }
   }
 
   #####################################
@@ -264,6 +307,11 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
       myparameters$MDAp_length=df$MDAp_length.new[i]
       myparameters$MDArad_cure=df$MDArad_cure.new[i]
     }
+
+    if(sto){
+      myparameters$N=df$N[i]
+    }
+
     if(from_equilibrium==TRUE){
       # get equilibrium values for Sl, S0, Il and I0
       equ_states=get_equilibrium_states_vivax_delay(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
@@ -309,19 +357,38 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
       myparameters$hl=df$hl_init[i]
       myparameters$hh=df$hh_init[i]
       myparameters$hhl=df$hhl_init[i]
+
+      seeds=df$run[i]
     }
 
     # simul approx model delay
-    if(mda){
-      this.simul=simulate_vivax_delay_mda_ode(parameters=myparameters, ODEmodel =my_ode_model, ODEmodel_mda = my_ode_model_mda , maxtime = maxtime, year=year)
-    } else{
-      this.simul=simulate_vivax_delay_ode(parameters=myparameters,   ODEmodel =my_ode_model , maxtime = maxtime, year=year)
+
+    if(sto){
+
+      if(mda){
+        this.simul=simulate_vivax_delay_mda_sto(parameters=myparameters, STOmodel=my_sto_model, STOmodel_mda = my_sto_model_mda , maxtime = maxtime, year=year, sto_method=sto_method, runs=runs, seeds=seeds)
+      } else{
+        this.simul=simulate_vivax_delay_sto(parameters=myparameters, STOmodel=my_sto_model, maxtime=maxtime, year=year, sto_method=sto_method, runs=runs, seeds=seeds)
+      }
+      if("run" %in% names(df)){this.simul$run=df$run[i]}
+    } else {
+      if(mda){
+        this.simul=simulate_vivax_delay_mda_ode(parameters=myparameters, ODEmodel =my_ode_model, ODEmodel_mda = my_ode_model_mda , maxtime = maxtime, year=year)
+      } else{
+        this.simul=simulate_vivax_delay_ode(parameters=myparameters,   ODEmodel =my_ode_model , maxtime = maxtime, year=year)
+      }
     }
+
 
     # post-process
     if(year) {
       this.simul$incidence= this.simul$h*1000
     } else { this.simul$incidence = incidence_day2year(this.simul$h)}
+
+    if(sto){
+      this.simul$incidence=this.simul$incidence/myparameters$N
+    }
+
     this.simul$id=df[i,]$id
 
     # combine the files

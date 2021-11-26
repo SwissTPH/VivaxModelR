@@ -17,7 +17,11 @@ simulate_vivax_interventions(
   rcd = FALSE,
   referral = FALSE,
   mda = FALSE,
-  rcd_at_baseline = FALSE
+  rcd_at_baseline = FALSE,
+  sto = FALSE,
+  sto_method = "exact",
+  runs = 1,
+  seeds = NULL
 )
 }
 \arguments{
@@ -54,6 +58,16 @@ If NULL (default), the model is simulated from equilibrium}
 \item{mda}{a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA}
 
 \item{rcd_at_baseline}{a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline}
+
+\item{sto}{a boolean indicating if the stochastic model is used. Default (FALSE) is the deterministic (ODE) model}
+
+\item{sto_method}{a scalarindicating which simulation method is used.
+Default ("exact") is Gillespie's direct method. Other options are "approximate" (tau-leap) or "mixed".
+cf. the documentation of the TiPS package for more information.}
+
+\item{runs}{number of draws of the stochastic model}
+
+\item{seeds}{a vector of the length of runs containing the seeds for each simulation (don't use "0" which has another use in TiPS)}
 }
 \value{
 A dataframe with the simulated state variables for each parameter combination in df
