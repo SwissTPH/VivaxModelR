@@ -25,3 +25,5 @@ The vignette presenting how to use the package can be accessed with the followin
 ```{r}
 browseVignettes("VivaxModelR")
 ```
+
+An extended version of the package allowing for stochastic simulations can be found [here](https://github.com/SwissTPH/VivaxModelR/tree/sto).
