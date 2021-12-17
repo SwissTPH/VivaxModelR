@@ -17,7 +17,6 @@ The model code, i.e. containing the definition of the ODEs, and formulae for rep
 - **VivaxFunctionsDelays.R** for the models with delayed access to treatment, without RCD and without MDA.
 - **VivaxFunctionsRCD.R** for the models with RCD (with and without delayed access to treatment). 
 - **VivaxFunctionsDelays.R** for the models with MDA (with and without delayed access to treatment). 
-- **VivaxFunctionsSto.R** for the stochastic implementation of all models  
 
 
 Wrapper functions to apply the model to a full dataset in which each row corresponds to a different setting are available in the following scripts:
