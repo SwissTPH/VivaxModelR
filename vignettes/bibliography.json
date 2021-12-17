@@ -204,7 +204,16 @@
 		{
 		"id": "champagne2022",
 		"type": "article-journal",
+		"abstract": "In this work, we present a simple and flexible model for Plasmodium vivax dynamics which can be easily combined with routinely collected data on local and imported case counts to quantify transmission intensity and simulate control strategies. This model extends the model from White et al. (2016) by including case management interventions targeting liver-stage or blood-stage parasites, as well as imported infections. The endemic steady state of the model is used to derive a relationship between the observed incidence and the transmission rate in order to calculate reproduction numbers and simulate intervention scenarios. To illustrate its potential applications, the model is used to calculate local reproduction numbers in Panama and identify areas of sustained malaria transmission that should be targeted by control interventions.",
+		"container-title": "Mathematical Biosciences",
+		"DOI": "10.1016/j.mbs.2021.108750",
+		"ISSN": "0025-5564",
+		"journalAbbreviation": "Mathematical Biosciences",
+		"language": "en",
+		"page": "108750",
+		"source": "ScienceDirect",
 		"title": "Using observed incidence to calibrate the transmission level of a mathematical model for Plasmodium vivax dynamics including case management and importation",
+		"URL": "https://www.sciencedirect.com/science/article/pii/S0025556421001541",
 		"author": [
 			{
 				"family": "Champagne",
@@ -219,8 +228,8 @@
 				"given": "Justin"
 			},
 			{
-				"family": "García Espinosa",
-				"given": "Bernardo"
+				"family": "Espinosa",
+				"given": "Bernardo García"
 			},
 			{
 				"family": "Bradley",
@@ -228,11 +237,11 @@
 			},
 			{
 				"family": "González",
-				"given": "Óscar"
+				"given": "Oscar"
 			},
 			{
 				"family": "Cohen",
-				"given": "Justin"
+				"given": "Justin M."
 			},
 			{
 				"family": "Le Menach",
@@ -240,15 +249,30 @@
 			},
 			{
 				"family": "White",
-				"given": "Michael"
+				"given": "Michael T."
 			},
 			{
 				"family": "Pothin",
 				"given": "Emilie"
 			}
 		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2021",
+					12,
+					7
+				]
+			]
+		},
 		"issued": {
-			"literal": "In prep"
+			"date-parts": [
+				[
+					"2021",
+					12,
+					7
+				]
+			]
 		}
 	},
 	{
