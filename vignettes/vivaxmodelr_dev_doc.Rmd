@@ -1,10 +1,10 @@
 ---
-title: "VivaxModelR: developer documentation"
+title: "VivaxModelR"
 author: "Clara Champagne"
 output: rmarkdown::html_vignette
 bibliography: bibliography.json
 vignette: >
-  %\VignetteIndexEntry{VivaxModelR}
+  %\VignetteIndexEntry{VivaxModelRdevdoc}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
