@@ -8,6 +8,13 @@
 \description{
 This packages contains functions to simulate Plasmodium Vivax dynamics using a compartmental model.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://swisstph.github.io/VivaxModelR/}
+}
+
+}
 \author{
 \strong{Maintainer}: Clara Champagne \email{clara.champagne@swisstph.ch}
 
