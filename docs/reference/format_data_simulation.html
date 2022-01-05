@@ -95,7 +95,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/vivaxmodelr.html">VivaxModelR</a>
+      <a href="../articles/vivaxmodelr.html">VivaxModelR: simple version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_delay.html">VivaxModelR: full version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_dev_doc.html">VivaxModelR: developer doc</a>
     </li>
   </ul>
 </li>
@@ -124,7 +130,15 @@
     <p>Helper function to format dataframes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_data_simulation</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>intervention_object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>format_data_simulation</span><span class='op'>(</span>
+  <span class='va'>df</span>,
+  <span class='va'>intervention_object</span>,
+  delay <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rcd <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  mda <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>mystart</span>,
+  rcd_at_baseline <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +153,26 @@
 list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
 where NA can be replaced by scalars or kepts as such.</p></td>
     </tr>
+    <tr>
+      <th>delay</th>
+      <td><p>a boolean indicating if the model including delays in treatment should be used. Default (FALSE) is the model without delay in treatment</p></td>
+    </tr>
+    <tr>
+      <th>rcd</th>
+      <td><p>a boolean indicating if the model including reactive case detection should be used. Default (FALSE) is the model without RCD</p></td>
+    </tr>
+    <tr>
+      <th>mda</th>
+      <td><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></td>
+    </tr>
+    <tr>
+      <th>mystart</th>
+      <td><p>an integer indicating the time index of the start of the simulation (this is used to chain interventions appropriately)</p></td>
+    </tr>
+    <tr>
+      <th>rcd_at_baseline</th>
+      <td><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -148,7 +182,8 @@ where NA can be replaced by scalars or kepts as such.</p></td>
 
     <p>If alpha.new is not provided in intervention_object it is equal to alpha.
 If beta.new is not provided in intervention_object it is equal to beta.
-If omega.new is not provided in intervention_object it is equal to omega.</p>
+If omega.new is not provided in intervention_object it is equal to omega.
+If rho.new is not provided in intervention_object it is equal to rho</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

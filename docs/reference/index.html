@@ -94,7 +94,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/vivaxmodelr.html">VivaxModelR</a>
+      <a href="../articles/vivaxmodelr.html">VivaxModelR: simple version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_delay.html">VivaxModelR: full version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_dev_doc.html">VivaxModelR: developer doc</a>
     </li>
   </ul>
 </li>
@@ -140,9 +146,51 @@
       <tr>
         
         <td>
+          <p><code><a href="calculate_h1_rcd.html">calculate_h1_rcd()</a></code> </p>
+        </td>
+        <td><p>Calculate h1 from aggregated incidence data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="calculate_r0_rc_fromdata.html">calculate_r0_rc_fromdata()</a></code> </p>
         </td>
         <td><p>Calculate R0 and Rc on an incidence dataset</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calculate_r0_rc_fromdata_delay.html">calculate_r0_rc_fromdata_delay()</a></code> </p>
+        </td>
+        <td><p>Calculate R0 and Rc on an incidence dataset</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calculate_r0_rc_fromdata_delay_rcd.html">calculate_r0_rc_fromdata_delay_rcd()</a></code> </p>
+        </td>
+        <td><p>Calculate R0 and Rc on an incidence dataset with delays and RCD</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calculate_r0_rc_fromdata_rcd.html">calculate_r0_rc_fromdata_rcd()</a></code> </p>
+        </td>
+        <td><p>Calculate R0 and Rc on an incidence dataset with RCD</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calculate_tau_rcd.html">calculate_tau_rcd()</a></code> </p>
+        </td>
+        <td><p>Calculate the targeting ratio from incidence data with information on RCD</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calibrate_vivax_equilibrium.html">calibrate_vivax_equilibrium()</a></code> </p>
+        </td>
+        <td><p>Calibrate the vivax model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create_approximation.html">create_approximation()</a></code> </p>
+        </td>
+        <td><p>Creates linear interpolation</p></td>
       </tr><tr>
         
         <td>
@@ -155,6 +203,30 @@
           <p><code><a href="get_equilibrium_states_vivax.html">get_equilibrium_states_vivax()</a></code> </p>
         </td>
         <td><p>Calculate equilibrium state variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_equilibrium_states_vivax_delay.html">get_equilibrium_states_vivax_delay()</a></code> </p>
+        </td>
+        <td><p>Calculate equilibrium state variables, in model with delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_equilibrium_states_vivax_rcd.html">get_equilibrium_states_vivax_rcd()</a></code> </p>
+        </td>
+        <td><p>Calculate equilibrium state variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_equilibrium_states_vivax_rcd_no_referral.html">get_equilibrium_states_vivax_rcd_no_referral()</a></code> </p>
+        </td>
+        <td><p>Calculate equilibrium state variables, RCD model (no referral)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_equilibrium_states_vivax_rcd_referral.html">get_equilibrium_states_vivax_rcd_referral()</a></code> </p>
+        </td>
+        <td><p>Calculate equilibrium state variables, RCD model (referral)</p></td>
       </tr><tr>
         
         <td>
@@ -173,6 +245,12 @@
           <p><code><a href="get_rc_vivax.html">get_rc_vivax()</a></code> </p>
         </td>
         <td><p>Rc calculation, with case management and vector control</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_rc_vivax_delay.html">get_rc_vivax_delay()</a></code> </p>
+        </td>
+        <td><p>Rc calculation, with case management and vector control and delay to treatment</p></td>
       </tr><tr>
         
         <td>
@@ -200,21 +278,99 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="ode_vivax_delay.html">ode_vivax_delay()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, importation and vector control, including delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_delay_mda.html">ode_vivax_delay_mda()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, importation and vector control, including delay to treatment, during MDA prophylaxis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_delay_rcd_no_referral.html">ode_vivax_delay_rcd_no_referral()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD without referral, importation and vector control, including delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_delay_rcd_no_referral_mda.html">ode_vivax_delay_rcd_no_referral_mda()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD without referral, importation and vector control, including delay to treatment, during MDA prophylaxis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_delay_rcd_referral.html">ode_vivax_delay_rcd_referral()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD with referral, importation and vector control, including delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_delay_rcd_referral_mda.html">ode_vivax_delay_rcd_referral_mda()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD with referral, importation and vector control, including delay to treatment, during PDA prophylaxis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_mda.html">ode_vivax_mda()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, importation and vector control, during MDA prophylaxis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_rcd.html">ode_vivax_rcd()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD, importation and vector control, including delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ode_vivax_rcd_mda.html">ode_vivax_rcd_mda()</a></code> </p>
+        </td>
+        <td><p>ODE vivax model with case management, RCD, importation and vector control, during MDA prophylaxis</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="sample_uncertainty_incidence_import.html">sample_uncertainty_incidence_import()</a></code> </p>
         </td>
         <td><p>Samples uncertainty in incidence and importation data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="simulate_from_equilibrium_fromdata.html">simulate_from_equilibrium_fromdata()</a></code> </p>
+          <p><code><a href="simulate_from_data.html">simulate_from_data()</a></code> </p>
         </td>
-        <td><p>Simulate from equilibrium</p></td>
+        <td><p>Simulate the model for several values in a database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simulate_from_data_delay.html">simulate_from_data_delay()</a></code> </p>
+        </td>
+        <td><p>Simulate from equilibrium, with delays in treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simulate_vivax_delay_mda_ode.html">simulate_vivax_delay_mda_ode()</a></code> </p>
+        </td>
+        <td><p>Simulate vivax model  with delay to treatment and MDA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simulate_vivax_delay_ode.html">simulate_vivax_delay_ode()</a></code> </p>
+        </td>
+        <td><p>Simulate vivax model with delay to treatment</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="simulate_vivax_interventions.html">simulate_vivax_interventions()</a></code> </p>
         </td>
         <td><p>Simulate the effect of several interventions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simulate_vivax_mda_ode.html">simulate_vivax_mda_ode()</a></code> </p>
+        </td>
+        <td><p>Simulate vivax model with MDA</p></td>
       </tr><tr>
         
         <td>
@@ -227,6 +383,42 @@
           <p><code><a href="solve_lambda_vivax.html">solve_lambda_vivax()</a></code> </p>
         </td>
         <td><p>Transmission rate calculation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="solve_lambda_vivax_delay.html">solve_lambda_vivax_delay()</a></code> </p>
+        </td>
+        <td><p>Transmission rate calculation, in model with delay to treatment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="solve_lambda_vivax_rcd.html">solve_lambda_vivax_rcd()</a></code> </p>
+        </td>
+        <td><p>Transmission rate calculation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="solve_lambda_vivax_rcd_no_referral.html">solve_lambda_vivax_rcd_no_referral()</a></code> </p>
+        </td>
+        <td><p>Transmission rate calculation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="solve_lambda_vivax_rcd_referral.html">solve_lambda_vivax_rcd_referral()</a></code> </p>
+        </td>
+        <td><p>Transmission rate calculation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="varying_tau.html">varying_tau()</a></code> </p>
+        </td>
+        <td><p>Function for time varying tau</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vector_control_exponential_decay.html">vector_control_exponential_decay()</a></code> </p>
+        </td>
+        <td><p>Creates vector control exponential decay</p></td>
       </tr>
     </tbody>
     </table>

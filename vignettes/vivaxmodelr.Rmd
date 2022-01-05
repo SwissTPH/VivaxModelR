@@ -1,5 +1,5 @@
 ---
-title: "VivaxModelR"
+title: "VivaxModelR: simple version"
 subtitle: "An R package to simulate *P. vivax* dynamics"
 author: "Clara Champagne, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Óscar González, Justin Cohen, Arnaud Le Menach, Michael White, Emilie Pothin"
 output: rmarkdown::html_vignette

@@ -1,5 +1,5 @@
 ---
-title: "VivaxModelR"
+title: "VivaxModelR: developer doc"
 author: "Clara Champagne"
 output: rmarkdown::html_vignette
 vignette: >

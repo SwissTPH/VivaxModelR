@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VivaxModelR • VivaxModelR</title>
+<title>VivaxModelR: simple version • VivaxModelR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="VivaxModelR">
+<script src="../pkgdown.js"></script><meta property="og:title" content="VivaxModelR: simple version">
 <meta property="og:description" content="VivaxModelR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -54,7 +54,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/vivaxmodelr.html">VivaxModelR</a>
+      <a href="../articles/vivaxmodelr.html">VivaxModelR: simple version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_delay.html">VivaxModelR: full version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_dev_doc.html">VivaxModelR: developer doc</a>
     </li>
   </ul>
 </li>
@@ -72,8 +78,9 @@
       </header><script src="vivaxmodelr_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>VivaxModelR</h1>
-                        <h4 class="author">Clara Champagne, Maximilian Gerhards, Emilie Pothin</h4>
+      <h1 data-toc-skip>VivaxModelR: simple version</h1>
+            <h3 class="subtitle">An R package to simulate <em>P. vivax</em> dynamics</h3>
+                        <h4 class="author">Clara Champagne, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Óscar González, Justin Cohen, Arnaud Le Menach, Michael White, Emilie Pothin</h4>
             
       
       
@@ -83,7 +90,7 @@
 
     
     
-<p>This package contains functions to simulate a compartmental model for Plasmodium Vivax and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
+<p>This package contains functions to simulate a compartmental model for <em>Plasmodium vivax</em> and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
 It is based on <span class="citation">White et al. (2016)</span>, and can be represented by the following diagram:
 <div class="figure">
 <img src="models_cartoon.png" alt="Schematic representation of the model" width="80%"><p class="caption">
@@ -92,7 +99,7 @@ Schematic representation of the model
 </div>
 <p>where <span class="math inline">\(I_L\)</span> is the proportion of individuals with both blood and liver stage parasites, <span class="math inline">\(I_0\)</span> is the proportion of individuals with blood stage parasites only, <span class="math inline">\(S_L\)</span> is the proportion of individuals with liver stage parasites only, and <span class="math inline">\(S_0\)</span> is the proportion of susceptible individuals.</p>
 <p>As in <span class="citation">White et al. (2016)</span>, it requires 4 biological parameters: <span class="math inline">\(\lambda\)</span> (transmission rate, called “lambda” in the package), <span class="math inline">\(r\)</span> (blood parasites clearance rate), <span class="math inline">\(\gamma_L\)</span> (liver parasites clearance rate, called “gamma”) and <span class="math inline">\(f\)</span> (relapse frequency). Values from the literature can be found for <span class="math inline">\(r\)</span>, <span class="math inline">\(\gamma_L\)</span> and <span class="math inline">\(f\)</span>. The parameter <span class="math inline">\(\lambda\)</span> is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: <span class="math inline">\(R_0\)</span> (in the absence of control intervention) and <span class="math inline">\(R_c\)</span> (considering current control interventions).</p>
-<p>For more information, please refer to the associated paper.</p>
+<p>For more information, please refer to the associated paper (<span class="citation">Champagne et al. (2021)</span>).</p>
 <div id="how-to-use-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-use-the-package" class="anchor"></a>How to use the package</h2>
@@ -116,7 +123,7 @@ Schematic representation of the model
 <span class="va">mydata</span><span class="op">$</span><span class="va">omega</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>  <span class="co"># no vector control</span></code></pre></div>
 <p>Run the model and save the results in a new database.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mydata_withR0RC</span><span class="op">=</span><span class="fu"><a href="../reference/calculate_r0_rc_fromdata.html">calculate_r0_rc_fromdata</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">72</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">223</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>, return.all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">mydata_withR0RC</span><span class="op">=</span><span class="fu"><a href="../reference/calibrate_vivax_equilibrium.html">calibrate_vivax_equilibrium</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">72</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">223</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>, return.all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
 <span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span></code></pre></div>
 <p>Visualise the output: several additional columns were created, including <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> for each region/year.</p>
@@ -133,554 +140,404 @@ Schematic representation of the model
 <div id="simulate-a-future-scenario-with-the-fitted-model-" class="section level3">
 <h3 class="hasAnchor">
 <a href="#simulate-a-future-scenario-with-the-fitted-model-" class="anchor"></a>Simulate a future scenario with the fitted model.</h3>
-<p>In this section, we will see how to use the calibrated model to simulate the impact of a future intervention.</p>
+<p>In this section, we will see how to use the calibrated model to simulate the impact of a future intervention, starting from the model equilibrium.</p>
 <p>As a first step, the intervention variables describing the new intervention scenario need to be defined. For each intervention, we create an intervention object containing new parameter values after the intervention. For example, we want to increase the proportion of radical cure <span class="math inline">\(\beta\)</span> from 0.4 to 0.6 (intervention A) or 0.8 (intervention B).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">intervention_object0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"baseline"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
-<span class="va">intervention_objectA</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.6</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
-<span class="va">intervention_objectB</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervB"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">intervention_object0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"baseline"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectA</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.6</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectB</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervB"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span> , <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span><span class="op">)</span></code></pre></div>
 <p>Now, we use the previously calibrated model (using the values contained in mydata_withR0RC) to simulate the interventions. Make sure that the data frame contains a variable called “id” that identifies uniquely each row.</p>
 <p>Now, we simulate the model with the new parameterisation.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_intervention_list</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_object0</span>, <span class="va">intervention_objectA</span>, <span class="va">intervention_objectB</span><span class="op">)</span>
 <span class="va">simulation_model</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list</span><span class="op">)</span>
-<span class="va">simulation_model</span>
-<span class="co">#&gt;         id time          Il          I0          Sl        S0          h</span>
-<span class="co">#&gt; 1  regionA    0 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 2  regionA  365 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 3  regionA  730 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 4  regionA 1095 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 5  regionA 1460 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 6  regionA 1825 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 7  regionA    0 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 8  regionA  365 0.012603849 0.003414580 0.012685001 0.9712966 0.02183618</span>
-<span class="co">#&gt; 9  regionA  730 0.011493562 0.003114235 0.011568915 0.9738233 0.01987509</span>
-<span class="co">#&gt; 10 regionA 1095 0.010522276 0.002851229 0.010592452 0.9760340 0.01817226</span>
-<span class="co">#&gt; 11 regionA 1460 0.009666298 0.002619419 0.009731729 0.9779826 0.01667521</span>
-<span class="co">#&gt; 12 regionA 1825 0.008907026 0.002413779 0.008968105 0.9797111 0.01535012</span>
-<span class="co">#&gt; 13 regionA    0 0.013764538 0.003669252 0.014212164 0.9683540 0.02300000</span>
-<span class="co">#&gt; 14 regionA  365 0.011371887 0.003140440 0.011097627 0.9743900 0.02056951</span>
-<span class="co">#&gt; 15 regionA  730 0.009302327 0.002569787 0.009079595 0.9790483 0.01676249</span>
-<span class="co">#&gt; 16 regionA 1095 0.007661822 0.002116858 0.007479603 0.9827417 0.01377586</span>
-<span class="co">#&gt; 17 regionA 1460 0.006345263 0.001753285 0.006195175 0.9857063 0.01138855</span>
-<span class="co">#&gt; 18 regionA 1825 0.005278180 0.001458553 0.005153884 0.9881094 0.00945982</span>
-<span class="co">#&gt; 19 regionB    0 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 20 regionB  365 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 21 regionB  730 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 22 regionB 1095 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 23 regionB 1460 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 24 regionB 1825 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 25 regionB    0 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 26 regionB  365 0.095297313 0.024077122 0.087181388 0.7934442 0.10881593</span>
-<span class="co">#&gt; 27 regionB  730 0.093234727 0.023510108 0.085158166 0.7980970 0.10553956</span>
-<span class="co">#&gt; 28 regionB 1095 0.092367128 0.023271201 0.084307126 0.8000545 0.10418441</span>
-<span class="co">#&gt; 29 regionB 1460 0.091999770 0.023170038 0.083946745 0.8008834 0.10361173</span>
-<span class="co">#&gt; 30 regionB 1825 0.091843790 0.023127083 0.083793721 0.8012354 0.10336877</span>
-<span class="co">#&gt; 31 regionB    0 0.099644353 0.024983677 0.093153122 0.7822188 0.11200000</span>
-<span class="co">#&gt; 32 regionB  365 0.090720088 0.023114416 0.080960684 0.8052048 0.10542336</span>
-<span class="co">#&gt; 33 regionB  730 0.086658544 0.021984267 0.077045231 0.8143120 0.09885379</span>
-<span class="co">#&gt; 34 regionB 1095 0.084999725 0.021521791 0.075445874 0.8180326 0.09622890</span>
-<span class="co">#&gt; 35 regionB 1460 0.084313667 0.021330495 0.074784306 0.8195715 0.09514726</span>
-<span class="co">#&gt; 36 regionB 1825 0.084028453 0.021250965 0.074509256 0.8202113 0.09469828</span>
-<span class="co">#&gt;             hr           I         p incidence intervention</span>
-<span class="co">#&gt; 1  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 2  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 3  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 4  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 5  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 6  0.012968600 0.017433790 0.0000000  23.00000     baseline</span>
-<span class="co">#&gt; 7  0.012968600 0.017433790 0.0000000  23.00000      intervA</span>
-<span class="co">#&gt; 8  0.012172229 0.016018429 0.0000000  21.83618      intervA</span>
-<span class="co">#&gt; 9  0.011054140 0.014607797 0.0000000  19.87509      intervA</span>
-<span class="co">#&gt; 10 0.010101502 0.013373505 0.0000000  18.17226      intervA</span>
-<span class="co">#&gt; 11 0.009264876 0.012285717 0.0000000  16.67521      intervA</span>
-<span class="co">#&gt; 12 0.008525026 0.011320805 0.0000000  15.35012      intervA</span>
-<span class="co">#&gt; 13 0.012968600 0.017433790 0.0000000  23.00000      intervB</span>
-<span class="co">#&gt; 14 0.011309489 0.014512327 0.0000000  20.56951      intervB</span>
-<span class="co">#&gt; 15 0.009169137 0.011872114 0.0000000  16.76249      intervB</span>
-<span class="co">#&gt; 16 0.007527762 0.009778681 0.0000000  13.77586      intervB</span>
-<span class="co">#&gt; 17 0.006218205 0.008098549 0.0000000  11.38855      intervB</span>
-<span class="co">#&gt; 18 0.005161749 0.006736734 0.0000000   9.45982      intervB</span>
-<span class="co">#&gt; 19 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 20 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 21 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 22 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 23 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 24 0.061390495 0.124628030 0.1000000 112.00000     baseline</span>
-<span class="co">#&gt; 25 0.061390495 0.124628030 0.1000000 112.00000      intervA</span>
-<span class="co">#&gt; 26 0.058902368 0.119374435 0.1035438 108.81593      intervA</span>
-<span class="co">#&gt; 27 0.056692667 0.116744835 0.1070770 105.53956      intervA</span>
-<span class="co">#&gt; 28 0.055801401 0.115638329 0.1086057 104.18441      intervA</span>
-<span class="co">#&gt; 29 0.055425222 0.115169808 0.1092638 103.61173      intervA</span>
-<span class="co">#&gt; 30 0.055265708 0.114970873 0.1095453 103.36877      intervA</span>
-<span class="co">#&gt; 31 0.061390495 0.124628030 0.1000000 112.00000      intervB</span>
-<span class="co">#&gt; 32 0.056261601 0.113834504 0.1075483 105.42336      intervB</span>
-<span class="co">#&gt; 33 0.051873128 0.108642811 0.1153676  98.85379      intervB</span>
-<span class="co">#&gt; 34 0.050171072 0.106521516 0.1187966  96.22890      intervB</span>
-<span class="co">#&gt; 35 0.049471391 0.105644162 0.1202650  95.14726      intervB</span>
-<span class="co">#&gt; 36 0.049181233 0.105279418 0.1208845  94.69828      intervB</span></code></pre></div>
-<p>The variable “time” indicates the number of days since baseline. The other variables are the state variables of the model. The variable I indicates the proportion of all individuals with blood stage infection (<span class="math inline">\(I=I_L+I_0\)</span>), i.e. prevalence (including any parasite concentration). The variable incidence indicates the incidence per 1000 person year.</p>
-<p>The model outputs can be represented graphically, for example using the ggplot2 package.</p>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">simulation_model</span><span class="op">)</span>
+<span class="co">#&gt;        id time         Il          I0         Sl       S0     h        hr    hl</span>
+<span class="co">#&gt; 1 regionA    0 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt; 2 regionA  365 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt; 3 regionA  730 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt; 4 regionA 1095 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt; 5 regionA 1460 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt; 6 regionA 1825 0.01376454 0.003669252 0.01421216 0.968354 0.023 0.0129686 0.023</span>
+<span class="co">#&gt;          hh       hhl          I p incidence intervention step</span>
+<span class="co">#&gt; 1 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span>
+<span class="co">#&gt; 2 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span>
+<span class="co">#&gt; 3 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span>
+<span class="co">#&gt; 4 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span>
+<span class="co">#&gt; 5 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span>
+<span class="co">#&gt; 6 0.1277778 0.1277778 0.01743379 0        23     baseline    1</span></code></pre></div>
+<p>The variable <strong>time</strong> indicates the number of days since baseline. The other variables are the state variables of the model. The variable <span class="math inline">\(I\)</span> indicates the proportion of all individuals with blood stage infection (<span class="math inline">\(I=I_L+I_0\)</span>), i.e. prevalence (including any parasite concentration). The variable <strong>incidence</strong> indicates the incidence per 1000 person year. All variables are detailed in the following table:</p>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="50%">
+<col width="40%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Column name</th>
+<th align="left">Description</th>
+<th align="left">Unit</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">Unique identifier of the area</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">time</td>
+<td align="left">Number of days since baseline</td>
+<td align="left">days</td>
+</tr>
+<tr class="odd">
+<td align="left">Il</td>
+<td align="left">
+<span class="math inline">\(I_L\)</span>, proportion of individuals with both blood and liver stage parasites</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="even">
+<td align="left">I0</td>
+<td align="left">
+<span class="math inline">\(I_0\)</span>, proportion of individuals with blood stage parasites only</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="odd">
+<td align="left">Sl</td>
+<td align="left">
+<span class="math inline">\(S_L\)</span>, proportion of individuals with liver stage parasites only</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="even">
+<td align="left">S0</td>
+<td align="left">
+<span class="math inline">\(S_0\)</span>, proportion of susceptible individuals</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="odd">
+<td align="left">h</td>
+<td align="left">Reported incidence</td>
+<td align="left">cases per person year if year=T or per person day if year=F</td>
+</tr>
+<tr class="even">
+<td align="left">hr</td>
+<td align="left">Reported incidence due to relapses</td>
+<td align="left">cases per person year if year=T or per person day if year=F</td>
+</tr>
+<tr class="odd">
+<td align="left">hl</td>
+<td align="left">Local reported incidence</td>
+<td align="left">cases per person year if year=T or per person day if year=F</td>
+</tr>
+<tr class="even">
+<td align="left">hh</td>
+<td align="left">Total incidence</td>
+<td align="left">cases per person year if year=T or per person day if year=F</td>
+</tr>
+<tr class="odd">
+<td align="left">hhl</td>
+<td align="left">Total local incidence</td>
+<td align="left">cases per person year if year=T or per person day if year=F</td>
+</tr>
+<tr class="even">
+<td align="left">I</td>
+<td align="left">Prevalence (<span class="math inline">\(I_L+I_0\)</span>)</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="odd">
+<td align="left">p</td>
+<td align="left">Proportion of imported cases</td>
+<td align="left">dimensionless</td>
+</tr>
+<tr class="even">
+<td align="left">incidence</td>
+<td align="left">Reported incidence</td>
+<td align="left">cases per 1000 person year</td>
+</tr>
+<tr class="odd">
+<td align="left">intervention</td>
+<td align="left">Name of the intervention</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">step</td>
+<td align="left">Simulation step</td>
+<td align="left">1 corresponds to the first simulation from equilibrium</td>
+</tr>
+</tbody>
+</table>
+<p>The model outputs can be represented graphically, for example using the <strong>ggplot2</strong> package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.0.5</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simulation_model</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">incidence</span>, color<span class="op">=</span><span class="va">intervention</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span></code></pre></div>
-<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<div id="simulate-a-future-scenario-with-the-fitted-model-starting-from-a-previous-simulation-run" class="section level4">
+<h4 class="hasAnchor">
+<a href="#simulate-a-future-scenario-with-the-fitted-model-starting-from-a-previous-simulation-run" class="anchor"></a>Simulate a future scenario with the fitted model, starting from a previous simulation run</h4>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simulation_model_day</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list</span>, year<span class="op">=</span><span class="cn">F</span><span class="op">)</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+<span class="va">intervention_object0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"baseline"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectB2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervB"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.9</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">my_intervention_list2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_object0</span>, <span class="va">intervention_objectA</span>, <span class="va">intervention_objectB2</span><span class="op">)</span>
+<span class="va">simulation_model2</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list2</span>, previous_simulation <span class="op">=</span> <span class="va">simulation_model_day</span>, year<span class="op">=</span><span class="cn">F</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simulation_model2</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span>, color<span class="op">=</span><span class="va">intervention</span>, linetype<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">step</span><span class="op">)</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Prevalence"</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+</div>
+</div>
+</div>
+<div id="additional-interventions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#additional-interventions" class="anchor"></a>Additional interventions</h2>
+<p>Additional interventions, namely Mass Drug Administration and Reactive Case Detection, can be included in the model.</p>
+<div id="mass-drug-administration-mda" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mass-drug-administration-mda" class="anchor"></a>Mass Drug Administration (MDA)</h3>
+<div id="simulate-a-future-scenario-with-the-fitted-model-starting-from-a-previous-simulation-run-and-adding-mda" class="section level4">
+<h4 class="hasAnchor">
+<a href="#simulate-a-future-scenario-with-the-fitted-model-starting-from-a-previous-simulation-run-and-adding-mda" class="anchor"></a>Simulate a future scenario with the fitted model, starting from a previous simulation run, and adding MDA</h4>
+<p>MDA is defined with 3 parameters: the coverage (<strong>MDAcov</strong>), the proportion of individuals receiving MDA that experience radical cure (<strong>MDArad_cure</strong>) and the duration of MDA prophylaxis (<strong>MDAp_length</strong>).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">intervention_objectMDA_0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"baseline"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"MDAcov.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"MDAp_length.new"</span><span class="op">=</span><span class="fl">30</span>, <span class="st">"MDArad_cure.new"</span><span class="op">=</span><span class="fl">0</span>  , <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectMDA_A</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.6</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span> , <span class="st">"MDAcov.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"MDAp_length.new"</span><span class="op">=</span><span class="fl">30</span>, <span class="st">"MDArad_cure.new"</span><span class="op">=</span><span class="fl">0</span> , <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectMDA_B</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervB"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"MDAcov.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"MDAp_length.new"</span><span class="op">=</span><span class="fl">30</span>, <span class="st">"MDArad_cure.new"</span><span class="op">=</span><span class="fl">0</span> , <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span>  <span class="op">)</span>
+
+<span class="va">my_intervention_list2_MDA</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_objectMDA_0</span>, <span class="va">intervention_objectMDA_A</span>, <span class="va">intervention_objectMDA_B</span><span class="op">)</span>
+<span class="va">simulation_model2_MDA</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list2_MDA</span>, previous_simulation <span class="op">=</span> <span class="va">simulation_model_day</span>, year<span class="op">=</span><span class="cn">F</span>, mda <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simulation_model2_MDA</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span>, color<span class="op">=</span><span class="va">intervention</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Prevalence"</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-12-1.png" width="672"> ### Reactive case detection Reactive case detection (RCD) can also be included as a future intervention, following the framework by <span class="citation">Chitnis et al. (2019)</span> and <span class="citation">Das and Chitnis (in prep)</span>. It is represented with 4 parameters. <span class="math inline">\(\iota\)</span> is the maximum number of reported cases that can be investigated per day (normalised by population size), <span class="math inline">\(\nu\)</span> is the number of individuals tested in each investigation around a reported case, <span class="math inline">\(\tau\)</span> is the targeting ratio reflecting the increased probability of case detection in the vicinity of a confirmed case (see <span class="citation">Chitnis et al. (2019)</span>) and <span class="math inline">\(\eta\)</span> is probability for a positive case detected by RCD to be effectively cured. It is assumed that the probability of liver-stage clearance is the same for people detected via RCD as for treated individuals in general (equal to <span class="math inline">\(\beta\)</span>). <span class="math inline">\(\kappa\)</span> is defined in relation to the case management cascade and it represents the common part between <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\alpha\)</span> : it is required for the calculation of incidence.</p>
+</div>
+<div id="simulate-a-future-scenario-with-the-fitted-model-including-reactive-case-detection" class="section level4">
+<h4 class="hasAnchor">
+<a href="#simulate-a-future-scenario-with-the-fitted-model-including-reactive-case-detection" class="anchor"></a>Simulate a future scenario with the fitted model, including reactive case detection</h4>
+<p>We define new intervention objects with the RCD parameters:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">intervention_objectA_rcd</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 50%"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"iota.new"</span><span class="op">=</span><span class="fl">5</span><span class="op">/</span><span class="fl">7</span><span class="op">/</span><span class="fl">10000</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="fl">2</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">0.5</span>, <span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectA_rcd2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 100%"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>,  <span class="st">"iota.new"</span><span class="op">=</span><span class="fl">5</span><span class="op">/</span><span class="fl">7</span><span class="op">/</span><span class="fl">10000</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="fl">2</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span>  <span class="op">)</span>
+<span class="va">intervention_objectA_rcd3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 100% ++"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"iota.new"</span><span class="op">=</span><span class="cn">Inf</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="fl">2</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">1</span> , <span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></code></pre></div>
+<p>In the third scenario, the neighborhood of all cases reported are investigated.<br>
+The interventions can be simulated as before, adding the option ‘rcd=TRUE.’</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_intervention_list_2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_objectA_rcd</span>, <span class="va">intervention_objectA_rcd2</span>, <span class="va">intervention_objectA_rcd3</span><span class="op">)</span>
+<span class="va">simulation_model2</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list_2</span>, rcd<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; We start from the equilibrium without RCD</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+<span class="co">#&gt; We start from the equilibrium without RCD</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">simulation_model</span> <span class="op">%&gt;%</span>
+              <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">intervention</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"baseline"</span>, <span class="st">"intervA"</span><span class="op">)</span><span class="op">)</span>,
+            <span class="va">simulation_model2</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+ <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span>, color<span class="op">=</span><span class="va">intervention</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+ <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Prevalence"</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+</div>
+<div id="varying-targeting-ratio-based-on-prevalence" class="section level4">
+<h4 class="hasAnchor">
+<a href="#varying-targeting-ratio-based-on-prevalence" class="anchor"></a>Varying targeting ratio based on prevalence</h4>
+<p>Following <span class="citation">Chitnis et al. (2019)</span>, the targeting ratio <span class="math inline">\(\tau\)</span> can be made varying over time. The function from <span class="citation">Chitnis et al. (2019)</span> (additional file 1, fitted on field data from Zambia) is implemented in the function <strong>varying_tau</strong> and can be used in the simulations as follows. First, we define a function taking only prevalence as an argument (other functional forms can be used instead as long as they take prevalence as the only argument):</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="va">my_tau</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">pr</span><span class="op">)</span><span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="../reference/varying_tau.html">varying_tau</a></span><span class="op">(</span>nu<span class="op">=</span><span class="fl">5</span>, pr<span class="op">=</span><span class="va">pr</span>, N<span class="op">=</span><span class="fl">10000</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span></code></pre></div>
+<p>This function can be used as an input in the intervention object for <span class="math inline">\(\tau\)</span>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">intervention_objectA_rcd_tv</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 50%"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"iota.new"</span><span class="op">=</span><span class="fl">5</span><span class="op">/</span><span class="fl">7</span><span class="op">/</span><span class="fl">10000</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="va">my_tau</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">0.5</span>, <span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectA_rcd2_tv</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 100%"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>,  <span class="st">"iota.new"</span><span class="op">=</span><span class="fl">5</span><span class="op">/</span><span class="fl">7</span><span class="op">/</span><span class="fl">10000</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="va">my_tau</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span>  <span class="op">)</span>
+<span class="va">intervention_objectA_rcd3_tv</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervA + rcd 100% ++"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"iota.new"</span><span class="op">=</span><span class="cn">Inf</span>, <span class="st">"nu.new"</span><span class="op">=</span><span class="fl">5</span>, <span class="st">"tau.new"</span><span class="op">=</span><span class="va">my_tau</span>, <span class="st">"eta.new"</span><span class="op">=</span><span class="fl">1</span> , <span class="st">"kappa.new"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_intervention_list_3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_objectA_rcd_tv</span>, <span class="va">intervention_objectA_rcd2_tv</span>, <span class="va">intervention_objectA_rcd3_tv</span><span class="op">)</span>
+<span class="va">simulation_model3</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list_3</span>, rcd<span class="op">=</span><span class="cn">T</span><span class="op">)</span> 
+<span class="co">#&gt; Warning in is.na(intervention_object$tau.new): is.na() applied to non-(list or</span>
+<span class="co">#&gt; vector) of type 'closure'</span>
+
+<span class="co">#&gt; Warning in is.na(intervention_object$tau.new): is.na() applied to non-(list or</span>
+<span class="co">#&gt; vector) of type 'closure'</span>
+
+<span class="co">#&gt; Warning in is.na(intervention_object$tau.new): is.na() applied to non-(list or</span>
+<span class="co">#&gt; vector) of type 'closure'</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; We start from the equilibrium without RCD</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+<span class="co">#&gt; We start from the equilibrium without RCD</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">simulation_model2</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>timevaryingtau<span class="op">=</span><span class="st">"no"</span><span class="op">)</span>,<span class="va">simulation_model3</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>timevaryingtau<span class="op">=</span><span class="st">"yes"</span> <span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+ <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span>, color<span class="op">=</span><span class="va">intervention</span>, linetype<span class="op">=</span><span class="va">timevaryingtau</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+ <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Year since baseline"</span>, y<span class="op">=</span><span class="st">"Prevalence"</span>, linetype<span class="op">=</span><span class="st">"time varying tau"</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+</div>
+<div id="calibrating-the-model-with-rcd-at-baseline" class="section level4">
+<h4 class="hasAnchor">
+<a href="#calibrating-the-model-with-rcd-at-baseline" class="anchor"></a>Calibrating the model with RCD at baseline</h4>
+<p>If there is some RCD already at baseline, this can be accounted for during the model calibration step. The initial dataset should contain the RCD parameters, i.e. <span class="math inline">\(\iota\)</span>, <span class="math inline">\(\nu\)</span>, <span class="math inline">\(\tau\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(\kappa\)</span></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mydata_rcd</span><span class="op">=</span><span class="va">mydata</span>
+<span class="va">mydata_rcd</span><span class="op">$</span><span class="va">iota</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">7</span><span class="op">/</span><span class="fl">365</span>, <span class="cn">Inf</span><span class="op">)</span> <span class="co"># number of index cases investigated per day</span>
+<span class="va">mydata_rcd</span><span class="op">$</span><span class="va">nu</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span> <span class="co"># number of secondary cases investigated</span>
+<span class="va">mydata_rcd</span><span class="op">$</span><span class="va">tau</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>  <span class="co"># targeting ratio</span>
+<span class="va">mydata_rcd</span><span class="op">$</span><span class="va">eta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.95</span>,<span class="fl">0.95</span><span class="op">)</span>  <span class="co"># probability of detection of a case</span>
+<span class="va">mydata_rcd</span><span class="op">$</span><span class="va">kappa</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.18</span>,<span class="fl">0.13</span><span class="op">)</span> <span class="co"># common part between rho and alpha (please refer to case management cascade)</span></code></pre></div>
+<p>The calibration step is then executed with the option rcd=T.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mydata_withR0RC_rcd</span><span class="op">=</span><span class="fu"><a href="../reference/calibrate_vivax_equilibrium.html">calibrate_vivax_equilibrium</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_rcd</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">72</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">223</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>, return.all <span class="op">=</span> <span class="cn">TRUE</span>, rcd<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
+<span class="co">#&gt; Warning in solve_lambda_vivax_rcd(h = my.h, h1 = my.h1, r = r, gamma = gamma, :</span>
+<span class="co">#&gt; imaginary parts discarded in coercion</span>
+
+<span class="co">#&gt; Warning in solve_lambda_vivax_rcd(h = my.h, h1 = my.h1, r = r, gamma = gamma, :</span>
+<span class="co">#&gt; imaginary parts discarded in coercion</span>
+<span class="va">mydata_withR0RC_rcd</span></code></pre></div>
+<p>This dataset can be used for future simulations, similarly to <strong>mydata_withR0RC</strong>.</p>
+</div>
+</div>
+</div>
+<div id="additional-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#additional-features" class="anchor"></a>Additional features</h2>
+<div id="including-decay-in-the-vector-control-parameter" class="section level3">
+<h3 class="hasAnchor">
+<a href="#including-decay-in-the-vector-control-parameter" class="anchor"></a>Including decay in the vector control parameter</h3>
+<p>It is possible to include a decay in the vector control parameter <span class="math inline">\(\omega\)</span>. For example, an exponential decay, using the following function:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_omega</span><span class="op">=</span><span class="fu"><a href="../reference/vector_control_exponential_decay.html">vector_control_exponential_decay</a></span><span class="op">(</span>initial_omega <span class="op">=</span> <span class="fl">0.8</span>, half_life <span class="op">=</span> <span class="fl">3</span>, every_x_years <span class="op">=</span> <span class="fl">3</span>, maxtime <span class="op">=</span> <span class="fl">7</span><span class="op">*</span><span class="fl">365</span> <span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_omega</span><span class="op">)</span>
+<span class="co">#&gt;   time     value</span>
+<span class="co">#&gt; 1    0 0.8000000</span>
+<span class="co">#&gt; 2    1 0.8001266</span>
+<span class="co">#&gt; 3    2 0.8002530</span>
+<span class="co">#&gt; 4    3 0.8003794</span>
+<span class="co">#&gt; 5    4 0.8005058</span>
+<span class="co">#&gt; 6    5 0.8006320</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">my_omega</span><span class="op">)</span><span class="op">+</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">value</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"years"</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">omega</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-20-1.png" width="384"></p>
+<p>In this example, we implement a vector control intervention every 3 years, with an initial efficacy of <span class="math inline">\(\omega=0.8\)</span> and a half-life of 3 years. Other patterns can be used, especially derived from the AnophelesModel package (Golumbeanu et al. in prep), as long a the dataset is provided as a dataframe with a “time” and “value” column.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">intervention_objectC</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervC"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="fl">0.8</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+<span class="va">intervention_objectCdecay</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"intervCdecay"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="va">my_omega</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span>
+
+<span class="va">my_intervention_list_vc</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_object0</span>, <span class="va">intervention_objectC</span>, <span class="va">intervention_objectCdecay</span><span class="op">)</span>
+
+<span class="va">simulation_model_vc</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list_vc</span>, maxtime <span class="op">=</span> <span class="fl">7</span><span class="op">*</span><span class="fl">365</span>, year<span class="op">=</span><span class="cn">F</span><span class="op">)</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simulation_model_vc</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">incidence</span>, color<span class="op">=</span><span class="va">intervention</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Removed 1 row(s) containing missing values (geom_path).</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+</div>
+<div id="modify-the-importation-rate-over-time" class="section level3">
+<h3 class="hasAnchor">
+<a href="#modify-the-importation-rate-over-time" class="anchor"></a>Modify the importation rate over time</h3>
+<p>It is possible to modify the importation parameter <span class="math inline">\(\delta\)</span> over time. For example, we want to leave it constant for 1 year, and then make it decrease linearly to zero over the next 2 years (starting from the initial equilibrium value).<br>
+We write the desired pattern in a dataframe:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_trend</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>time<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="co"># baseline</span>
+                           <span class="fl">365</span>, <span class="co"># after 1 year</span>
+                           <span class="fl">3</span><span class="op">*</span><span class="fl">365</span><span class="op">+</span><span class="fl">1</span> <span class="co"># after 3 years (+1 to ensure the whole 3 year period is entirely covered)</span>
+                           <span class="op">)</span>, 
+                    relative_change<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="co"># initial value is constant (*1)</span>
+                                      <span class="fl">1</span>, <span class="co"># still constant after 1 year (*1)</span>
+                                      <span class="fl">0</span>  <span class="co"># equalsto zero after 3 years (*0)</span>
+                                      <span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Secondly, we create a database containing all unique regions, their respective value for <span class="math inline">\(\delta\)</span> and the desired time points:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="va">full</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="va">full</span><span class="op">$</span><span class="va">id</span><span class="op">=</span><span class="va">mydata_withR0RC</span><span class="op">$</span><span class="va">id</span> <span class="co"># extract all unique regions from previous database</span>
+  <span class="va">full</span><span class="op">$</span><span class="va">time</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">365</span>,<span class="fl">3</span><span class="op">*</span><span class="fl">365</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span> <span class="co"># desired time points</span>
+  <span class="va">my_delta0</span><span class="op">=</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span> <span class="va">full</span> <span class="op">)</span>, <span class="va">mydata_withR0RC</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"delta"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="co">#&gt; Joining, by = "id"</span>
+  
+  <span class="va">my_delta0</span>
+<span class="co">#&gt;        id time       delta</span>
+<span class="co">#&gt; 1 regionA    0 0.000000000</span>
+<span class="co">#&gt; 2 regionB    0 0.000269643</span>
+<span class="co">#&gt; 3 regionA  365 0.000000000</span>
+<span class="co">#&gt; 4 regionB  365 0.000269643</span>
+<span class="co">#&gt; 5 regionA 1096 0.000000000</span>
+<span class="co">#&gt; 6 regionB 1096 0.000269643</span></code></pre></div>
+<p>We now merge this table with the pre-defined trend and build the input database for the package:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_delta</span><span class="op">=</span><span class="va">my_delta0</span> <span class="op">%&gt;%</span> <span class="co"># create a data.frame with the </span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">my_trend</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>value<span class="op">=</span><span class="va">relative_change</span><span class="op">*</span><span class="va">delta</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>,<span class="va">time</span>,<span class="va">value</span><span class="op">)</span>
+<span class="co">#&gt; Joining, by = "time"</span>
+
+<span class="va">my_delta</span>
+<span class="co">#&gt;        id time       value</span>
+<span class="co">#&gt; 1 regionA    0 0.000000000</span>
+<span class="co">#&gt; 2 regionB    0 0.000269643</span>
+<span class="co">#&gt; 3 regionA  365 0.000000000</span>
+<span class="co">#&gt; 4 regionB  365 0.000269643</span>
+<span class="co">#&gt; 5 regionA 1096 0.000000000</span>
+<span class="co">#&gt; 6 regionB 1096 0.000000000</span></code></pre></div>
+<p>This data.frame can then be used in the creation of the intervention object. Other patterns can be used, as long a the dataset is provided as a ata.frame with an “id,” “time” and “value” column.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">intervention_objectD</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"baseline"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span><span class="op">)</span>
+<span class="va">intervention_objectD_delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"A"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"delta.new"</span><span class="op">=</span><span class="va">my_delta</span><span class="op">)</span>
+
+<span class="va">my_intervention_list_delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">intervention_objectD</span>,<span class="va">intervention_objectD_delta</span><span class="op">)</span>
+
+<span class="va">simulation_model_delta</span><span class="op">=</span><span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, intervention_list <span class="op">=</span> <span class="va">my_intervention_list_delta</span>, year<span class="op">=</span><span class="cn">F</span>, maxtime <span class="op">=</span> <span class="fl">365</span><span class="op">*</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simulation_model_delta</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">incidence</span>, color<span class="op">=</span><span class="va">intervention</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span></code></pre></div>
+<p><img src="vivaxmodelr_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p>In region A, the importation rate was already equal to zero, therefore, the trajectory remains unchanged.</p>
 </div>
 <div id="including-uncertainty-quantification-in-data-reporting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#including-uncertainty-quantification-in-data-reporting" class="anchor"></a>Including uncertainty quantification in data reporting</h3>
 <p>Creating a dummy dataset with reported numbers or total cases and local cases, i.e. as opposed to imported cases, and the population size of the area (the user should include their real data). Each line corresponds to an administrative area or a year of data. We also added the reporting and case management parameters for each setting.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata_2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"regionA"</span>,<span class="st">"regionB"</span><span class="op">)</span>,cases<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">114</span>,<span class="fl">312</span><span class="op">)</span>,cases_local<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">110</span>,<span class="fl">290</span><span class="op">)</span>, population<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10000</span>,<span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mydata_2</span><span class="op">$</span><span class="va">alpha</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.18</span>, <span class="fl">0.13</span><span class="op">)</span> <span class="co"># proportion of treated cases</span>
 <span class="va">mydata_2</span><span class="op">$</span><span class="va">beta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span> <span class="co"># proportion of radical cure</span>
 <span class="va">mydata_2</span><span class="op">$</span><span class="va">rho</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span> <span class="co"># reporting rate (here, we assume that all treated cases are reported)</span>
 <span class="va">mydata_2</span><span class="op">$</span><span class="va">omega</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>  <span class="co"># no vector control</span></code></pre></div>
 <p>Draw 100 samples of the incidence and proportion of imported cases, given the observed total and local number of cases. The uncertainty modelled here is due to population size: for additional information concerning the model, please refer to the associated publication.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata_2u</span><span class="op">=</span><span class="fu"><a href="../reference/sample_uncertainty_incidence_import.html">sample_uncertainty_incidence_import</a></span><span class="op">(</span><span class="va">mydata_2</span>, ndraw <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <p>Run the model and save the results in a new database.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mydata_withR0RC_u</span><span class="op">=</span><span class="fu"><a href="../reference/calculate_r0_rc_fromdata.html">calculate_r0_rc_fromdata</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_2u</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">72</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">223</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>, return.all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span>
-
-<span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span>
-<span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span></code></pre></div>
-<p>This database includes 100 replicates of the <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> calculation, including the sampling uncertainty in the incidence and proportion of imported cases.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mydata_withR0RC_u</span><span class="op">)</span>
-<span class="co">#&gt; [1] 200</span></code></pre></div>
+<p>This database includes 100 replicates of the <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> calculation, including the sampling uncertainty in the incidence and proportion of imported cases, and it can also be used further for simulations.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#nrow(mydata_withR0RC_u)</span></code></pre></div>
 </div>
-<div id="limitations-of-the-model" class="section level3">
-<h3 class="hasAnchor">
-<a href="#limitations-of-the-model" class="anchor"></a>Limitations of the model</h3>
+</div>
+<div id="limitations-of-the-model" class="section level2">
+<h2 class="hasAnchor">
+<a href="#limitations-of-the-model" class="anchor"></a>Limitations of the model</h2>
 <p>The model is a simplified representation of reality, and has therefore some limitations.</p>
 <p>Firstly, the model does not include any form of immunity. This simplifcation is acceptable for settings with low to moderate transmission intensity. For high transmission settings (roughly observed annual incidence &gt; 200), other models should be used instead.</p>
 <p>Secondly, the model is deterministic and therefore neglects the randomness in very small populations. For very low transmission settings (&lt; 20 reported cases annually), other models should be used instead.</p>
 <p>Finally, in some instances, the models cannot provide <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.</p>
 </div>
-</div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-champagne2022" class="csl-entry">
+Champagne, Clara, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Oscar González, Justin M. Cohen, Arnaud Le Menach, Michael T. White, and Emilie Pothin. 2021. <span>“Using Observed Incidence to Calibrate the Transmission Level of a Mathematical Model for Plasmodium Vivax Dynamics Including Case Management and Importation.”</span> <em>Mathematical Biosciences</em>, December, 108750. <a href="https://doi.org/10.1016/j.mbs.2021.108750">https://doi.org/10.1016/j.mbs.2021.108750</a>.
+</div>
+<div id="ref-chitnis2019" class="csl-entry">
+Chitnis, Nakul, Peter Pemberton-Ross, Josh Yukich, Busiku Hamainza, John Miller, Theresa Reiker, Thomas P. Eisele, and Thomas A. Smith. 2019. <span>“Theory of Reactive Interventions in the Elimination and Control of Malaria.”</span> <em>Malaria Journal</em> 18 (1): 266. <a href="https://doi.org/10.1186/s12936-019-2882-z">https://doi.org/10.1186/s12936-019-2882-z</a>.
+</div>
+<div id="ref-das2021" class="csl-entry">
+Das, Aatreyee M., and Nakul Chitnis. in prep. <span>“The Impact of Human Mobility and Reactive Case Detection on Malaria Transmission in Zanzibar,”</span> in prep.
+</div>
 <div id="ref-galactionova2015" class="csl-entry">
 Galactionova, Katya, Fabrizio Tediosi, Don de Savigny, Thomas Smith, and Marcel Tanner. 2015. <span>“Effective Coverage and Systems Effectiveness for Malaria Case Management in Sub-Saharan African Countries.”</span> Edited by Georges Snounou. <em>PLOS ONE</em> 10 (5): e0127818. <a href="https://doi.org/10.1371/journal.pone.0127818">https://doi.org/10.1371/journal.pone.0127818</a>.
 </div>

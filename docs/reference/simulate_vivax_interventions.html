@@ -95,7 +95,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/vivaxmodelr.html">VivaxModelR</a>
+      <a href="../articles/vivaxmodelr.html">VivaxModelR: simple version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_delay.html">VivaxModelR: full version</a>
+    </li>
+    <li>
+      <a href="../articles/vivaxmodelr_dev_doc.html">VivaxModelR: developer doc</a>
     </li>
   </ul>
 </li>
@@ -127,11 +133,17 @@
     <pre class="usage"><span class='fu'>simulate_vivax_interventions</span><span class='op'>(</span>
   <span class='va'>df</span>,
   <span class='va'>intervention_list</span>,
+  previous_simulation <span class='op'>=</span> <span class='cn'>NULL</span>,
   f <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>72</span>,
   gamma <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>223</span>,
   r <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>60</span>,
   year <span class='op'>=</span> <span class='cn'>T</span>,
-  maxtime <span class='op'>=</span> <span class='fl'>2000</span>
+  maxtime <span class='op'>=</span> <span class='fl'>2000</span>,
+  delay <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rcd <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  referral <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  mda <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rcd_at_baseline <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -153,6 +165,11 @@ In practice, this dataframe can be the output of the function calculate_r0_rc_fr
       <td><p>a list of intervention objects.</p></td>
     </tr>
     <tr>
+      <th>previous_simulation</th>
+      <td><p>the result of a previous simulation (e.g. the outcome of simulate_vivax_interventions or chain_vivax_interventions).
+If NULL (default), the model is simulated from equilibrium</p></td>
+    </tr>
+    <tr>
       <th>f</th>
       <td><p>relapse frequency</p></td>
     </tr>
@@ -172,6 +189,26 @@ In practice, this dataframe can be the output of the function calculate_r0_rc_fr
       <th>maxtime</th>
       <td><p>number of time steps for simulation</p></td>
     </tr>
+    <tr>
+      <th>delay</th>
+      <td><p>a boolean indicating if the model including delays in treatment should be used. Default (FALSE) is the model without delay in treatment</p></td>
+    </tr>
+    <tr>
+      <th>rcd</th>
+      <td><p>a boolean indicating if the model including reactive case detection should be used. Default (FALSE) is the model without RCD</p></td>
+    </tr>
+    <tr>
+      <th>referral</th>
+      <td><p>a boolean indicating if the rcd model includes referral. Default (FALSE) is the model with referral for RCD. This parameter is used only if rcd==TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>mda</th>
+      <td><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></td>
+    </tr>
+    <tr>
+      <th>rcd_at_baseline</th>
+      <td><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -180,73 +217,74 @@ In practice, this dataframe can be the output of the function calculate_r0_rc_fr
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>An intervention object is named list containing the intervention description. It should have the follwing structure:
-list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
+list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "rho.new"=NA )
 where NA can be replaced by scalars or kepts as such.
 If alpha.new is not provided in intervention_object it is equal to alpha.
 If beta.new is not provided in intervention_object it is equal to beta.
-If omega.new is not provided in intervention_object it is equal to omega.</p>
+If omega.new is not provided in intervention_object it is equal to omega.
+If rho.new is not provided in intervention_object it is equal to rho.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>mydata</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>incidence<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>23</span>,<span class='fl'>112</span><span class='op'>)</span>,lambda<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.0063</span>,<span class='fl'>0.0071</span><span class='op'>)</span>,I<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.017</span>,<span class='fl'>0.12</span><span class='op'>)</span>,id<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mydata</span><span class='op'>$</span><span class='va'>rho</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.18</span>,<span class='fl'>0.13</span><span class='op'>)</span>
+<span class='va'>mydata</span><span class='op'>$</span><span class='va'>rho.old</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.18</span>,<span class='fl'>0.13</span><span class='op'>)</span>
 <span class='va'>mydata</span><span class='op'>$</span><span class='va'>beta.old</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.43</span>,<span class='fl'>0.42</span><span class='op'>)</span>
 <span class='va'>mydata</span><span class='op'>$</span><span class='va'>alpha.old</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.17</span>, <span class='fl'>0.12</span><span class='op'>)</span>
 <span class='va'>mydata</span><span class='op'>$</span><span class='va'>delta</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span><span class='op'>)</span>
 <span class='va'>mydata</span><span class='op'>$</span><span class='va'>omega.old</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>int_0</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>intervention_name<span class='op'>=</span><span class='st'>"0"</span>, <span class='st'>"alpha.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"beta.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"omega.new"</span><span class='op'>=</span><span class='cn'>NA</span> <span class='op'>)</span>
-<span class='va'>int_A</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>intervention_name<span class='op'>=</span><span class='st'>"A"</span>, <span class='st'>"alpha.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"beta.new"</span><span class='op'>=</span><span class='fl'>0.6</span>, <span class='st'>"omega.new"</span><span class='op'>=</span><span class='cn'>NA</span> <span class='op'>)</span>
+<span class='va'>int_0</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>intervention_name<span class='op'>=</span><span class='st'>"0"</span>, <span class='st'>"alpha.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"beta.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"omega.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"rho.new"</span><span class='op'>=</span><span class='cn'>NA</span> <span class='op'>)</span>
+<span class='va'>int_A</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>intervention_name<span class='op'>=</span><span class='st'>"A"</span>, <span class='st'>"alpha.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"beta.new"</span><span class='op'>=</span><span class='fl'>0.6</span>, <span class='st'>"omega.new"</span><span class='op'>=</span><span class='cn'>NA</span>, <span class='st'>"rho.new"</span><span class='op'>=</span><span class='cn'>NA</span> <span class='op'>)</span>
 <span class='va'>my_intervention_list</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>int_0</span>, <span class='va'>int_A</span><span class='op'>)</span>
 <span class='fu'>simulate_vivax_interventions</span><span class='op'>(</span>df<span class='op'>=</span><span class='va'>mydata</span>, <span class='va'>my_intervention_list</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: no alpha in df, assumed alpha=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no beta in df, assumed beta=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no omega in df, assumed omega=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no alpha in df, assumed alpha=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no beta in df, assumed beta=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no omega in df, assumed omega=1</span></div><div class='output co'>#&gt;    id time          Il          I0          Sl        S0           h
-#&gt; 1   1    0 0.013413918 0.003586082 0.012097497 0.9709025 0.017955816
-#&gt; 2   1  365 0.011438304 0.003135727 0.010553559 0.9748724 0.016770936
-#&gt; 3   1  730 0.009903445 0.002714985 0.009137410 0.9782442 0.014504607
-#&gt; 4   1 1095 0.008610033 0.002360402 0.007944044 0.9810855 0.012593156
-#&gt; 5   1 1460 0.007511743 0.002059311 0.006930707 0.9834982 0.010974147
-#&gt; 6   1 1825 0.006573085 0.001801982 0.006064655 0.9855603 0.009593413
-#&gt; 7   1    0 0.013413918 0.003586082 0.012097497 0.9709025 0.017955816
-#&gt; 8   1  365 0.011438304 0.003135727 0.010553559 0.9748724 0.016770936
-#&gt; 9   1  730 0.009903445 0.002714985 0.009137410 0.9782442 0.014504607
-#&gt; 10  1 1095 0.008610033 0.002360402 0.007944044 0.9810855 0.012593156
-#&gt; 11  1 1460 0.007511743 0.002059311 0.006930707 0.9834982 0.010974147
-#&gt; 12  1 1825 0.006573085 0.001801982 0.006064655 0.9855603 0.009593413
-#&gt; 13  2    0 0.095543458 0.024456542 0.082828344 0.7971717 0.090162292
-#&gt; 14  2  365 0.078146883 0.020707634 0.069914061 0.8312314 0.082886255
-#&gt; 15  2  730 0.067640207 0.017923740 0.060514192 0.8539219 0.070860037
-#&gt; 16  2 1095 0.060261254 0.015968417 0.053912624 0.8698577 0.062563007
-#&gt; 17  2 1460 0.054815060 0.014525250 0.049040196 0.8816195 0.056536818
-#&gt; 18  2 1825 0.050646308 0.013420587 0.045310630 0.8906225 0.051978476
-#&gt; 19  2    0 0.095543458 0.024456542 0.082828344 0.7971717 0.090162292
-#&gt; 20  2  365 0.078146883 0.020707634 0.069914061 0.8312314 0.082886255
-#&gt; 21  2  730 0.067640207 0.017923740 0.060514192 0.8539219 0.070860037
-#&gt; 22  2 1095 0.060261254 0.015968417 0.053912624 0.8698577 0.062563007
-#&gt; 23  2 1460 0.054815060 0.014525250 0.049040196 0.8816195 0.056536818
-#&gt; 24  2 1825 0.050646308 0.013420587 0.045310630 0.8906225 0.051978476
-#&gt;             hr           I p incidence intervention
-#&gt; 1  0.011038966 0.017000000 0 17.955816            0
-#&gt; 2  0.010368869 0.014574032 0 16.770936            0
-#&gt; 3  0.008965132 0.012618430 0 14.504607            0
-#&gt; 4  0.007778262 0.010970435 0 12.593156            0
-#&gt; 5  0.006774277 0.009571054 0 10.974147            0
-#&gt; 6  0.005918990 0.008375067 0  9.593413            0
-#&gt; 7  0.011038966 0.017000000 0 17.955816            A
-#&gt; 8  0.010368869 0.014574032 0 16.770936            A
-#&gt; 9  0.008965132 0.012618430 0 14.504607            A
-#&gt; 10 0.007778262 0.010970435 0 12.593156            A
-#&gt; 11 0.006774277 0.009571054 0 10.974147            A
-#&gt; 12 0.005918990 0.008375067 0  9.593413            A
-#&gt; 13 0.054586180 0.120000000 0 90.162292            0
-#&gt; 14 0.050367855 0.098854517 0 82.886255            0
-#&gt; 15 0.042780824 0.085563947 0 70.860037            0
-#&gt; 16 0.037587687 0.076229671 0 62.563007            0
-#&gt; 17 0.033848732 0.069340310 0 56.536818            0
-#&gt; 18 0.031038390 0.064066895 0 51.978476            0
-#&gt; 19 0.054586180 0.120000000 0 90.162292            A
-#&gt; 20 0.050367855 0.098854517 0 82.886255            A
-#&gt; 21 0.042780824 0.085563947 0 70.860037            A
-#&gt; 22 0.037587687 0.076229671 0 62.563007            A
-#&gt; 23 0.033848732 0.069340310 0 56.536818            A
-#&gt; 24 0.031038390 0.064066895 0 51.978476            A</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: no rho in df, assumed rho=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no alpha in df, assumed alpha=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no beta in df, assumed beta=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no omega in df, assumed omega=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no rho in df, assumed rho=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no alpha in df, assumed alpha=0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no beta in df, assumed beta=1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no omega in df, assumed omega=1</span></div><div class='output co'>#&gt; <span class='message'>Starting from equilibrium</span></div><div class='output co'>#&gt; <span class='message'>simulating from equilibrium</span></div><div class='output co'>#&gt;    id time          Il          I0          Sl        S0          h         hr
+#&gt; 1   1    0 0.013413918 0.003586082 0.012097497 0.9709025 0.09975453 0.06132759
+#&gt; 2   1  365 0.011438304 0.003135727 0.010553559 0.9748724 0.09317187 0.05760483
+#&gt; 3   1  730 0.009903445 0.002714985 0.009137410 0.9782442 0.08058115 0.04980629
+#&gt; 4   1 1095 0.008610033 0.002360402 0.007944044 0.9810855 0.06996198 0.04321257
+#&gt; 5   1 1460 0.007511743 0.002059311 0.006930707 0.9834982 0.06096749 0.03763487
+#&gt; 6   1 1825 0.006573085 0.001801982 0.006064655 0.9855603 0.05329674 0.03288328
+#&gt; 7   1    0 0.013413918 0.003586082 0.012097497 0.9709025 0.09975453 0.06132759
+#&gt; 8   1  365 0.011438304 0.003135727 0.010553559 0.9748724 0.09317187 0.05760483
+#&gt; 9   1  730 0.009903445 0.002714985 0.009137410 0.9782442 0.08058115 0.04980629
+#&gt; 10  1 1095 0.008610033 0.002360402 0.007944044 0.9810855 0.06996198 0.04321257
+#&gt; 11  1 1460 0.007511743 0.002059311 0.006930707 0.9834982 0.06096749 0.03763487
+#&gt; 12  1 1825 0.006573085 0.001801982 0.006064655 0.9855603 0.05329674 0.03288328
+#&gt; 13  2    0 0.095543458 0.024456542 0.082828344 0.7971717 0.69355609 0.41989369
+#&gt; 14  2  365 0.078146883 0.020707633 0.069914061 0.8312314 0.63758658 0.38744504
+#&gt; 15  2  730 0.067640207 0.017923740 0.060514192 0.8539219 0.54507721 0.32908326
+#&gt; 16  2 1095 0.060261253 0.015968417 0.053912623 0.8698577 0.48125390 0.28913605
+#&gt; 17  2 1460 0.054815060 0.014525250 0.049040196 0.8816195 0.43489860 0.26037486
+#&gt; 18  2 1825 0.050646308 0.013420587 0.045310630 0.8906225 0.39983443 0.23875684
+#&gt; 19  2    0 0.095543458 0.024456542 0.082828344 0.7971717 0.69355609 0.41989369
+#&gt; 20  2  365 0.078146883 0.020707633 0.069914061 0.8312314 0.63758658 0.38744504
+#&gt; 21  2  730 0.067640207 0.017923740 0.060514192 0.8539219 0.54507721 0.32908326
+#&gt; 22  2 1095 0.060261253 0.015968417 0.053912623 0.8698577 0.48125390 0.28913605
+#&gt; 23  2 1460 0.054815060 0.014525250 0.049040196 0.8816195 0.43489860 0.26037486
+#&gt; 24  2 1825 0.050646308 0.013420587 0.045310630 0.8906225 0.39983443 0.23875684
+#&gt;            hl         hh        hhl           I p incidence intervention step
+#&gt; 1  0.09975453 0.09975453 0.09975453 0.017000000 0  99.75453            0    1
+#&gt; 2  0.09317187 0.09317187 0.09317187 0.014574032 0  93.17187            0    1
+#&gt; 3  0.08058115 0.08058115 0.08058115 0.012618430 0  80.58115            0    1
+#&gt; 4  0.06996198 0.06996198 0.06996198 0.010970435 0  69.96198            0    1
+#&gt; 5  0.06096749 0.06096749 0.06096749 0.009571054 0  60.96749            0    1
+#&gt; 6  0.05329674 0.05329674 0.05329674 0.008375067 0  53.29674            0    1
+#&gt; 7  0.09975453 0.09975453 0.09975453 0.017000000 0  99.75453            A    1
+#&gt; 8  0.09317187 0.09317187 0.09317187 0.014574032 0  93.17187            A    1
+#&gt; 9  0.08058115 0.08058115 0.08058115 0.012618430 0  80.58115            A    1
+#&gt; 10 0.06996198 0.06996198 0.06996198 0.010970435 0  69.96198            A    1
+#&gt; 11 0.06096749 0.06096749 0.06096749 0.009571054 0  60.96749            A    1
+#&gt; 12 0.05329674 0.05329674 0.05329674 0.008375067 0  53.29674            A    1
+#&gt; 13 0.69355609 0.69355609 0.69355609 0.120000000 0 693.55609            0    1
+#&gt; 14 0.63758658 0.63758658 0.63758658 0.098854516 0 637.58658            0    1
+#&gt; 15 0.54507721 0.54507721 0.54507721 0.085563947 0 545.07721            0    1
+#&gt; 16 0.48125390 0.48125390 0.48125390 0.076229671 0 481.25390            0    1
+#&gt; 17 0.43489860 0.43489860 0.43489860 0.069340309 0 434.89860            0    1
+#&gt; 18 0.39983443 0.39983443 0.39983443 0.064066895 0 399.83443            0    1
+#&gt; 19 0.69355609 0.69355609 0.69355609 0.120000000 0 693.55609            A    1
+#&gt; 20 0.63758658 0.63758658 0.63758658 0.098854516 0 637.58658            A    1
+#&gt; 21 0.54507721 0.54507721 0.54507721 0.085563947 0 545.07721            A    1
+#&gt; 22 0.48125390 0.48125390 0.48125390 0.076229671 0 481.25390            A    1
+#&gt; 23 0.43489860 0.43489860 0.43489860 0.069340309 0 434.89860            A    1
+#&gt; 24 0.39983443 0.39983443 0.39983443 0.064066895 0 399.83443            A    1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
