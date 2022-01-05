@@ -19,12 +19,12 @@ library(devtools)
 install_github("SwissTPH/VivaxModelR")
 ```
 
-The scripts necessary to reproduce the manuscript figures are situated under [demo/figures_UsingObservedIncidence](https://github.com/SwissTPH/VivaxModelR/tree/main/demo/figures_UsingObservedIncidence).  
+The scripts necessary to reproduce the manuscript figures are situated under [demo/figures_UsingObservedIncidence](https://github.com/SwissTPH/VivaxModelR/tree/main/demo/figures_UsingObservedIncidence) (to be used with version [v1.0.1](https://github.com/SwissTPH/VivaxModelR/tree/v1.0.1)).  
 
 
 The vignette presenting how to use the package is available [here](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_delay.html).  
 A simplified version of the package without delayed access to treatment is available [here](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr.html).  
-A quick description for developers of the scripts in the package is available [here].
+A quick description for developers of the scripts in the package is available [here](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_dev_doc.html).
 
 
 
