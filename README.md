@@ -28,4 +28,4 @@ A quick description for developers of the scripts in the package is available [h
 
 
 
-An extended version of the package allowing for stochastic simulations can be found [here](https://github.com/SwissTPH/VivaxModelR/tree/sto).
+An extended version of the package allowing for stochastic simulations (based on [Danesh et al. 2021](https://cran.rstudio.com/web/packages/TiPS/index.html)) can be found [here](https://github.com/SwissTPH/VivaxModelR/tree/sto).
