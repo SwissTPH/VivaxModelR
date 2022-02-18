@@ -67,23 +67,29 @@ mydata_withR0RC
 ```
 The transmission rate lambda has been calibrated to the incidence and import proportion and it can be used to simulate future scenarios. The quantity $\delta$ (called "delta") representing the daily importation rate was also calculated based on the observed data.
 
+
+
 ### Simulate a future scenario with the fitted model.
 In this section, we will see how to use the calibrated model to simulate the impact of a future intervention.
 
 As a first step, the intervention variables describing the new intervention scenario need to be defined. For each intervention, we create an intervention object containing new parameter values after the intervention.
-For example, we want to reduce the delays in treatment access $\sigma$ from 15 to 5 days (intervention A) or explore what it would be if it is increased to 20 days (intervention B).
+For example, we want to increase the proportion of treated infections $\alpha$ to 0.4 (intervention A), the proportion of radical cure $\beta$ from 0.4 to 0.6 (intervention B) or to reduce the delays in treatment access $\sigma$ from 15 to 5 days (intervention C). Intervention D is the combination of these three improvements.
 
 ```{r}
 intervention_object0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "rho.new"=NA )
-intervention_objectA=list(intervention_name="intervA", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "rho.new"=NA  )
-intervention_objectB=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/20, "rho.new"=NA  )
+intervention_objectA=list(intervention_name="intervA", "alpha.new"=0.4, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "rho.new"=NA )
+intervention_objectB=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=0.6, "omega.new"=NA ,"sigma.new"=NA,  "rho.new"=NA)
+intervention_objectC=list(intervention_name="intervC", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "rho.new"=NA  )
+intervention_objectD=list(intervention_name="intervD", "alpha.new"=0.4, "beta.new"=0.6, "omega.new"=NA, "sigma.new"=1/5, "rho.new"=NA  )
 ```
+
+In this example, the observation rate $\rho$ is kept constant, but it could also be modified (for example, as access to care increases).
 
 Now, we use the previously calibrated model (using the values contained in mydata_withR0RC) to simulate the interventions. Make sure that the data frame contains a variable called "id" that identifies uniquely each row.
 
 Now, we simulate the model with the new parameterization.
 ```{r}
-my_intervention_list=list(intervention_object0, intervention_objectA, intervention_objectB)
+my_intervention_list=list(intervention_object0, intervention_objectA, intervention_objectB, intervention_objectC, intervention_objectD)
 simulation_model= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list, delay = T)
 head(simulation_model)
 ```
@@ -120,10 +126,6 @@ kable(data_name)
 ```
 
 
-
-
-
-
 The model outputs can be represented graphically, for example using the ggplot2 package.
 ```{r , fig.width = 7}
 library(ggplot2)
@@ -132,13 +134,20 @@ ggplot(simulation_model)+
   facet_wrap(id ~., scales = "free_y")+xlab("Year since baseline")
 ```
 
+
+
+
 #### Simulate a future scenario with the fitted model, starting from a previous simulation run
+
+In this example, we increase further the proportion of treated cases and the proportion of radical cure to 80%.
 
 ```{r, fig.width = 7}
 simulation_model_day= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list, year=F, delay=T)
 intervention_object0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "rho.new"=NA )
-intervention_objectB2=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/15 , "rho.new"=NA  )
-my_intervention_list2=list(intervention_object0, intervention_objectA, intervention_objectB2)
+intervention_objectA2=list(intervention_name="intervA", "alpha.new"=0.6, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/15 , "rho.new"=NA  )
+intervention_objectB2=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=0.8, "omega.new"=NA, "sigma.new"=1/15 , "rho.new"=NA  )
+intervention_objectD2=list(intervention_name="intervD", "alpha.new"=0.6, "beta.new"=0.8, "omega.new"=NA, "sigma.new"=1/5 , "rho.new"=NA  )
+my_intervention_list2=list(intervention_object0, intervention_objectA2, intervention_objectB2, intervention_objectC, intervention_objectD2)
 simulation_model2= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list2, previous_simulation = simulation_model_day, year=F, delay=T)
 
 ggplot(simulation_model2)+
@@ -148,6 +157,8 @@ ggplot(simulation_model2)+
 
 
 ## Additional interventions
+
+In order to use the model without delays in treatment (as in @champagne2022, see vignette for the "simple version"), the option delay=F can be used (default) and the parameter $\sigma$ does not need to be specified. 
 
 Additional interventions, namely Mass Drug Administration and Reactive Case Detection, can be included in the model.
 
@@ -160,10 +171,12 @@ MDA is defined with 3 parameters: the coverage (**MDAcov**), the proportion of i
 
 ```{r, fig.width = 7}
 intervention_objectMDA_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0, "rho.new"=NA  )
-intervention_objectMDA_A=list(intervention_name="intervA", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5 , "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0, "rho.new"=NA )
-intervention_objectMDA_B=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/20, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0, "rho.new"=NA  )
+intervention_objectMDA_A=list(intervention_name="intervA", "alpha.new"=0.4, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "rho.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0)
+intervention_objectMDA_B=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=0.6, "omega.new"=NA ,"sigma.new"=NA,  "rho.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0  )
+intervention_objectMDA_C=list(intervention_name="intervC", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "rho.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0   )
+intervention_objectMDA_D=list(intervention_name="intervD", "alpha.new"=0.4, "beta.new"=0.6, "omega.new"=NA, "sigma.new"=1/5, "rho.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0   )
 
-my_intervention_list2_MDA=list(intervention_objectMDA_0, intervention_objectMDA_A, intervention_objectMDA_B)
+my_intervention_list2_MDA=list(intervention_objectMDA_0, intervention_objectMDA_A, intervention_objectMDA_B, intervention_objectMDA_C, intervention_objectMDA_D)
 simulation_model2_MDA= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list2_MDA, previous_simulation = simulation_model_day, year=F, mda = T, delay=T)
 
 ggplot(simulation_model2_MDA)+
@@ -180,15 +193,15 @@ Reactive case detection (RCD) can also be included as a future intervention, fol
 
 We define new intervention objects with the RCD parameters:
 ```{r}
-intervention_objectA_rcd=list(intervention_name="intervA + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectA_rcd2=list(intervention_name="intervA + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectA_rcd3=list(intervention_name="intervA + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=Inf, "nu.new"=5, "tau.new"=2, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
+intervention_objectC_rcd=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
+intervention_objectC_rcd2=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
+intervention_objectC_rcd3=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=Inf, "nu.new"=5, "tau.new"=2, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
 ```
 In the third scenario, the neighborhood of all cases reported are investigated.  
 The interventions can be simulated as before, adding the option 'rcd=TRUE'. When the delay model is used (delay=TRUE), there are two options for the underlying RCD model: individuals detected by RCD are either treated immediately (referral=FALSE, default) or they have to be referred to a health facility for testing, and hence are treated with similar delays as those detected when seeking care (referral=TRUE).
 
 ```{r , fig.width = 7}
-my_intervention_list_2=list(intervention_objectA_rcd, intervention_objectA_rcd2, intervention_objectA_rcd3)
+my_intervention_list_2=list(intervention_objectC_rcd, intervention_objectC_rcd2, intervention_objectC_rcd3)
 simulation_model2= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list_2, delay = T, rcd=T)
 ggplot(rbind(simulation_model %>%
               dplyr::filter(intervention %in% c("baseline", "intervA")),
@@ -209,13 +222,13 @@ Following @chitnis2019, the targeting ratio $\tau$ can be made varying over time
 ```
 This function can be used as an input in the intervention object for $\tau$.
 ```{r}
-intervention_objectA_rcd_tv=list(intervention_name="intervA + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectA_rcd2_tv=list(intervention_name="intervA + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectA_rcd3_tv=list(intervention_name="intervA + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
+intervention_objectC_rcd_tv=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
+intervention_objectC_rcd2_tv=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
+intervention_objectC_rcd3_tv=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
 ```
 
 ```{r , fig.width = 7}
-my_intervention_list_3=list(intervention_objectA_rcd_tv, intervention_objectA_rcd2_tv, intervention_objectA_rcd3_tv)
+my_intervention_list_3=list(intervention_objectC_rcd_tv, intervention_objectC_rcd2_tv, intervention_objectC_rcd3_tv)
 simulation_model3= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list_3, rcd=T, delay = T) 
 ggplot(rbind(simulation_model2 %>% dplyr::mutate(timevaryingtau="no"),simulation_model3 %>% dplyr::mutate(timevaryingtau="yes" )))+
  geom_line(aes(x=time/365,y=I, color=intervention, linetype=timevaryingtau), lwd=1)+
@@ -243,6 +256,21 @@ mydata_withR0RC_rcd
 ```
 This dataset can be used for future simulations, similarly to **mydata_withR0RC**.
 
+#### Calculate the targeting ratio with data on reactive case detection
+
+If there is some RCD already at baseline and information on the detection method for the incidence data is available, this data can be used to calculate the targeting ratio of the RCD. Let $h1$ be the daily incidence of directly detected cases, and $h2$ the daily incidence for cases detected via RCD. The following function can be used to calculate the targeting ratio:
+
+```{r , fig.width = 4}
+
+my_h1=mydata_rcd$h[mydata_rcd$id=="regionA"] *0.9 
+my_h2=mydata_rcd$h[mydata_rcd$id=="regionB"] *0.1  # we assume in this example that 10% of the reported cases were detected via RCD
+calculate_tau_rcd(h1=my_h1 , h2=my_h2, 
+                  alpha= mydata_rcd$alpha[mydata_rcd$id=="regionA"], rho= mydata_rcd$rho[mydata_rcd$id=="regionA"],
+                  kappa= mydata_rcd$kappa[mydata_rcd$id=="regionA"], iota= mydata_rcd$iota[mydata_rcd$id=="regionA"], 
+                  nu= mydata_rcd$nu[mydata_rcd$id=="regionA"], eta= mydata_rcd$eta[mydata_rcd$id=="regionA"], 
+                  r= 1/60 )
+```
+
 
 
 ## Additional features
@@ -260,10 +288,10 @@ In this example, we implement a vector control intervention every 3 years, with 
 
 
 ```{r , fig.width = 7}
-intervention_objectC=list(intervention_name="intervC", "alpha.new"=NA, "beta.new"=NA, "omega.new"=0.8, "rho.new"=NA, "sigma.new"=NA )
-intervention_objectCdecay=list(intervention_name="intervCdecay", "alpha.new"=NA, "beta.new"=NA, "omega.new"=my_omega, "rho.new"=NA, "sigma.new"=NA  )
+intervention_objectE=list(intervention_name="intervE", "alpha.new"=NA, "beta.new"=NA, "omega.new"=0.8, "rho.new"=NA, "sigma.new"=NA )
+intervention_objectEdecay=list(intervention_name="intervEdecay", "alpha.new"=NA, "beta.new"=NA, "omega.new"=my_omega, "rho.new"=NA, "sigma.new"=NA  )
 
-my_intervention_list_vc=list(intervention_object0, intervention_objectC, intervention_objectCdecay)
+my_intervention_list_vc=list(intervention_object0, intervention_objectE, intervention_objectEdecay)
 
 simulation_model_vc= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list_vc, maxtime = 7*365, year=F, delay=T)
 
@@ -316,10 +344,10 @@ This data.frame can then be used in the creation of the intervention object. Oth
 
 
 ```{r , fig.width = 7}
-intervention_objectD=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "rho.new"=NA, "sigma.new"=NA )
-intervention_objectD_delta=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "rho.new"=NA, "sigma.new"=NA , "delta.new"=my_delta)
+intervention_objectF=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "rho.new"=NA, "sigma.new"=NA )
+intervention_objectF_delta=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "rho.new"=NA, "sigma.new"=NA , "delta.new"=my_delta)
 
-my_intervention_list_delta=list(intervention_objectD,intervention_objectD_delta)
+my_intervention_list_delta=list(intervention_objectF,intervention_objectF_delta)
 
 simulation_model_delta=simulate_vivax_interventions(df=mydata_withR0RC, intervention_list = my_intervention_list_delta, year=F, maxtime = 365*3, delay = T)
 
