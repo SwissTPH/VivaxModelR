@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,7 +72,11 @@
   rcd <span class="op">=</span> <span class="cn">FALSE</span>,
   referral <span class="op">=</span> <span class="cn">FALSE</span>,
   mda <span class="op">=</span> <span class="cn">FALSE</span>,
-  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>
+  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>,
+  sto <span class="op">=</span> <span class="cn">FALSE</span>,
+  sto_method <span class="op">=</span> <span class="st">"exact"</span>,
+  runs <span class="op">=</span> <span class="fl">1</span>,
+  seeds <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -110,6 +114,16 @@ with one variable called id which identifies uniquely each row in the dataset. T
 <dd><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></dd>
 <dt>rcd_at_baseline</dt>
 <dd><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></dd>
+<dt>sto</dt>
+<dd><p>a boolean indicating if the stochastic model is used. Default (FALSE) is the deterministic (ODE) model</p></dd>
+<dt>sto_method</dt>
+<dd><p>a scalarindicating which simulation method is used.
+Default ("exact") is Gillespie's direct method. Other options are "approximate" (tau-leap) or "mixed".
+cf. the documentation of the TiPS package for more information.</p></dd>
+<dt>runs</dt>
+<dd><p>number of draws of the stochastic model</p></dd>
+<dt>seeds</dt>
+<dd><p>a vector of the length of runs containing the seeds for each simulation (don't use "0" which has another use in TiPS)</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

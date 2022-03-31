@@ -97,6 +97,24 @@
     <loc>https://swisstph.github.io/VivaxModelR/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay_mda.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay_rcd_no_referral.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay_rcd_no_referral_mda.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay_rcd_referral.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/model_sto_vivax_delay_rcd_referral_mda.html</loc>
+  </url>
+  <url>
     <loc>https://swisstph.github.io/VivaxModelR/reference/ode_vivax_cm_importation_vc.html</loc>
   </url>
   <url>
@@ -142,7 +160,13 @@
     <loc>https://swisstph.github.io/VivaxModelR/reference/simulate_vivax_delay_mda_ode.html</loc>
   </url>
   <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/simulate_vivax_delay_mda_sto.html</loc>
+  </url>
+  <url>
     <loc>https://swisstph.github.io/VivaxModelR/reference/simulate_vivax_delay_ode.html</loc>
+  </url>
+  <url>
+    <loc>https://swisstph.github.io/VivaxModelR/reference/simulate_vivax_delay_sto.html</loc>
   </url>
   <url>
     <loc>https://swisstph.github.io/VivaxModelR/reference/simulate_vivax_interventions.html</loc>
