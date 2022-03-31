@@ -1,14 +1,12 @@
 ---
-title: "VivaxModelR"
+title: "VivaxModelR: developer doc"
 author: "Clara Champagne"
 output: rmarkdown::html_vignette
-bibliography: bibliography.json
 vignette: >
-  %\VignetteIndexEntry{VivaxModelRdevdoc}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{VivaxModelRdevdoc}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
-
 This document explains the structure of the various functions contained in the package.
 These functions are provided in the **R** folder.
 
@@ -22,7 +20,6 @@ The model code, i.e. containing the definition of the ODEs, and formulae for rep
 
 
 Wrapper functions to apply the model to a full dataset in which each row corresponds to a different setting are available in the following scripts:
-
 - **CalculateFromData.R** for the models without delayed access to treatment(with and without MDA and RCD). Contains both calibration and forward simulation.
 - **CalculateFromDataDelay.R** for the models with delayed access to treatment (with and without MDA and RCD). Contains both calibration and forward simulation.
 - **CalculateFromDataRCD.R** for the calibration with RCD at baseline

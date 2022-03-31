@@ -1,6 +1,8 @@
 ---
-title: "VivaxModelR"
-author: "Clara Champagne, Maximilian Gerhards, Emilie Pothin"
+
+title: "VivaxModelR: simple version"
+subtitle: "An R package to simulate *P. vivax* dynamics"
+author: "Clara Champagne, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Óscar González, Justin Cohen, Arnaud Le Menach, Michael White, Emilie Pothin"
 output: rmarkdown::html_vignette
 bibliography: bibliography.json
 vignette: >
@@ -139,97 +141,6 @@ ggplot(simulation_model2)+
   facet_wrap(id ~., scales = "free_y")+xlab("Year since baseline")+ylab("Prevalence")
 ```
 
-
-## Additional interventions
-
-Additional interventions, namely Mass Drug Administration and Reactive Case Detection, can be included in the model.
-
-
-### Mass Drug Administration (MDA) 
-
-#### Simulate a future scenario with the fitted model, starting from a previous simulation run, and adding MDA
-
-MDA is defined with 3 parameters: the coverage (**MDAcov**), the proportion of individuals receiving MDA that experience radical cure (**MDArad_cure**) and the duration of MDA prophylaxis (**MDAp_length**).
-
-```{r, fig.width = 7}
-intervention_objectMDA_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0  , "rho.new"=NA )
-intervention_objectMDA_A=list(intervention_name="intervA", "alpha.new"=NA, "beta.new"=0.6, "omega.new"=NA , "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0 , "rho.new"=NA )
-intervention_objectMDA_B=list(intervention_name="intervB", "alpha.new"=NA, "beta.new"=0.8, "omega.new"=NA, "MDAcov.new"=0.8, "MDAp_length.new"=30, "MDArad_cure.new"=0 , "rho.new"=NA  )
-
-my_intervention_list2_MDA=list(intervention_objectMDA_0, intervention_objectMDA_A, intervention_objectMDA_B)
-simulation_model2_MDA= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list2_MDA, previous_simulation = simulation_model_day, year=F, mda = T)
-
-ggplot(simulation_model2_MDA)+
-  geom_line(aes(x=time/365,y=I, color=intervention), lwd=1)+
-  facet_wrap(id ~., scales = "free_y")+xlab("Year since baseline")+ylab("Prevalence")
-```
-### Reactive case detection
-Reactive case detection (RCD) can also be included as a future intervention, following the framework by @chitnis2019 and @das2021. It is represented with 4 parameters. $\iota$ is the maximum number of reported cases that can be investigated per day (normalised by population size), $\nu$ is the number of individuals tested in each investigation around a reported case, $\tau$ is the targeting ratio reflecting the increased probability of case detection in the vicinity of a confirmed case (see @chitnis2019) and $\eta$ is probability for a positive case detected by RCD to be effectively cured. It is assumed that the probability of liver-stage clearance is the same for people detected via RCD as for treated individuals in general (equal to $\beta$). $\kappa$ is defined in relation to the case management cascade and it represents the common part between $\rho$ and $\alpha$ : it is required for the calculation of incidence.
-
-#### Simulate a future scenario with the fitted model, including reactive case detection
-
-We define new intervention objects with the RCD parameters:
-```{r}
-intervention_objectA_rcd=list(intervention_name="intervA + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectA_rcd2=list(intervention_name="intervA + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectA_rcd3=list(intervention_name="intervA + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=2, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
-```
-In the third scenario, the neighborhood of all cases reported are investigated.  
-The interventions can be simulated as before, adding the option 'rcd=TRUE'.
-
-```{r , fig.width = 7}
-my_intervention_list_2=list(intervention_objectA_rcd, intervention_objectA_rcd2, intervention_objectA_rcd3)
-simulation_model2= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list_2, rcd=T)
-ggplot(rbind(simulation_model %>%
-              dplyr::filter(intervention %in% c("baseline", "intervA")),
-            simulation_model2))+
- geom_line(aes(x=time/365,y=I, color=intervention), lwd=1)+
- facet_wrap(id ~., scales = "free_y")+xlab("Year since baseline")+ylab("Prevalence")
-```
-
-
-#### Varying targeting ratio based on prevalence
-
-Following @chitnis2019, the targeting ratio $\tau$ can be made varying over time. The function from @chitnis2019 (additional file 1, fitted on field data from Zambia) is implemented in the function **varying_tau** and can be used in the simulations as follows. First, we define a function taking only prevalence as an argument (other functional forms can be used instead as long as they take prevalence as the only argument):
-
-```{r , fig.width = 7}
-  my_tau=function(pr){
-    return(varying_tau(nu=5, pr=pr, N=10000))
-  }
-```
-This function can be used as an input in the intervention object for $\tau$.
-```{r}
-intervention_objectA_rcd_tv=list(intervention_name="intervA + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectA_rcd2_tv=list(intervention_name="intervA + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectA_rcd3_tv=list(intervention_name="intervA + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
-```
-
-```{r , fig.width = 7}
-my_intervention_list_3=list(intervention_objectA_rcd_tv, intervention_objectA_rcd2_tv, intervention_objectA_rcd3_tv)
-simulation_model3= simulate_vivax_interventions(df=mydata_withR0RC, my_intervention_list_3, rcd=T) 
-ggplot(rbind(simulation_model2 %>% dplyr::mutate(timevaryingtau="no"),simulation_model3 %>% dplyr::mutate(timevaryingtau="yes" )))+
- geom_line(aes(x=time/365,y=I, color=intervention, linetype=timevaryingtau), lwd=1)+
- facet_wrap(id ~., scales = "free_y")+labs(x="Year since baseline", y="Prevalence", linetype="time varying tau")
-```
-
-#### Calibrating the model with RCD at baseline
-
-If there is some RCD already at baseline, this can be accounted for during the model calibration step. The initial dataset should contain the RCD parameters, i.e. $\iota$, $\nu$, $\tau$, $\eta$ and $\kappa$
-
-```{r}
-mydata_rcd=mydata
-mydata_rcd$iota=c(5/7/365, Inf) # number of index cases investigated per day
-mydata_rcd$nu=c(5, 10) # number of secondary cases investigated
-mydata_rcd$tau=c(5,5)  # targeting ratio
-mydata_rcd$eta=c(0.95,0.95)  # probability of detection of a case
-mydata_rcd$kappa=c(0.18,0.13) # common part between rho and alpha (please refer to case management cascade)
-```
-The calibration step is then executed with the option rcd=T.
-```{r, results='hide'}
-mydata_withR0RC_rcd=calibrate_vivax_equilibrium(df=mydata_rcd, f=1/72, gamma=1/223, r=1/60, return.all = TRUE, rcd=T)
-mydata_withR0RC_rcd
-```
-This dataset can be used for future simulations, similarly to **mydata_withR0RC**.
 
 ## Additional features
 

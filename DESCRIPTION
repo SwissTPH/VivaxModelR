@@ -36,3 +36,4 @@ Suggests:
     ggplot2,
     covr
 VignetteBuilder: knitr
+URL: https://swisstph.github.io/VivaxModelR/
