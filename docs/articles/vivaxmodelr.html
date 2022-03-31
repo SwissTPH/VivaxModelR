@@ -74,9 +74,7 @@
       </header><script src="vivaxmodelr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>VivaxModelR: simple version</h1>
-            <h3 data-toc-skip class="subtitle">An R package to simulate <em>P. vivax</em> dynamics</h3>
-                        <h4 data-toc-skip class="author">Clara Champagne, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Óscar González, Justin Cohen, Arnaud Le Menach, Michael White, Emilie Pothin</h4>
+      <h1 data-toc-skip></h1>
             
       
       
@@ -86,21 +84,23 @@
 
     
     
-<p>This package contains functions to simulate a compartmental model for <em>Plasmodium vivax</em> and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
-It is based on <span class="citation">White et al. (2016)</span>, and can be represented by the following diagram:
+<hr>
+<p>title: “VivaxModelR: simple version” subtitle: “An R package to simulate <em>P. vivax</em> dynamics” author: “Clara Champagne, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Óscar González, Justin Cohen, Arnaud Le Menach, Michael White, Emilie Pothin” output: rmarkdown::html_vignette bibliography: bibliography.json vignette: &gt; % % % —</p>
+<p>This package contains functions to simulate a compartmental model for Plasmodium Vivax and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
+It is based on <span class="citation">(<span class="citeproc-not-found" data-reference-id="white2016"><strong>???</strong></span>)</span>, and can be represented by the following diagram:
 <div class="figure">
 <img src="models_cartoon.png" alt="Schematic representation of the model" width="80%"><p class="caption">
 Schematic representation of the model
 </p>
 </div>
 <p>where <span class="math inline">\(I_L\)</span> is the proportion of individuals with both blood and liver stage parasites, <span class="math inline">\(I_0\)</span> is the proportion of individuals with blood stage parasites only, <span class="math inline">\(S_L\)</span> is the proportion of individuals with liver stage parasites only, and <span class="math inline">\(S_0\)</span> is the proportion of susceptible individuals.</p>
-<p>As in <span class="citation">White et al. (2016)</span>, it requires 4 biological parameters: <span class="math inline">\(\lambda\)</span> (transmission rate, called “lambda” in the package), <span class="math inline">\(r\)</span> (blood parasites clearance rate), <span class="math inline">\(\gamma_L\)</span> (liver parasites clearance rate, called “gamma”) and <span class="math inline">\(f\)</span> (relapse frequency). Values from the literature can be found for <span class="math inline">\(r\)</span>, <span class="math inline">\(\gamma_L\)</span> and <span class="math inline">\(f\)</span>. The parameter <span class="math inline">\(\lambda\)</span> is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: <span class="math inline">\(R_0\)</span> (in the absence of control intervention) and <span class="math inline">\(R_c\)</span> (considering current control interventions).</p>
-<p>For more information, please refer to the associated paper (<span class="citation">Champagne et al. (2021)</span>).</p>
+<p>As in <span class="citation">(<span class="citeproc-not-found" data-reference-id="white2016"><strong>???</strong></span>)</span>, it requires 4 biological parameters: <span class="math inline">\(\lambda\)</span> (transmission rate, called “lambda” in the package), <span class="math inline">\(r\)</span> (blood parasites clearance rate), <span class="math inline">\(\gamma_L\)</span> (liver parasites clearance rate, called “gamma”) and <span class="math inline">\(f\)</span> (relapse frequency). Values from the literature can be found for <span class="math inline">\(r\)</span>, <span class="math inline">\(\gamma_L\)</span> and <span class="math inline">\(f\)</span>. The parameter <span class="math inline">\(\lambda\)</span> is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: <span class="math inline">\(R_0\)</span> (in the absence of control intervention) and <span class="math inline">\(R_c\)</span> (considering current control interventions).</p>
+<p>For more information, please refer to the associated paper (<span class="citation">(<span class="citeproc-not-found" data-reference-id="champagne2022"><strong>???</strong></span>)</span>).</p>
 <div class="section level2">
 <h2 id="how-to-use-the-package">How to use the package<a class="anchor" aria-label="anchor" href="#how-to-use-the-package"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">VivaxModelR</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://swisstph.github.io/VivaxModelR/">VivaxModelR</a></span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="calculate-the-reproduction-numbers-from-data-on-reported-cases">Calculate the reproduction numbers from data on reported cases<a class="anchor" aria-label="anchor" href="#calculate-the-reproduction-numbers-from-data-on-reported-cases"></a>
 </h3>
@@ -111,7 +111,7 @@ Schematic representation of the model
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata</span><span class="op">$</span><span class="va">h</span><span class="op">=</span><span class="fu"><a href="../reference/incidence_year2day.html">incidence_year2day</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">$</span><span class="va">incidence</span><span class="op">)</span></code></pre></div>
 <p>Indicate model intervention parameter values for current case management (<span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>) and vector control (<span class="math inline">\(\omega\)</span>), as well as the observation rate (<span class="math inline">\(\rho\)</span>).</p>
-<p>The parameter <span class="math inline">\(\alpha\)</span> (called “alpha” in the package) represents the probability to receive effective cure for the blood stage infection and the parameter <span class="math inline">\(\beta\)</span> (called “beta”) represents the probability that individuals clear their liver stage infection when receiving their treatment. The parameter <span class="math inline">\(\omega\)</span> (called “omega”) quantifies the intensity of vector control (0 indicating perfect vector control and 1 indicating the absence of vector control). The observation rate <span class="math inline">\(\rho\)</span> (called “rho”) indicates the proportion of all infections that are effectively observed and reported in the incidence data. The parameter <span class="math inline">\(\alpha\)</span> should reflect the proportion of individual effectively cured (for example because they present symptoms, seek care, and receive and adhere to an effective treatment, as in <span class="citation">Galactionova et al. (2015)</span> for example).</p>
+<p>The parameter <span class="math inline">\(\alpha\)</span> (called “alpha” in the package) represents the probability to receive effective cure for the blood stage infection and the parameter <span class="math inline">\(\beta\)</span> (called “beta”) represents the probability that individuals clear their liver stage infection when receiving their treatment. The parameter <span class="math inline">\(\omega\)</span> (called “omega”) quantifies the intensity of vector control (0 indicating perfect vector control and 1 indicating the absence of vector control). The observation rate <span class="math inline">\(\rho\)</span> (called “rho”) indicates the proportion of all infections that are effectively observed and reported in the incidence data. The parameter <span class="math inline">\(\alpha\)</span> should reflect the proportion of individual effectively cured (for example because they present symptoms, seek care, and receive and adhere to an effective treatment, as in <span class="citation">(<span class="citeproc-not-found" data-reference-id="galactionova2015"><strong>???</strong></span>)</span> for example).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mydata</span><span class="op">$</span><span class="va">alpha</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span> <span class="co"># proportion of treated cases</span>
 <span class="va">mydata</span><span class="op">$</span><span class="va">beta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span> <span class="co"># proportion of radical cure</span>
@@ -417,20 +417,9 @@ We write the desired pattern in a dataframe:</p>
 <p>Secondly, the model is deterministic and therefore neglects the randomness in very small populations. For very low transmission settings (&lt; 20 reported cases annually), other models should be used instead.</p>
 <p>Finally, in some instances, the models cannot provide <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.</p>
 </div>
-<div class="section level2 unnumbered">
+<div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-champagne2022">
-<p>Champagne, Clara, Maximilian Gerhards, Justin Lana, Bernardo García Espinosa, Christina Bradley, Oscar González, Justin M. Cohen, Arnaud Le Menach, Michael T. White, and Emilie Pothin. 2021. “Using Observed Incidence to Calibrate the Transmission Level of a Mathematical Model for Plasmodium Vivax Dynamics Including Case Management and Importation.” <em>Mathematical Biosciences</em>, December, 108750. <a href="https://doi.org/10.1016/j.mbs.2021.108750" class="external-link">https://doi.org/10.1016/j.mbs.2021.108750</a>.</p>
-</div>
-<div id="ref-galactionova2015">
-<p>Galactionova, Katya, Fabrizio Tediosi, Don de Savigny, Thomas Smith, and Marcel Tanner. 2015. “Effective Coverage and Systems Effectiveness for Malaria Case Management in Sub-Saharan African Countries.” Edited by Georges Snounou. <em>PLOS ONE</em> 10 (5): e0127818. <a href="https://doi.org/10.1371/journal.pone.0127818" class="external-link">https://doi.org/10.1371/journal.pone.0127818</a>.</p>
-</div>
-<div id="ref-white2016">
-<p>White, Michael T., George Shirreff, Stephan Karl, Azra C. Ghani, and Ivo Mueller. 2016. “Variation in Relapse Frequency and the Transmission Potential of Plasmodium Vivax Malaria.” <em>Proceedings of the Royal Society B: Biological Sciences</em> 283 (1827): 20160048. <a href="https://doi.org/10.1098/rspb.2016.0048" class="external-link">https://doi.org/10.1098/rspb.2016.0048</a>.</p>
-</div>
-</div>
 </div>
   </div>
 

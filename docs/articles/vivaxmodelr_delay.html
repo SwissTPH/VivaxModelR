@@ -86,7 +86,7 @@
 
     
     
-<p>This package contains functions to simulate a compartmental model for <em>Plasmodium vivax</em> and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
+<p>This package contains functions to simulate a compartmental model for Plasmodium Vivax and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases. The model includes case management and vector control.</p>
 It is an extension of <span class="citation">White et al. (2016)</span> and <span class="citation">Champagne et al. (2021)</span>, and can be represented by the following diagram:
 <div class="figure">
 <img src="models_delay_cartoon.png" alt="Schematic representation of the model" width="80%"><p class="caption">
@@ -95,11 +95,12 @@ Schematic representation of the model
 </div>
 <p>where <span class="math inline">\(I_L\)</span> is the proportion of untreated individuals with both blood and liver stage parasites, <span class="math inline">\(I_0\)</span> is the proportion of untreated individuals with blood stage parasites only, <span class="math inline">\(T_L\)</span> is the proportion of treated individuals with both blood and liver stage parasites, <span class="math inline">\(T_0\)</span> is the proportion of treated individuals with blood stage parasites only, <span class="math inline">\(S_L\)</span> is the proportion of individuals with liver stage parasites only, and <span class="math inline">\(S_0\)</span> is the proportion of susceptible individuals.</p>
 <p>As in <span class="citation">White et al. (2016)</span>, it requires 4 biological parameters: <span class="math inline">\(\lambda\)</span> (transmission rate, called “lambda” in the package), <span class="math inline">\(r\)</span> (blood parasites clearance rate), <span class="math inline">\(\gamma_L\)</span> (liver parasites clearance rate, called “gamma”) and <span class="math inline">\(f\)</span> (relapse frequency). Values from the literature can be found for <span class="math inline">\(r\)</span>, <span class="math inline">\(\gamma_L\)</span> and <span class="math inline">\(f\)</span>. The parameter <span class="math inline">\(\lambda\)</span> is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: <span class="math inline">\(R_0\)</span> (in the absence of control intervention) and <span class="math inline">\(R_c\)</span> (considering current control interventions).</p>
+<p>For more information, please refer to the associated document.</p>
 <div class="section level2">
 <h2 id="how-to-use-the-package">How to use the package<a class="anchor" aria-label="anchor" href="#how-to-use-the-package"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">VivaxModelR</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://swisstph.github.io/VivaxModelR/">VivaxModelR</a></span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="calculate-the-reproduction-numbers-from-data-on-reported-cases">Calculate the reproduction numbers from data on reported cases<a class="anchor" aria-label="anchor" href="#calculate-the-reproduction-numbers-from-data-on-reported-cases"></a>
 </h3>
@@ -551,13 +552,56 @@ We write the desired pattern in a dataframe:</p>
 <code class="sourceCode R"><span class="co">#nrow(mydata_withR0RC_u)</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="limitations-of-the-model">Limitations of the model<a class="anchor" aria-label="anchor" href="#limitations-of-the-model"></a>
+<h3 id="including-demographic-stochasticity">Including demographic stochasticity<a class="anchor" aria-label="anchor" href="#including-demographic-stochasticity"></a>
 </h3>
+<p>The default version of the model is based on ordinary differential equations, and is therefore deterministic. It neglects the randomness in very small populations. For very low transmission settings (&lt; 20 reported cases annually), a stochastic implementation of the model simulations relying on the <strong>TiPS</strong> package (<span class="citation">Danesh et al. (2021)</span>, <span class="citation">Danesh et al. (2020)</span>) is available with the option <strong>sto=TRUE</strong>. This package may require the additional installation of the <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a> package in order to function properly. For each area, the population size <strong>N</strong> needs to be indicated in the input database:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mydata_withR0RC</span><span class="op">$</span><span class="va">N</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50000</span>,<span class="fl">20000</span><span class="op">)</span></code></pre></div>
+<p>The number of model draws can be chosen with the parameter <em>runs</em> and the simulation algorithm with the option <strong>sto_method</strong>, for which the default is the Gillespie algorithm (“exact”).</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simulation_model_sto</span><span class="op">=</span> <span class="fu"><a href="../reference/simulate_vivax_interventions.html">simulate_vivax_interventions</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata_withR0RC</span>, <span class="va">my_intervention_list</span>, delay <span class="op">=</span> <span class="cn">T</span>, sto<span class="op">=</span><span class="cn">T</span>, year<span class="op">=</span><span class="cn">F</span>, runs<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; Starting from equilibrium</span>
+<span class="co">#&gt; simulating from equilibrium</span>
+<span class="co">#&gt; Building the simulator ...</span>
+<span class="co">#&gt; Compiling the simulator ...</span>
+<span class="co">#&gt; Process complete.</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span>
+<span class="co">#&gt; Success!</span></code></pre></div>
+<p>The model outputs can be represented graphically, for each simulation run.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">simulation_model_sto</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">mydata_withR0RC</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"N"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span><span class="op">/</span><span class="va">N</span>, color<span class="op">=</span><span class="va">intervention</span>, group<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">intervention</span>,<span class="va">run</span><span class="op">)</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">simulation_model</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">I</span>, color<span class="op">=</span><span class="va">intervention</span>, group<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">intervention</span><span class="op">)</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">id</span> <span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Year since baseline"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Prevalence"</span><span class="op">)</span>
+<span class="co">#&gt; Joining, by = "id"</span></code></pre></div>
+<p><img src="vivaxmodelr_delay_files/figure-html/unnamed-chunk-33-1.png" width="672"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="limitations-of-the-model">Limitations of the model<a class="anchor" aria-label="anchor" href="#limitations-of-the-model"></a>
+</h2>
 <p>The model is a simplified representation of reality, and has therefore some limitations.</p>
 <p>Firstly, the model does not include any form of immunity. This simplifcation is acceptable for settings with low to moderate transmission intensity. For high transmission settings (roughly observed annual incidence &gt; 200), other models should be used instead.</p>
-<p>Secondly, the model is deterministic and therefore neglects the randomness in very small populations. For very low transmission settings (&lt; 20 reported cases annually), other models should be used instead.</p>
-<p>Finally, in some instances, the models cannot provide <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.</p>
-</div>
+<p>Secondly, in some instances, the models cannot provide <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> estimates (NA values, and lambda=-2). This means that the combination of incidence, importation and parameter values does not correspond to any mathematical solution. In this case, please revise the assumptions used.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -568,6 +612,12 @@ We write the desired pattern in a dataframe:</p>
 </div>
 <div id="ref-chitnis2019">
 <p>Chitnis, Nakul, Peter Pemberton-Ross, Josh Yukich, Busiku Hamainza, John Miller, Theresa Reiker, Thomas P. Eisele, and Thomas A. Smith. 2019. “Theory of Reactive Interventions in the Elimination and Control of Malaria.” <em>Malaria Journal</em> 18 (1): 266. <a href="https://doi.org/10.1186/s12936-019-2882-z" class="external-link">https://doi.org/10.1186/s12936-019-2882-z</a>.</p>
+</div>
+<div id="ref-tips_cran">
+<p>Danesh, Gonche, Emma Saulnier, Marc Choisy, and Samuel Alizon. 2021. <em>TiPS: Trajectories and Phylogenies Simulator</em> (version 1.0). <a href="https://CRAN.R-project.org/package=TiPS" class="external-link">https://CRAN.R-project.org/package=TiPS</a>.</p>
+</div>
+<div id="ref-tips_biorxiv">
+<p>Danesh, Gonché, Emma Saulnier, Olivier Gascuel, Marc Choisy, and Samuel Alizon. 2020. “Simulating Trajectories and Phylogenies from Population Dynamics Models with TiPS.” <a href="https://doi.org/10.1101/2020.11.09.373795" class="external-link">https://doi.org/10.1101/2020.11.09.373795</a>.</p>
 </div>
 <div id="ref-das2021">
 <p>Das, Aatreyee M., and Nakul Chitnis. in prep. “The Impact of Human Mobility and Reactive Case Detection on Malaria Transmission in Zanzibar.”</p>
