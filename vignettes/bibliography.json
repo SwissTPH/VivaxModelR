@@ -202,77 +202,175 @@
 		}
 	},
 		{
-        "id": "champagne2022",
-        "type": "article-journal",
-        "abstract": "In this work, we present a simple and flexible model for Plasmodium vivax dynamics which can be easily combined with routinely collected data on local and imported case counts to quantify transmission intensity and simulate control strategies. This model extends the model from White et al. (2016) by including case management interventions targeting liver-stage or blood-stage parasites, as well as imported infections. The endemic steady state of the model is used to derive a relationship between the observed incidence and the transmission rate in order to calculate reproduction numbers and simulate intervention scenarios. To illustrate its potential applications, the model is used to calculate local reproduction numbers in Panama and identify areas of sustained malaria transmission that should be targeted by control interventions.",
-        "container-title": "Mathematical Biosciences",
-        "DOI": "10.1016/j.mbs.2021.108750",
-        "ISSN": "0025-5564",
-        "journalAbbreviation": "Mathematical Biosciences",
-        "language": "en",
-        "page": "108750",
-        "source": "ScienceDirect",
-        "title": "Using observed incidence to calibrate the transmission level of a mathematical model for Plasmodium vivax dynamics including case management and importation",
-        "URL": "https://www.sciencedirect.com/science/article/pii/S0025556421001541",
-        "author": [
-            {
-                "family": "Champagne",
-                "given": "Clara"
-            },
-            {
-                "family": "Gerhards",
-                "given": "Maximilian"
-            },
-            {
-                "family": "Lana",
-                "given": "Justin"
-            },
-            {
-                "family": "Espinosa",
-                "given": "Bernardo García"
-            },
-            {
-                "family": "Bradley",
-                "given": "Christina"
-            },
-            {
-                "family": "González",
-                "given": "Oscar"
-            },
-            {
-                "family": "Cohen",
-                "given": "Justin M."
-            },
-            {
-                "family": "Le Menach",
-                "given": "Arnaud"
-            },
-            {
-                "family": "White",
-                "given": "Michael T."
-            },
-            {
-                "family": "Pothin",
-                "given": "Emilie"
-            }
-        ],
-        "accessed": {
-            "date-parts": [
-                [
-                    "2021",
-                    12,
-                    7
-                ]
-            ]
-        },
-        "issued": {
-            "date-parts": [
-                [
-                    "2021",
-                    12,
-                    7
-                ]
-            ]
-        }
-    }
+		"id": "champagne2022",
+		"type": "article-journal",
+		"abstract": "In this work, we present a simple and flexible model for Plasmodium vivax dynamics which can be easily combined with routinely collected data on local and imported case counts to quantify transmission intensity and simulate control strategies. This model extends the model from White et al. (2016) by including case management interventions targeting liver-stage or blood-stage parasites, as well as imported infections. The endemic steady state of the model is used to derive a relationship between the observed incidence and the transmission rate in order to calculate reproduction numbers and simulate intervention scenarios. To illustrate its potential applications, the model is used to calculate local reproduction numbers in Panama and identify areas of sustained malaria transmission that should be targeted by control interventions.",
+		"container-title": "Mathematical Biosciences",
+		"DOI": "10.1016/j.mbs.2021.108750",
+		"ISSN": "0025-5564",
+		"journalAbbreviation": "Mathematical Biosciences",
+		"language": "en",
+		"page": "108750",
+		"source": "ScienceDirect",
+		"title": "Using observed incidence to calibrate the transmission level of a mathematical model for Plasmodium vivax dynamics including case management and importation",
+		"URL": "https://www.sciencedirect.com/science/article/pii/S0025556421001541",
+		"author": [
+			{
+				"family": "Champagne",
+				"given": "Clara"
+			},
+			{
+				"family": "Gerhards",
+				"given": "Maximilian"
+			},
+			{
+				"family": "Lana",
+				"given": "Justin"
+			},
+			{
+				"family": "Espinosa",
+				"given": "Bernardo García"
+			},
+			{
+				"family": "Bradley",
+				"given": "Christina"
+			},
+			{
+				"family": "González",
+				"given": "Oscar"
+			},
+			{
+				"family": "Cohen",
+				"given": "Justin M."
+			},
+			{
+				"family": "Le Menach",
+				"given": "Arnaud"
+			},
+			{
+				"family": "White",
+				"given": "Michael T."
+			},
+			{
+				"family": "Pothin",
+				"given": "Emilie"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2021",
+					12,
+					7
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2021",
+					12,
+					7
+				]
+			]
+		}
+	},
+	{
+		"id": "tips_biorxiv",
+		"type": "report",
+		"abstract": "We introduce TiPS, an R-based simulation software to generate time series and genealogies associated with a population dynamics model. The approach is flexible since it can capture any model defined with a set of ordinary differential equations (ODE), and allow parameter values to vary over time periods. Computational time is minimal thanks to the use of the Rcpp package to compile the ODEs into a program corresponding to an implementation of the Gillespie algorithm. This software is particularly suited for epidemiology and phylodynamics, where there is a need to generate numerous phylogenies for a variety of infections life cycles, and in population genetics as well.",
+		"language": "en",
+		"note": "Company: Cold Spring Harbor Laboratory\nDOI: 10.1101/2020.11.09.373795\nDistributor: Cold Spring Harbor Laboratory\nLabel: Cold Spring Harbor Laboratory\nsection: New Results\ntype: article",
+		"page": "2020.11.09.373795",
+		"source": "bioRxiv",
+		"title": "Simulating trajectories and phylogenies from population dynamics models with TiPS",
+		"URL": "https://www.biorxiv.org/content/10.1101/2020.11.09.373795v1",
+		"author": [
+			{
+				"family": "Danesh",
+				"given": "Gonché"
+			},
+			{
+				"family": "Saulnier",
+				"given": "Emma"
+			},
+			{
+				"family": "Gascuel",
+				"given": "Olivier"
+			},
+			{
+				"family": "Choisy",
+				"given": "Marc"
+			},
+			{
+				"family": "Alizon",
+				"given": "Samuel"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2021",
+					10,
+					21
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					11,
+					9
+				]
+			]
+		}
+	},
+	{
+		"id": "tips_cran",
+		"type": "book",
+		"abstract": "Generates stochastic time series and genealogies associated with a population dynamics model. Times series are simulated using the Gillespie exact and approximate algorithms and a new algorithm we introduce that uses both approaches to optimize the time execution of the simulations. Genealogies are simulated from a trajectory using a backwards-in-time based approach. Methods are described in Danesh G et al (2020) <doi:10.1101/2020.11.09.373795>.",
+		"source": "R-Packages",
+		"title": "TiPS: Trajectories and Phylogenies Simulator",
+		"title-short": "TiPS",
+		"URL": "https://CRAN.R-project.org/package=TiPS",
+		"version": "1.0",
+		"author": [
+			{
+				"family": "Danesh",
+				"given": "Gonche"
+			},
+			{
+				"family": "Saulnier",
+				"given": "Emma"
+			},
+			{
+				"family": "Choisy",
+				"given": "Marc"
+			},
+			{
+				"family": "Alizon",
+				"given": "Samuel"
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2021",
+					10,
+					21
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2021",
+					9,
+					13
+				]
+			]
+		}
+	}
+
 ]

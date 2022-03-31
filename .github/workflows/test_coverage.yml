@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [main]
+    branches: [sto]
   pull_request:
-    branches: [main]
+    branches: [sto]
 
 name: test-coverage
 
@@ -45,8 +45,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: f66fda014589a897f852edc85f4059fc
-          filename: vivax.json
+          gistID: 691fea8285290758f43b48ce17806edd
+          filename: vivax_sto.json
           label: coverage
           message: ${{ env.TOTAL }}
           color: ${{ env.COLOR }}

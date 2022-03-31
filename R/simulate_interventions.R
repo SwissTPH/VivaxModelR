@@ -215,6 +215,12 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
 #' @param referral a boolean indicating if the rcd model includes referral. Default (FALSE) is the model with referral for RCD. This parameter is used only if rcd==TRUE.
 #' @param mda a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA
 #' @param rcd_at_baseline a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline
+#' @param sto a boolean indicating if the stochastic model is used. Default (FALSE) is the deterministic (ODE) model
+#' @param sto_method a scalarindicating which simulation method is used.
+#' Default ("exact") is Gillespie's direct method. Other options are "approximate" (tau-leap) or "mixed".
+#' cf. the documentation of the TiPS package for more information.
+#' @param runs number of draws of the stochastic model
+#' @param seeds a vector of the length of runs containing the seeds for each simulation (don't use "0" which has another use in TiPS)
 #'
 #' @return A dataframe with the simulated state variables for each parameter combination in df
 #'
@@ -241,7 +247,8 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
 #' If omega.new is not provided in intervention_object it is equal to omega.
 #' If rho.new is not provided in intervention_object it is equal to rho.
 #'
-simulate_vivax_interventions=function(df, intervention_list, previous_simulation=NULL, f=1/72, gamma=1/223, r=1/60, year=T,maxtime=2000, delay=FALSE, rcd=FALSE ,referral=FALSE, mda=FALSE, rcd_at_baseline=FALSE){
+simulate_vivax_interventions=function(df, intervention_list, previous_simulation=NULL, f=1/72, gamma=1/223, r=1/60, year=T,maxtime=2000, delay=FALSE, rcd=FALSE ,referral=FALSE, mda=FALSE, rcd_at_baseline=FALSE,
+                                      sto=FALSE,sto_method="exact", runs=1, seeds=NULL){
 
   #############################
   # sanity check
@@ -249,6 +256,10 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
     warning("There is a sigma parameter in df: are you sure you don't want to use the model with delay in treatment?")
   }
 
+  # sanity check
+  if(delay==FALSE & sto==TRUE){
+    stop("The stochastic version of the model without delays is not available")
+  }
   #############################
   # prepare intervention list and make them part of the id column
   df_full=data.frame()
@@ -274,7 +285,9 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
     chain_time=max(previous_simulation$time)
     myinitialstate=previous_simulation[previous_simulation$time==chain_time,]
 
-    names(myinitialstate)[!names(myinitialstate) %in% c("id", "intervention", "step")]=paste0(names(previous_simulation)[!names(myinitialstate) %in% c("id", "intervention", "step")], "_init")
+    if(sto){myvars= c("id", "intervention", "step", "run")} else{myvars=c("id", "intervention", "step")}
+
+    names(myinitialstate)[!names(myinitialstate) %in% myvars]=paste0(names(previous_simulation)[!names(myinitialstate) %in% myvars], "_init")
     myinitialstate$id0=myinitialstate$id_init
     myinitialstate$id0=myinitialstate$id
     myinitialstate$id=paste0(myinitialstate$id0, myinitialstate$intervention)
@@ -284,6 +297,13 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
     }
 
     this_from_equilibrium=FALSE
+
+    if(sto){  #if stochastic, match the number of runs from previous simulation
+      runs_list=rep(1:runs, times=nrow(df_full))
+      df_full <- df_full[rep(seq_len(nrow(df_full)), each = runs), ]
+      df_full$run=runs_list
+      runs=1
+    }
 
   } else{
     message("Starting from equilibrium")
@@ -298,7 +318,8 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
 
   if(delay==TRUE){
     simulation_model= simulate_from_data_delay(df=df_full, from_equilibrium=this_from_equilibrium, initial_states=myinitialstate,
-                                         f=f, gamma=gamma, r=r,maxtime=maxtime,year=year, rcd=rcd, referral = referral, mda=mda, rcd_at_baseline=rcd_at_baseline)
+                                         f=f, gamma=gamma, r=r,maxtime=maxtime,year=year, rcd=rcd, referral = referral, mda=mda, rcd_at_baseline=rcd_at_baseline,
+                                         sto=sto,sto_method=sto_method, runs=runs)
  } else {
     simulation_model= simulate_from_data(df=df_full, from_equilibrium=this_from_equilibrium, initial_states=myinitialstate,
                                          f=f, gamma=gamma, r=r,maxtime=maxtime,year=year, rcd=rcd, mda=mda, rcd_at_baseline=rcd_at_baseline)
