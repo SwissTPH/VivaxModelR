@@ -37,24 +37,8 @@
 calculate_r0_rc_fromdata=function(df, f=1/72, gamma=1/223, r=1/60,
                               return.all=F, h.cutoff=5e-08){
 
-  if(!"h" %in% names(df)){ stop("no h variable in df")}
-  if(!"prop_import" %in% names(df)){ stop("no prop_import variable in df")}
-  if(!"rho" %in% names(df)){
-    df$rho=1
-    warning("no rho in df, assumed rho=1")
-  }
-  if(!"omega" %in% names(df)){
-    df$omega=1
-    warning("no omega in df, assumed omega=1")
-  }
-  if(!"alpha" %in% names(df)){
-    df$alpha=0
-    warning("no alpha in df, assumed alpha=0")
-  }
-  if(!"beta" %in% names(df)){
-    df$beta=1
-    warning("no beta in df, assumed beta=1")
-  }
+  df=sanity_checks_inputs_calculate(df=df, delay=FALSE, rcd_at_baseline=FALSE)
+
   # convert incidence and initialisation
   dataTransform = df %>%
     dplyr::mutate( lambda=-1, Rc=-1,R0=-1, delta=NA, I=NA)
@@ -147,60 +131,7 @@ simulate_from_data=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/
 
   ####################################
   # sanity checks on the inputs
-  if(!"id" %in% names(df)){ stop("no id variable in df")}
-  if(!"lambda" %in% names(df)){ stop("no lambda variable in df")}
-  if(!"rho.old" %in% names(df)){
-    df$rho.old=1
-    warning("no rho.old in df, assumed rho.old=1")
-  }
-  if(!"omega.old" %in% names(df)){
-    df$omega.old=1
-    warning("no omega.old in df, assumed omega.old=1")
-  }
-  if(!"alpha.old" %in% names(df)){
-    df$alpha.old=0
-    warning("no alpha.old in df, assumed alpha.old=0")
-  }
-  if(!"beta.old" %in% names(df)){
-    df$beta.old=1
-    warning("no beta.old in df, assumed beta.old=1")
-  }
-  if(!"rho.new" %in% names(df)){
-    df$rho.new=df$rho.old
-    warning("no rho.new in df, assumed rho.new=rho.old")
-  }
-  if(!"omega.new" %in% names(df)){
-    df$omega.new=df$omega.old
-    warning("no omega.new in df, assumed omega.new=omega.old")
-  }
-  if(!"alpha.new" %in% names(df)){
-    df$alpha.new=df$alpha.old
-    warning("no alpha.new in df, assumed alpha.new=alpha.old")
-  }
-  if(!"beta.new" %in% names(df)){
-    df$beta.new=df$beta.old
-    warning("no beta.new in df, assumed beta.new=beta.old")
-  }
-  if(!"delta" %in% names(df)){
-    df$delta=0
-    warning("no delta in df, assumed delta=0")
-  }
-  if(!"delta.new" %in% names(df)){
-    df$delta.new=df$delta
-    warning("no delta.new in df, assumed delta.new=delta")
-  }
-
-  if((!"iota.new" %in% names(df) | !"tau.new" %in% names(df) | !"nu.new" %in% names(df) | !"eta.new" %in% names(df)| !"kappa.new" %in% names(df)) & rcd==TRUE){
-    stop("RCD parameters are missing, please add them or use model without RCD")
-  }
-
-  if((!"iota.old" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df)| !"kappa.old" %in% names(df)) & rcd_at_baseline==TRUE){
-    stop("RCD parameters are missing at baseline, please add them or use model without RCD (rcd_at_baseline=F)")
-  }
-
-  if((!"MDAcov.new" %in% names(df) | !"MDAp_length.new" %in% names(df) | !"MDArad_cure.new" %in% names(df)  ) & mda==TRUE){
-    stop("MDA parameters are missing, please add them or use model without MDA")
-  }
+  df=sanity_checks_inputs_simulate(df=df, delay=FALSE, rcd=rcd, mda=mda, sto=FALSE, rcd_at_baseline=rcd_at_baseline)
 
   # further sanity checks, depending if equilibrium or non equilibrium is used
   if(from_equilibrium==FALSE){

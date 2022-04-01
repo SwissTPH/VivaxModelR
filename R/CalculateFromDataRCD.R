@@ -30,27 +30,7 @@
 calculate_r0_rc_fromdata_rcd=function(df, f=1/72, gamma=1/223, r=1/60,
                                   return.all=F, h.cutoff=5e-08){
 
-  if(!"h" %in% names(df)){ stop("no h variable in df")}
-  if(!"prop_import" %in% names(df)){ stop("no prop_import variable in df")}
-  if(!"rho" %in% names(df)){
-    df$rho=1
-    warning("no rho in df, assumed rho=1")
-  }
-  if(!"omega" %in% names(df)){
-    df$omega=1
-    warning("no omega in df, assumed omega=1")
-  }
-  if(!"alpha" %in% names(df)){
-    df$alpha=0
-    warning("no alpha in df, assumed alpha=0")
-  }
-  if(!"beta" %in% names(df)){
-    df$beta=1
-    warning("no beta in df, assumed beta=1")
-  }
-  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)| !"kappa" %in% names(df)) ){
-    stop("RCD parameters are missing, please add them or use model without RCD")
-  }
+  df=sanity_checks_inputs_calculate(df=df, delay=FALSE, rcd_at_baseline=TRUE)
 
   # convert incidence and initialisation
   dataTransform = df %>%
@@ -138,28 +118,8 @@ calculate_r0_rc_fromdata_rcd=function(df, f=1/72, gamma=1/223, r=1/60,
 calculate_r0_rc_fromdata_delay_rcd=function(df, f=1/72, gamma=1/223, r=1/60,
                                         return.all=F, h.cutoff=5e-08, referral=FALSE){
 
-  if(!"h" %in% names(df)){ stop("no h variable in df")}
-  if(!"prop_import" %in% names(df)){ stop("no prop_import variable in df")}
-  if(!"sigma" %in% names(df)){ stop("no sigma variable in df, maybe use the model without delay (calculate_r0_rc_fromdata)")}
-  if(!"rho" %in% names(df)){
-    df$rho=1
-    warning("no rho in df, assumed rho=1")
-  }
-  if(!"omega" %in% names(df)){
-    df$omega=1
-    warning("no omega in df, assumed omega=1")
-  }
-  if(!"alpha" %in% names(df)){
-    df$alpha=0
-    warning("no alpha in df, assumed alpha=0")
-  }
-  if(!"beta" %in% names(df)){
-    df$beta=1
-    warning("no beta in df, assumed beta=1")
-  }
-  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)| !"kappa" %in% names(df)) ){
-    stop("RCD parameters are missing, please add them or use model without RCD")
-  }
+  df=sanity_checks_inputs_calculate(df=df, delay=TRUE, rcd_at_baseline=TRUE)
+
   # convert incidence and initialisation
   dataTransform = df %>%
     dplyr::mutate( lambda=-1, Rc=-1,R0=-1, delta=NA, I=NA)
