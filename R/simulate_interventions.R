@@ -125,40 +125,43 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
       stop("some rcd parameters (iota.new, nu.new, tau.new, eta.new or kappa.new) are missing in df, please use model without rcd")
     }
 
-    if(is.na(intervention_object$iota.new)){
-      new_df$iota.new = 0
-      warning("no iota parameter, assumed iota=0")
-    } else new_df$iota.new = intervention_object$iota.new
-    if(is.na(intervention_object$nu.new)){
-      new_df$nu.new = 0
-      warning("no nu parameter, assumed nu=0")
-    }  else new_df$nu.new = intervention_object$nu.new
-    if(is.na(intervention_object$tau.new)){
-      new_df$tau.new = 1
-      warning("no tau parameter, assumed tau=1")
-    } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
-    if(is.na(intervention_object$eta.new)){
-      new_df$eta.new = 0
-      warning("no eta parameter, assumed eta=0")
-    } else new_df$eta.new = intervention_object$eta.new
-    if(is.na(intervention_object$kappa.new)){
-      new_df$kappa.new = 1
-      warning("no kappa parameter, assumed kappa=1")
-    } else new_df$kappa.new = intervention_object$kappa.new
-
 
     if(rcd_at_baseline==TRUE){
 
-      if(!"iota_star" %in% names(intervention_object) | !"tau.old" %in% names(intervention_object)|
-         !"nu.old" %in% names(intervention_object)| !"eta.old" %in% names(intervention_object)| !"kappa.old" %in% names(intervention_object) ){
-        stop("some rcd parameters (iota_star, nu.old, tau.old, eta.old or kappa.old) are missing in df, please use model without rcd")
+      if(!"iota" %in% names(df) | !"iota_star" %in% names(df) | !"tau" %in% names(df)|
+         !"nu" %in% names(df)| !"eta" %in% names(df)| !"kappa" %in% names(df) ){
+        stop("some rcd parameters (iota_star, nu, tau, eta or kappa) are missing in df, please use model without rcd")
       }
 
+      new_df$iota.old=new_df$iota
       new_df$nu.old=new_df$nu
       new_df$tau.old=new_df$tau
       new_df$eta.old=new_df$eta
       new_df$kappa.old=new_df$kappa
     }
+
+    if(is.na(intervention_object$iota.new)){
+      new_df$iota.new = ifelse(rcd_at_baseline,  new_df$iota.old, 0)
+      warning("no iota parameter, assumed iota=0 or iota=iota.old")
+    } else new_df$iota.new = intervention_object$iota.new
+    if(is.na(intervention_object$nu.new)){
+      new_df$nu.new =  ifelse(rcd_at_baseline,  new_df$nu.old, 0)
+      warning("no nu parameter, assumed nu=0 or nu=nu.old")
+    }  else new_df$nu.new = intervention_object$nu.new
+    if(is.na(intervention_object$tau.new)){
+      new_df$tau.new =  ifelse(rcd_at_baseline,  new_df$tau.old, 1)
+      warning("no tau parameter, assumed tau=1 or tau=tau.old")
+    } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
+    if(is.na(intervention_object$eta.new)){
+      new_df$eta.new =  ifelse(rcd_at_baseline,  new_df$eta.old, 0)
+      warning("no eta parameter, assumed eta=0 or eta=eta.old")
+    } else new_df$eta.new = intervention_object$eta.new
+    if(is.na(intervention_object$kappa.new)){
+      new_df$kappa.new =  ifelse(rcd_at_baseline,  new_df$kappa.old, 1)
+      warning("no kappa parameter, assumed kappa=1 or kappa=kappa.old")
+    } else new_df$kappa.new = intervention_object$kappa.new
+
+
 
   }
 

@@ -73,7 +73,7 @@ sanity_checks_inputs_simulate=function(df, delay, rcd, mda, sto, rcd_at_baseline
     stop("RCD parameters are missing, please add them or use model without RCD")
   }
 
-  if((!"iota.old" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df)| !"kappa.old" %in% names(df)) & rcd_at_baseline==TRUE){
+  if((!"iota_star" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df)| !"kappa.old" %in% names(df)) & rcd_at_baseline==TRUE){
     stop("RCD parameters are missing at baseline, please add them or use model without RCD (rcd_at_baseline=F)")
   }
 
