@@ -93,7 +93,7 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
           new_df$delta.new=rep(list(delta_t),nrow(new_df))
         } else{
           new_df$delta.new=NA
-          if(length(unique(new_df$id)) != length(unique(intervention_object$delta.new$id))){
+          if(! all(unique(new_df$id)  %in% unique(intervention_object$delta.new$id))){
             stop("some id values are missing in the delta.new dataset")
           }
           for (my_id in unique(new_df$id)){
