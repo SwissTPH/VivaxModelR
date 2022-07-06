@@ -60,7 +60,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sanity_checks_inputs_simulate</span><span class="op">(</span><span class="va">df</span>, <span class="va">delay</span>, <span class="va">rcd</span>, <span class="va">mda</span>, <span class="va">sto</span>, <span class="va">rcd_at_baseline</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sanity_checks_inputs_simulate</span><span class="op">(</span><span class="va">df</span>, <span class="va">delay</span>, <span class="va">rcd</span>, <span class="va">mda</span>, <span class="va">sto</span>, <span class="va">rcd_at_baseline</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -70,20 +70,33 @@
 and one variable called prop_import containing the proportion of imported cases among new infections.
 additional optional variables are alpha (effective care), beta (proportion of liver stage cure),
 rho (reporting rate) and omega (intensity of vector control)</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>a boolean indicating if the model including delays in treatment should be used.</p></dd>
+
+
 <dt>rcd</dt>
 <dd><p>a boolean indicating if the model including reactive case detection should be used.</p></dd>
+
+
 <dt>mda</dt>
 <dd><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used.</p></dd>
+
+
 <dt>sto</dt>
 <dd><p>a boolean indicating if the stochastic version of the model should be used.</p></dd>
+
+
 <dt>rcd_at_baseline</dt>
 <dd><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataframe containing all required variables</p>
+    
+
+<p>A dataframe containing all required variables</p>
     </div>
 
   </div>
@@ -98,7 +111,7 @@ rho (reporting rate) and omega (intensity of vector control)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

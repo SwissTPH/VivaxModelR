@@ -62,14 +62,14 @@ incidence and the proportion of imported cases</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_r0_rc_fromdata_delay</span><span class="op">(</span>
-  <span class="va">df</span>,
-  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,
-  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,
-  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,
-  return.all <span class="op">=</span> <span class="cn">F</span>,
-  h.cutoff <span class="op">=</span> <span class="fl">5e-08</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_r0_rc_fromdata_delay</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  return.all <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  h.cutoff <span class="op">=</span> <span class="fl">5e-08</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,21 +79,43 @@ incidence and the proportion of imported cases</p>
 and one variable called prop_import containing the proportion of imported cases among new infections.
 additional optional variables are alpha (effective care), beta (proportion of liver stage cure),
 rho (reporting rate) and omega (intensity of vector control)</p></dd>
+
+
 <dt>f</dt>
 <dd><p>relapse frequency</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>liver clearance rate</p></dd>
+
+
 <dt>r</dt>
 <dd><p>blood clearance rate</p></dd>
+
+
 <dt>return.all</dt>
 <dd><p>if TRUE, also returns delta and I estimates</p></dd>
+
+
 <dt>h.cutoff</dt>
 <dd><p>R0/Rc are not calculated for h values which are strictly inferior to h.cutoff</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataframe with 3 additional columns: lambda is the transmission rate,
-R0 is the basic reproduction number, Rc is the controlled reproduction number. <br>If lambda = -2, it means that the parameter combination does not correspond to a positive lambda solution with the model. <br>If lambda = -3, it means the incidence data contains missing values or infinite values or values below h.cutoff.  <br>If return.all=T, delta and I are also included.</p>
+    
+
+<p>A dataframe with 3 additional columns: lambda is the transmission rate,
+R0 is the basic reproduction number, Rc is the controlled reproduction number. <br></p>
+
+
+<p>If lambda = -2, it means that the parameter combination does not correspond to a positive lambda solution with the model. <br></p>
+
+
+<p>If lambda = -3, it means the incidence data contains missing values or infinite values or values below h.cutoff.  <br></p>
+
+
+<p>If return.all=T, delta and I are also included.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -113,7 +135,7 @@ If rho is not provided in df, rho=1. If omega is not provided in df, omega=1.</p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

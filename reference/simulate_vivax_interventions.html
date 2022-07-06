@@ -60,25 +60,25 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simulate_vivax_interventions</span><span class="op">(</span>
-  <span class="va">df</span>,
-  <span class="va">intervention_list</span>,
-  previous_simulation <span class="op">=</span> <span class="cn">NULL</span>,
-  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,
-  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,
-  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,
-  year <span class="op">=</span> <span class="cn">T</span>,
-  maxtime <span class="op">=</span> <span class="fl">2000</span>,
-  delay <span class="op">=</span> <span class="cn">FALSE</span>,
-  rcd <span class="op">=</span> <span class="cn">FALSE</span>,
-  referral <span class="op">=</span> <span class="cn">FALSE</span>,
-  mda <span class="op">=</span> <span class="cn">FALSE</span>,
-  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>,
-  sto <span class="op">=</span> <span class="cn">FALSE</span>,
-  sto_method <span class="op">=</span> <span class="st">"exact"</span>,
-  runs <span class="op">=</span> <span class="fl">1</span>,
-  seeds <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simulate_vivax_interventions</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">intervention_list</span>,</span>
+<span>  previous_simulation <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  year <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  maxtime <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>  delay <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rcd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  referral <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mda <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sto <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sto_method <span class="op">=</span> <span class="st">"exact"</span>,</span>
+<span>  runs <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,45 +92,80 @@ rho (reporting rate), delta (importation rate) <br>
 intervention levels in the past (when lambda was calculated):  alpha.old (effective care), beta.old (proportion of liver stage cure), omega.old (intensity of vector control)
 intervention levels in the future (in the simulation):  alpha.new (effective care), beta.new (proportion of liver stage cure), omega.new (intensity of vector control)
 In practice, this dataframe can be the output of the function calculate_r0_rc_fromdata</p></dd>
+
+
 <dt>intervention_list</dt>
 <dd><p>a list of intervention objects.</p></dd>
+
+
 <dt>previous_simulation</dt>
 <dd><p>the result of a previous simulation (e.g. the outcome of simulate_vivax_interventions or chain_vivax_interventions).
 If NULL (default), the model is simulated from equilibrium</p></dd>
+
+
 <dt>f</dt>
 <dd><p>relapse frequency</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>liver clearance rate</p></dd>
+
+
 <dt>r</dt>
 <dd><p>blood clearance rate</p></dd>
+
+
 <dt>year</dt>
 <dd><p>if TRUE, aggregates the outputs per year (h would be in cases per person year). if FALSE, returns daily outputs (h would be in cases per person day).</p></dd>
+
+
 <dt>maxtime</dt>
 <dd><p>number of time steps for simulation</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>a boolean indicating if the model including delays in treatment should be used. Default (FALSE) is the model without delay in treatment</p></dd>
+
+
 <dt>rcd</dt>
 <dd><p>a boolean indicating if the model including reactive case detection should be used. Default (FALSE) is the model without RCD</p></dd>
+
+
 <dt>referral</dt>
 <dd><p>a boolean indicating if the rcd model includes referral. Default (FALSE) is the model with referral for RCD. This parameter is used only if rcd==TRUE.</p></dd>
+
+
 <dt>mda</dt>
 <dd><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></dd>
+
+
 <dt>rcd_at_baseline</dt>
 <dd><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></dd>
+
+
 <dt>sto</dt>
 <dd><p>a boolean indicating if the stochastic model is used. Default (FALSE) is the deterministic (ODE) model</p></dd>
+
+
 <dt>sto_method</dt>
 <dd><p>a scalarindicating which simulation method is used.
 Default ("exact") is Gillespie's direct method. Other options are "approximate" (tau-leap) or "mixed".
 cf. the documentation of the TiPS package for more information.</p></dd>
+
+
 <dt>runs</dt>
 <dd><p>number of draws of the stochastic model</p></dd>
+
+
 <dt>seeds</dt>
 <dd><p>a vector of the length of runs containing the seeds for each simulation (don't use "0" which has another use in TiPS)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataframe with the simulated state variables for each parameter combination in df</p>
+    
+
+<p>A dataframe with the simulated state variables for each parameter combination in df</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -145,16 +180,16 @@ If rho.new is not provided in intervention_object it is equal to rho.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">mydata</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>incidence<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">112</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0063</span>,<span class="fl">0.0071</span><span class="op">)</span>,I<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.017</span>,<span class="fl">0.12</span><span class="op">)</span>,id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">rho.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.18</span>,<span class="fl">0.13</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">beta.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">alpha.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">omega.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">int_0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"0"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></span>
-<span class="r-in"><span class="va">int_A</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"A"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.6</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></span>
-<span class="r-in"><span class="va">my_intervention_list</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">int_0</span>, <span class="va">int_A</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">simulate_vivax_interventions</span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, <span class="va">my_intervention_list</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mydata</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>incidence<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">112</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0063</span>,<span class="fl">0.0071</span><span class="op">)</span>,I<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.017</span>,<span class="fl">0.12</span><span class="op">)</span>,id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">rho.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.18</span>,<span class="fl">0.13</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">beta.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">alpha.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">omega.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">int_0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"0"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">int_A</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>intervention_name<span class="op">=</span><span class="st">"A"</span>, <span class="st">"alpha.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"beta.new"</span><span class="op">=</span><span class="fl">0.6</span>, <span class="st">"omega.new"</span><span class="op">=</span><span class="cn">NA</span>, <span class="st">"rho.new"</span><span class="op">=</span><span class="cn">NA</span> <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">my_intervention_list</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">int_0</span>, <span class="va">int_A</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">simulate_vivax_interventions</span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, <span class="va">my_intervention_list</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no rho in df, assumed rho=0</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no alpha in df, assumed alpha=0</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no beta in df, assumed beta=1</span>
@@ -215,7 +250,7 @@ If rho.new is not provided in intervention_object it is equal to rho.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22 0.48125390 0.48125390 0.48125390 0.076229671 0 481.25390            A    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23 0.43489860 0.43489860 0.43489860 0.069340309 0 434.89860            A    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 24 0.39983443 0.39983443 0.39983443 0.064066895 0 399.83443            A    1</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -230,7 +265,7 @@ If rho.new is not provided in intervention_object it is equal to rho.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

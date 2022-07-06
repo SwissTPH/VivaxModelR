@@ -60,19 +60,19 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simulate_from_data</span><span class="op">(</span>
-  <span class="va">df</span>,
-  from_equilibrium <span class="op">=</span> <span class="cn">TRUE</span>,
-  initial_states <span class="op">=</span> <span class="cn">NULL</span>,
-  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,
-  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,
-  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,
-  <span class="va">maxtime</span>,
-  <span class="va">year</span>,
-  rcd <span class="op">=</span> <span class="cn">FALSE</span>,
-  mda <span class="op">=</span> <span class="cn">FALSE</span>,
-  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simulate_from_data</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  from_equilibrium <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  initial_states <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  f <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">72</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">223</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  <span class="va">maxtime</span>,</span>
+<span>  <span class="va">year</span>,</span>
+<span>  rcd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mda <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,32 +85,55 @@ Additional optional variables are: <br>
 rho (reporting rate), delta (importation rate) <br>
 intervention levels in the past (when lambda was calculated):  alpha.old (effective care), beta.old (proportion of liver stage cure), omega.old (intensity of vector control)
 intervention levels in the future (in the simulation):  alpha.new (effective care), beta.new (proportion of liver stage cure), omega.new (intensity of vector control)</p></dd>
+
+
 <dt>from_equilibrium</dt>
 <dd><p>boolean indicating if the model is run from equilibrium (TRUE, default) or from a pre-specified initial condition, which should be specified in initial_states</p></dd>
+
+
 <dt>initial_states</dt>
 <dd><p>given initial condition, as a dataframe containing the variables
 "Il_init", "I0_init", "Sl_init", "S0_init", "h_init", "hr_init",
 with one variable called id which identifies uniquely each row in the dataset. This input is not used when from_equilibrium=TRUE (default).</p></dd>
+
+
 <dt>f</dt>
 <dd><p>relapse frequency</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>liver clearance rate</p></dd>
+
+
 <dt>r</dt>
 <dd><p>blood clearance rate</p></dd>
+
+
 <dt>maxtime</dt>
 <dd><p>number of time steps for simulation</p></dd>
+
+
 <dt>year</dt>
 <dd><p>if TRUE, aggregates the outputs per year (h would be in cases per person year). if FALSE, returns daily outputs (h would be in cases per person day).</p></dd>
+
+
 <dt>rcd</dt>
 <dd><p>if TRUE, includes RCD in the model. Default is FALSE (no RCD)</p></dd>
+
+
 <dt>mda</dt>
 <dd><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></dd>
+
+
 <dt>rcd_at_baseline</dt>
 <dd><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataframe with the simulated state variables for each parameter combination in df</p>
+    
+
+<p>A dataframe with the simulated state variables for each parameter combination in df</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -121,13 +144,13 @@ If delta is not provided in df, delta=0.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">mydata</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>incidence<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">112</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0063</span>,<span class="fl">0.0071</span><span class="op">)</span>,I<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.017</span>,<span class="fl">0.12</span><span class="op">)</span>,id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">rho</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.18</span>,<span class="fl">0.13</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">beta.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">alpha.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydata</span><span class="op">$</span><span class="va">omega.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">simulate_from_data</span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">69</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">383</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,maxtime<span class="op">=</span><span class="fl">2000</span>,year<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mydata</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>incidence<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">112</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0063</span>,<span class="fl">0.0071</span><span class="op">)</span>,I<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.017</span>,<span class="fl">0.12</span><span class="op">)</span>,id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">rho</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.18</span>,<span class="fl">0.13</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">beta.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.43</span>,<span class="fl">0.42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">alpha.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.17</span>, <span class="fl">0.12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">delta</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span><span class="op">$</span><span class="va">omega.old</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">simulate_from_data</span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">69</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">383</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,maxtime<span class="op">=</span><span class="fl">2000</span>,year<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no rho.old in df, assumed rho.old=1</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no rho.new in df, assumed rho.new=rho.old</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no omega.new in df, assumed omega.new=omega.old</span>
@@ -161,7 +184,7 @@ If delta is not provided in df, delta=0.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10961 0.8564733 0.8564733 0.8564733 0.12420202 0  856.4733  2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14611 0.8620741 0.8620741 0.8620741 0.12493207 0  862.0741  2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18261 0.8662056 0.8662056 0.8662056 0.12546994 0  866.2056  2</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -176,7 +199,7 @@ If delta is not provided in df, delta=0.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

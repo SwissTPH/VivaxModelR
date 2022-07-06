@@ -60,64 +60,97 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">solve_lambda_vivax_rcd_referral</span><span class="op">(</span>
-  <span class="va">h</span>,
-  <span class="va">h1</span>,
-  <span class="va">r</span>,
-  <span class="va">f</span>,
-  <span class="va">gamma</span>,
-  <span class="va">alpha</span>,
-  <span class="va">beta</span>,
-  <span class="va">sigma</span>,
-  <span class="va">rho</span>,
-  <span class="va">p</span>,
-  <span class="va">omega</span>,
-  <span class="va">iota</span>,
-  <span class="va">nu</span>,
-  <span class="va">tau</span>,
-  <span class="va">eta</span>,
-  return.all <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">solve_lambda_vivax_rcd_referral</span><span class="op">(</span></span>
+<span>  <span class="va">h</span>,</span>
+<span>  <span class="va">h1</span>,</span>
+<span>  <span class="va">r</span>,</span>
+<span>  <span class="va">f</span>,</span>
+<span>  <span class="va">gamma</span>,</span>
+<span>  <span class="va">alpha</span>,</span>
+<span>  <span class="va">beta</span>,</span>
+<span>  <span class="va">sigma</span>,</span>
+<span>  <span class="va">rho</span>,</span>
+<span>  <span class="va">p</span>,</span>
+<span>  <span class="va">omega</span>,</span>
+<span>  <span class="va">iota</span>,</span>
+<span>  <span class="va">nu</span>,</span>
+<span>  <span class="va">tau</span>,</span>
+<span>  <span class="va">eta</span>,</span>
+<span>  return.all <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>h</dt>
 <dd><p>daily incidence</p></dd>
+
+
 <dt>h1</dt>
 <dd><p>daily incidence, directly detected cases</p></dd>
+
+
 <dt>r</dt>
 <dd><p>blood clearance rate</p></dd>
+
+
 <dt>f</dt>
 <dd><p>relapse frequency</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>liver clearance rate</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>effective treatment probability</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>probability of liver clearance</p></dd>
+
+
 <dt>sigma</dt>
 <dd><p>delay to treatment (1/duration of the delay)</p></dd>
+
+
 <dt>rho</dt>
 <dd><p>observation rate</p></dd>
+
+
 <dt>p</dt>
 <dd><p>proportion of imported cases</p></dd>
+
+
 <dt>omega</dt>
 <dd><p>vector control intensity. If vector control is not the purpose of the analysis, omega can be fixed to 1.</p></dd>
+
+
 <dt>iota</dt>
 <dd><p>RCD parameter: maximum number of index cases investigated per population per unit of time</p></dd>
+
+
 <dt>nu</dt>
 <dd><p>RCD parameter: number of secondary cases investigated per index case</p></dd>
+
+
 <dt>tau</dt>
 <dd><p>RCD parameter: targeting ratio of the RCD</p></dd>
+
+
 <dt>eta</dt>
 <dd><p>RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)</p></dd>
+
+
 <dt>return.all</dt>
 <dd><p>if TRUE, returns lambda, I and delta. If FALSE, returns only lambda</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If return.all=TRUE, returns a list with lambda, I, delta and iota_star. If return.all=FALSE, returns only a lambda value</p>
+    
+
+<p>If return.all=TRUE, returns a list with lambda, I, delta and iota_star. If return.all=FALSE, returns only a lambda value</p>
     </div>
 
   </div>
@@ -132,7 +165,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -60,39 +60,54 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">format_data_simulation</span><span class="op">(</span>
-  <span class="va">df</span>,
-  <span class="va">intervention_object</span>,
-  delay <span class="op">=</span> <span class="cn">FALSE</span>,
-  rcd <span class="op">=</span> <span class="cn">FALSE</span>,
-  mda <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">mystart</span>,
-  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_data_simulation</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">intervention_object</span>,</span>
+<span>  delay <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rcd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mda <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">mystart</span>,</span>
+<span>  rcd_at_baseline <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>a dataframe containing at least 3 variables : alpha, beta and omega</p></dd>
+
+
 <dt>intervention_object</dt>
 <dd><p>an named list containing the intervention description. It should have the follwing structure:
 list(intervention_name="string", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA )
 where NA can be replaced by scalars or kepts as such.</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>a boolean indicating if the model including delays in treatment should be used. Default (FALSE) is the model without delay in treatment</p></dd>
+
+
 <dt>rcd</dt>
 <dd><p>a boolean indicating if the model including reactive case detection should be used. Default (FALSE) is the model without RCD</p></dd>
+
+
 <dt>mda</dt>
 <dd><p>a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA</p></dd>
+
+
 <dt>mystart</dt>
 <dd><p>an integer indicating the time index of the start of the simulation (this is used to chain interventions appropriately)</p></dd>
+
+
 <dt>rcd_at_baseline</dt>
 <dd><p>a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataframe with the required input parameters for future simulation</p>
+    
+
+<p>A dataframe with the required input parameters for future simulation</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -114,7 +129,7 @@ If rho.new is not provided in intervention_object it is equal to rho</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
