@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [sto]
+    branches: [main]
   pull_request:
-    branches: [sto]
+    branches: [main]
 
 name: test-coverage
 
