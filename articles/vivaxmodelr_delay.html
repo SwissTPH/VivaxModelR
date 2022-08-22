@@ -93,7 +93,7 @@ It is an extension of <span class="citation">White et al. (2016)</span> and <spa
 Schematic representation of the model
 </p>
 </div>
-<p>where <span class="math inline">\(I_L\)</span> is the proportion of untreated individuals with both blood and liver stage parasites, <span class="math inline">\(I_0\)</span> is the proportion of untreated individuals with blood stage parasites only, <span class="math inline">\(T_L\)</span> is the proportion of treated individuals with both blood and liver stage parasites, <span class="math inline">\(T_0\)</span> is the proportion of treated individuals with blood stage parasites only, <span class="math inline">\(S_L\)</span> is the proportion of individuals with liver stage parasites only, and <span class="math inline">\(S_0\)</span> is the proportion of susceptible individuals.</p>
+<p>where <span class="math inline">\(U_L\)</span> is the proportion of untreated individuals with both blood and liver stage parasites, <span class="math inline">\(U_0\)</span> is the proportion of untreated individuals with blood stage parasites only, <span class="math inline">\(T_L\)</span> is the proportion of treated individuals with both blood and liver stage parasites, <span class="math inline">\(T_0\)</span> is the proportion of treated individuals with blood stage parasites only, <span class="math inline">\(S_L\)</span> is the proportion of individuals with liver stage parasites only, and <span class="math inline">\(S_0\)</span> is the proportion of susceptible individuals.</p>
 <p>As in <span class="citation">White et al. (2016)</span>, it requires 4 biological parameters: <span class="math inline">\(\lambda\)</span> (transmission rate, called “lambda” in the package), <span class="math inline">\(r\)</span> (blood parasites clearance rate), <span class="math inline">\(\gamma_L\)</span> (liver parasites clearance rate, called “gamma”) and <span class="math inline">\(f\)</span> (relapse frequency). Values from the literature can be found for <span class="math inline">\(r\)</span>, <span class="math inline">\(\gamma_L\)</span> and <span class="math inline">\(f\)</span>. The parameter <span class="math inline">\(\lambda\)</span> is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: <span class="math inline">\(R_0\)</span> (in the absence of control intervention) and <span class="math inline">\(R_c\)</span> (considering current control interventions).</p>
 <p>For more information, please refer to the associated document.</p>
 <div class="section level2">
@@ -158,7 +158,7 @@ The parameter <span class="math inline">\(\sigma\)</span> is the parasite cleara
 <span><span class="co">#&gt; Starting from equilibrium</span></span>
 <span><span class="co">#&gt; simulating from equilibrium</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">simulation_model</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        id time         Il          I0         Sl        S0           Tl</span></span>
+<span><span class="co">#&gt;        id time         Ul          U0         Sl        S0           Tl</span></span>
 <span><span class="co">#&gt; 1 regionA    0 0.01376414 0.003669648 0.01438241 0.9674696 0.0006777512</span></span>
 <span><span class="co">#&gt; 2 regionA  365 0.01376414 0.003669648 0.01438241 0.9674696 0.0006777512</span></span>
 <span><span class="co">#&gt; 3 regionA  730 0.01376414 0.003669648 0.01438241 0.9674696 0.0006777512</span></span>
@@ -179,7 +179,7 @@ The parameter <span class="math inline">\(\sigma\)</span> is the parasite cleara
 <span><span class="co">#&gt; 4     baseline    1</span></span>
 <span><span class="co">#&gt; 5     baseline    1</span></span>
 <span><span class="co">#&gt; 6     baseline    1</span></span></code></pre></div>
-<p>The variable “time” indicates the number of days since baseline. The other variables are the state variables of the model. The variable I indicates the proportion of all individuals with blood stage infection (<span class="math inline">\(I=I_L+I_0+T_0+T_L\)</span>), i.e. prevalence (including any parasite concentration). The variable incidence indicates the incidence per 1000 person year. All variables are detailed in the following table:</p>
+<p>The variable “time” indicates the number of days since baseline. The other variables are the state variables of the model. The variable I indicates the proportion of all individuals with blood stage infection (<span class="math inline">\(I=U_L+U_0+T_0+T_L\)</span>), i.e. prevalence (including any parasite concentration). The variable incidence indicates the incidence per 1000 person year. All variables are detailed in the following table:</p>
 <table class="table">
 <colgroup>
 <col width="8%">
@@ -209,9 +209,9 @@ The parameter <span class="math inline">\(\sigma\)</span> is the parasite cleara
 <td align="left">dimensionless</td>
 </tr>
 <tr class="even">
-<td align="left">T0</td>
+<td align="left">U0</td>
 <td align="left">
-<span class="math inline">\(T_0\)</span>, proportion of treated individuals with blood stage parasites only</td>
+<span class="math inline">\(I_0\)</span>, proportion of untreated individuals with blood stage parasites only</td>
 <td align="left">dimensionless</td>
 </tr>
 <tr class="odd">
@@ -248,7 +248,7 @@ The parameter <span class="math inline">\(\sigma\)</span> is the parasite cleara
 </tr>
 <tr class="odd">
 <td align="left">I</td>
-<td align="left">Prevalence (<span class="math inline">\(I_L+I_0+T_L+T_0\)</span>)</td>
+<td align="left">Prevalence (<span class="math inline">\(U_L+U_0+T_L+T_0\)</span>)</td>
 <td align="left">dimensionless</td>
 </tr>
 <tr class="even">
@@ -647,7 +647,7 @@ We write the desired pattern in a dataframe:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
