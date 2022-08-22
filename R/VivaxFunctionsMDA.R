@@ -220,8 +220,8 @@ ode_vivax_delay_mda <- function(t, y, parameters) {
   omega=parameters["omega"][[1]](t)
   delta=parameters["delta"][[1]](t)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -233,20 +233,20 @@ ode_vivax_delay_mda <- function(t, y, parameters) {
   hh=y[11]
   hhl=y[12]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
 
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
 
   return(list(res))
 }
@@ -285,8 +285,8 @@ ode_vivax_delay_rcd_referral_mda <- function(t, y, parameters) {
 
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -298,20 +298,20 @@ ode_vivax_delay_rcd_referral_mda <- function(t, y, parameters) {
   hh=y[11]
   hhl=y[12]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il -Il*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0 -I0*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0 +Il*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +I0*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul -Ul*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0 -U0*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0 +Ul*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +U0*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
 
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -348,8 +348,8 @@ ode_vivax_delay_rcd_no_referral_mda <- function(t, y, parameters) {
 
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -361,20 +361,20 @@ ode_vivax_delay_rcd_no_referral_mda <- function(t, y, parameters) {
   hh=y[11]
   hhl=y[12]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il -Il*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0 -I0*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl +(1-beta)*Il*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0 +(beta*Il+I0)*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul -Ul*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0 -U0*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl +(1-beta)*Ul*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0 +(beta*Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
 
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dPl, dP0, dh, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -406,14 +406,14 @@ simulate_vivax_delay_mda_ode=function(parameters, ODEmodel=ode_vivax_delay, ODEm
   MDAp_length=parameters["MDAp_length"][[1]]
 
   #simulation during MDA prophylaxis
-  state_mda   = c(parameters["Il"][[1]]*(1-MDAcov),
-                  parameters["I0"][[1]]*(1-MDAcov),
+  state_mda   = c(parameters["Ul"][[1]]*(1-MDAcov),
+                  parameters["U0"][[1]]*(1-MDAcov),
                   parameters["Sl"][[1]]*(1-MDAcov),
                   parameters["S0"][[1]]*(1-MDAcov),
                   parameters["Tl"][[1]]*(1-MDAcov),
                   parameters["T0"][[1]]*(1-MDAcov),
-                  MDAcov*(1-MDArad_cure)*(parameters["Il"][[1]]+parameters["Tl"][[1]]+parameters["Sl"][[1]]),
-                  MDAcov*(parameters["I0"][[1]]+parameters["T0"][[1]]+parameters["S0"][[1]]+MDArad_cure*(parameters["Il"][[1]]+parameters["Tl"][[1]]+parameters["Sl"][[1]])),
+                  MDAcov*(1-MDArad_cure)*(parameters["Ul"][[1]]+parameters["Tl"][[1]]+parameters["Sl"][[1]]),
+                  MDAcov*(parameters["U0"][[1]]+parameters["T0"][[1]]+parameters["S0"][[1]]+MDArad_cure*(parameters["Ul"][[1]]+parameters["Tl"][[1]]+parameters["Sl"][[1]])),
                   parameters["h"][[1]],
                   parameters["hl"][[1]],
                   parameters["hh"][[1]],
@@ -423,14 +423,14 @@ simulate_vivax_delay_mda_ode=function(parameters, ODEmodel=ode_vivax_delay, ODEm
 
   solveSIS_mda = deSolve::ode(y = state_mda, times = times_mda, func = ODEmodel_mda, parms =parameters, method = "lsoda")
   solutionVivax_mda=as.data.frame(solveSIS_mda)
-  names(solutionVivax_mda)=c("time", "Il", "I0", "SSl", "SS0", "Tl", "T0", "Pl", "P0", "h", "hl", "hh", "hhl")
+  names(solutionVivax_mda)=c("time", "Ul", "U0", "SSl", "SS0", "Tl", "T0", "Pl", "P0", "h", "hl", "hh", "hhl")
 
   solutionVivax_mda$Sl=solutionVivax_mda$SSl+ solutionVivax_mda$Pl
   solutionVivax_mda$S0=solutionVivax_mda$SS0+ solutionVivax_mda$P0
 
   #simulation after MDA has vanished
-  state_post_mda= c(solutionVivax_mda$Il[solutionVivax_mda$time==MDAp_length],
-                    solutionVivax_mda$I0[solutionVivax_mda$time==MDAp_length],
+  state_post_mda= c(solutionVivax_mda$Ul[solutionVivax_mda$time==MDAp_length],
+                    solutionVivax_mda$U0[solutionVivax_mda$time==MDAp_length],
                     solutionVivax_mda$Sl[solutionVivax_mda$time==MDAp_length],
                     solutionVivax_mda$S0[solutionVivax_mda$time==MDAp_length],
                     solutionVivax_mda$Tl[solutionVivax_mda$time==MDAp_length],
@@ -444,10 +444,10 @@ simulate_vivax_delay_mda_ode=function(parameters, ODEmodel=ode_vivax_delay, ODEm
 
   solveSIS_post_mda = deSolve::ode(y = state_post_mda, times = times_post_mda, func = ODEmodel, parms =parameters, method = "lsoda")
   solutionVivax_post_mda=as.data.frame(solveSIS_post_mda)
-  names(solutionVivax_post_mda)=c("time", "Il", "I0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")
+  names(solutionVivax_post_mda)=c("time", "Ul", "U0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")
 
   # Combine all results into one single file
-  solutionVivax=rbind(solutionVivax_mda[c("time", "Il", "I0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")], solutionVivax_post_mda[solutionVivax_post_mda$time>MDAp_length,])
+  solutionVivax=rbind(solutionVivax_mda[c("time", "Ul", "U0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")], solutionVivax_post_mda[solutionVivax_post_mda$time>MDAp_length,])
 
   if(year){solutionVivax=solutionVivax[(solutionVivax$time %%365 ==0),]}
   h0=ifelse(year, parameters["h"][[1]]*365, parameters["h"][[1]])
@@ -459,7 +459,7 @@ simulate_vivax_delay_mda_ode=function(parameters, ODEmodel=ode_vivax_delay, ODEm
   hhl0=ifelse(year, parameters["hhl"][[1]]*365, parameters["hhl"][[1]])
   solutionVivax$hhl=c(hhl0,diff(solutionVivax$hhl))
 
-  solutionVivax$I=solutionVivax$Il+solutionVivax$I0+solutionVivax$Tl+solutionVivax$T0
+  solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
   solutionVivax$p=(solutionVivax$h-solutionVivax$hl)/solutionVivax$h
 
   return(solutionVivax)

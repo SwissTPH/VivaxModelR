@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -60,33 +60,52 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_tau_rcd</span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span>, <span class="va">alpha</span>, <span class="va">rho</span>, <span class="va">kappa</span>, <span class="va">iota</span>, <span class="va">nu</span>, <span class="va">eta</span>, <span class="va">r</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_tau_rcd</span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span>, <span class="va">alpha</span>, <span class="va">rho</span>, <span class="va">kappa</span>, <span class="va">iota</span>, <span class="va">nu</span>, <span class="va">eta</span>, <span class="va">r</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>h1</dt>
 <dd><p>daily incidence, directly detected cases</p></dd>
+
+
 <dt>h2</dt>
 <dd><p>daily incidence, reactively detected cases</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>effective treatment probability</p></dd>
+
+
 <dt>rho</dt>
 <dd><p>observation rate</p></dd>
+
+
 <dt>kappa</dt>
 <dd><p>common part in rho and alpha</p></dd>
+
+
 <dt>iota</dt>
 <dd><p>RCD parameter: maximum number of index cases investigated per population per unit of time</p></dd>
+
+
 <dt>nu</dt>
 <dd><p>RCD parameter: number of secondary cases investigated per index case</p></dd>
+
+
 <dt>eta</dt>
 <dd><p>RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)</p></dd>
+
+
 <dt>r</dt>
 <dd><p>blood clearance rate</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a scalar equal to the targeting ratio tau.</p>
+    
+
+<p>a scalar equal to the targeting ratio tau.</p>
     </div>
 
   </div>
@@ -101,7 +120,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

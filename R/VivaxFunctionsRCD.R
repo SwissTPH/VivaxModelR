@@ -86,8 +86,8 @@ ode_vivax_delay_rcd_referral <- function(t, y, parameters) {
 
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -97,17 +97,17 @@ ode_vivax_delay_rcd_referral <- function(t, y, parameters) {
   hhh=y[9]
   hhl=y[10]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il -Il*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0 -I0*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0 +Il*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +I0*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul -Ul*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0 -U0*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0 +Ul*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +U0*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -145,8 +145,8 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
 
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -156,17 +156,17 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
   hhh=y[9]
   hhl=y[10]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il -Il*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0 -I0*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl +(1-beta)*Il*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0 +(beta*Il+I0)*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul -Ul*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0 -U0*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl +(1-beta)*Ul*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0 +(beta*Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -416,9 +416,9 @@ solve_lambda_vivax_rcd_no_referral <- function(h, h1, r,  f, gamma, alpha, beta,
 
   iota_star=min(iota, h1)
   rcd_term=iota_star*nu*tau*eta
-  II=h1*(1-alpha)/(r+rcd_term)/rho
-  TT=II*alpha*(r+rcd_term)/((1-alpha)*(r+sigma))
-  I=II+TT
+  UU=h1*(1-alpha)/(r+rcd_term)/rho
+  TT=UU*alpha*(r+rcd_term)/((1-alpha)*(r+sigma))
+  I=UU+TT
   delta=p * h/(1-I)/rho
   # solving the equation for lambda
   lambda_complex =polyroot(c(a_5(I, r= r+rcd_term,  f, gamma, alpha, beta, rho, sigma-rcd_term, delta, rcd_term),
@@ -445,9 +445,9 @@ solve_lambda_vivax_rcd_no_referral <- function(h, h1, r,  f, gamma, alpha, beta,
 
 #' @title Calculate equilibrium state variables, RCD model (no referral)
 #'
-#' @description Calculates equilibrium state variables I0, Il, S0, Sl, T0 and Tl based on I and model parameters
+#' @description Calculates equilibrium state variables U0, Ul, S0, Sl, T0 and Tl based on I and model parameters
 #'
-#' @param I proportion of infectious individuals at equilibrium (I0+Il)
+#' @param I proportion of infectious individuals at equilibrium (U0+Ul+T0+Tl)
 #' @param lambda transmission rate
 #' @param f relapse frequency
 #' @param r blood clearance rate
@@ -464,7 +464,7 @@ solve_lambda_vivax_rcd_no_referral <- function(h, h1, r,  f, gamma, alpha, beta,
 #' @param tau RCD parameter: targeting ratio of the RCD
 #' @param eta RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)
 #'
-#' @return A list with the equilibrium states (I0, Il, T0, Tl, S0 and Sl)
+#' @return A list with the equilibrium states (U0, Ul, T0, Tl, S0 and Sl)
 #' @export
 #'
 get_equilibrium_states_vivax_rcd_no_referral <- function(I, lambda, r, gamma, f, alpha, beta, rho, sigma, delta, omega, iota_star, nu, tau, eta, kappa){
@@ -473,19 +473,19 @@ get_equilibrium_states_vivax_rcd_no_referral <- function(I, lambda, r, gamma, f,
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   TT=I*alpha*(r+rcd_term)/(r+(1-alpha)*sigma+alpha*rcd_term)  # T0+Tl
-  II=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+alpha*rcd_term) #I0 + Il
+  UU=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+alpha*rcd_term) #U0 + Ul
   T0=TT*gamma/(lambda*I+delta+gamma+r+sigma)
   Tl=TT-T0
-  I0=II*gamma/(lambda*I+delta+gamma+r+rcd_term)
-  Il=II-I0
-  Sl=(r*Il+(1-beta)*rcd_term*Il+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
+  U0=UU*gamma/(lambda*I+delta+gamma+r+rcd_term)
+  Ul=UU-U0
+  Sl=(r*Ul+(1-beta)*rcd_term*Ul+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
   S0=1-I-Sl
 
-  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*II*corr_factor_rcd
-  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*II*corr_factor_rcd
+  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
+  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
   hh= ((lambda*I+delta)*(1-I) +f*Sl)
   hhl= (lambda*I*(1-I) +f*Sl)
-  return(list("Il"=Il, "I0"=I0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
+  return(list("Ul"=Ul, "U0"=U0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
               "h"=h, "hl"=hl, "hh"=hh, "hhl"=hhl))
 }
 
@@ -552,9 +552,9 @@ solve_lambda_vivax_rcd_referral <- function(h, h1, r,  f, gamma, alpha, beta, si
 
   iota_star=min(iota, h1)
   rcd_term=iota_star*nu*tau*eta
-  II=h1*(1-alpha)/(r+rcd_term)/rho
-  TT=II*(alpha*r+rcd_term)/((1-alpha)*(r+sigma))
-  I=II+TT
+  UU=h1*(1-alpha)/(r+rcd_term)/rho
+  TT=UU*(alpha*r+rcd_term)/((1-alpha)*(r+sigma))
+  I=UU+TT
   delta=p * h/(1-I)/rho
   # solving the equation for lambda
   lambda_complex =polyroot(c(a_5(I, r= r,  f, gamma, alpha, beta, rho, sigma, delta, rcd_term),
@@ -608,20 +608,20 @@ get_equilibrium_states_vivax_rcd_referral <- function(I, lambda, r, gamma, f, al
   rcd_term=iota_star*nu*tau*eta
   corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
-  II=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+rcd_term) #I0 + Il
-  TT=I-II  # T0+Tl
-  I0=II*gamma/(lambda*I+delta+gamma+r+rcd_term)
-  Il=II-I0
-  T0=(TT*gamma+rcd_term*I0)/(lambda*I+delta+gamma+r+sigma)
+  UU=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+rcd_term) #I0 + Il
+  TT=I-UU  # T0+Tl
+  U0=UU*gamma/(lambda*I+delta+gamma+r+rcd_term)
+  Ul=UU-U0
+  T0=(TT*gamma+rcd_term*U0)/(lambda*I+delta+gamma+r+sigma)
   Tl=TT-T0
-  Sl=(r*Il+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
+  Sl=(r*Ul+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
   S0=1-I-Sl
 
-  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*II*corr_factor_rcd
-  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*II*corr_factor_rcd
+  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
+  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
   hh= ((lambda*I+delta)*(1-I) +f*Sl)
   hhl= (lambda*I*(1-I) +f*Sl)
-  return(list("Il"=Il, "I0"=I0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
+  return(list("Ul"=Ul, "U0"=U0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
               "h"=h, "hl"=hl, "hh"=hh, "hhl"=hhl))
 }
 

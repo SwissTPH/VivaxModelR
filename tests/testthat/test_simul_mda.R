@@ -111,7 +111,7 @@ test_that("test compare MDA in delay model with non MDA model (no RCD)", {
   parameters_mda=list("r"=1/60, "gamma"=1/383,
                       "f"=1/69,"lambda"=0.013,"delta"=3.562799e-05,
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
-                      "I0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Il"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
+                      "U0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Ul"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
                       "h"=0.0009225553, "hl"=0, "hh"=0, "hhl"=0,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
 
@@ -146,7 +146,7 @@ test_that("test compare MDA in delay model with non MDA model (RCD model but no 
   parameters_mda=list("r"=1/60, "gamma"=1/383,
                       "f"=1/69,"lambda"=0.015,"delta"=3.562799e-05,
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
-                      "I0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Il"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
+                      "U0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Ul"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
                       "h"=0.0009225553,"hl"=0, "hh"=0, "hhl"=0,
                       "tau"=5, "nu"=5, "iota"=0, "eta"=1,"kappa"=0.18,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
@@ -186,7 +186,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD)", {
   parameters_mda=list("r"=1/60, "gamma"=1/383,
                       "f"=1/69,"lambda"=0.015,"delta"=3.562799e-05, "sigma"=1/15,
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1,
-                      "I0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Il"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
+                      "U0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Ul"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
                       "h"=0.0009225553,"hl"=0, "hh"=0, "hhl"=0,
                       "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)

@@ -68,7 +68,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
   parameters_rcd=list("r"=1/60, "gamma"=1/223,
                       "f"=1/72,"lambda"=0.00155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
-                      "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
+                      "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
@@ -97,7 +97,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
   parameters2_rcd=list("r"=1/60, "gamma"=1/223,
                        "f"=1/72,"lambda"=0.00155531,"delta"=0.0001,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
-                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
+                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
@@ -132,7 +132,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
   parameters_rcd=list("r"=1/60, "gamma"=1/223,
                       "f"=1/72,"lambda"=0.00455531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
-                      "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
+                      "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
@@ -161,7 +161,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
   parameters2_rcd=list("r"=1/60, "gamma"=1/223,
                        "f"=1/72,"lambda"=0.00155531,"delta"=0.001,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
-                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
+                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
@@ -197,14 +197,19 @@ test_that("test compare the 3 RCD models", {
   parameters_rcd=list("r"=1/60, "gamma"=1/223,
                       "f"=1/72,"lambda"=0.0155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
-                      "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
+                      "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                       "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
+  parameters_rcd_nodelay=parameters_rcd
+  parameters_rcd_nodelay$Il=parameters_rcd$Ul
+  parameters_rcd_nodelay$I0=parameters_rcd$U0
+  parameters_rcd_nodelay$Ul=NULL
+  parameters_rcd_nodelay$U0=NULL
 
   parameters_rcd_infsigma=parameters_rcd; parameters_rcd_infsigma$sigma=1/0.4
 
-  vivax_rcd=simulate_vivax_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_rcd, maxtime=1465, year=FALSE)
+  vivax_rcd=simulate_vivax_ode(parameters=parameters_rcd_nodelay , ODEmodel=ode_vivax_rcd, maxtime=1465, year=FALSE)
   vivax_delay_non_ref=simulate_vivax_delay_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=1465, year=FALSE)
   vivax_delay_ref=simulate_vivax_delay_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=1465, year=FALSE)
   vivax_delay_ref_siginf=simulate_vivax_delay_ode(parameters=parameters_rcd_infsigma , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=1465, year=FALSE)
@@ -217,13 +222,19 @@ test_that("test compare the 3 RCD models", {
   parameters2_rcd=list("r"=1/60, "gamma"=1/223,
                        "f"=1/72,"lambda"=0.0155531,"delta"=0,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
-                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
+                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
                        "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
   parameters2_rcd_infsigma=parameters2_rcd; parameters2_rcd_infsigma$sigma=1/0.4
   parameters2_rcd_0sigma=parameters2_rcd; parameters2_rcd_0sigma$sigma=0
 
-  vivax2_rcd=simulate_vivax_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
+  parameters2_rcd_nodelay=parameters2_rcd
+  parameters2_rcd_nodelay$Il=parameters2_rcd$Ul
+  parameters2_rcd_nodelay$I0=parameters2_rcd$U0
+  parameters2_rcd_nodelay$Ul=NULL
+  parameters2_rcd_nodelay$U0=NULL
+
+  vivax2_rcd=simulate_vivax_ode(parameters=parameters2_rcd_nodelay , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
   vivax2_delay_non_ref=simulate_vivax_delay_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)
   vivax2_delay_ref=simulate_vivax_delay_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=5000, year=FALSE)
   vivax2_delay_non_ref_sig0=simulate_vivax_delay_ode(parameters=parameters2_rcd_0sigma , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)

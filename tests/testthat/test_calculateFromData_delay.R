@@ -183,8 +183,8 @@ test_that("test simulation of future scenarios starting from initial condition, 
 
   simul_no_rcd=simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=F, rcd=F)
 
-  my_initial_state=simul_no_rcd[simul_no_rcd$time==2000,c("Il", "I0","Sl", "S0", "Tl", "T0","h", "hl","hh", "hhl", "id")]
-  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init","hhl_init",  "id")
+  my_initial_state=simul_no_rcd[simul_no_rcd$time==2000,c("Ul", "U0","Sl", "S0", "Tl", "T0","h", "hl","hh", "hhl", "id")]
+  names(my_initial_state)=c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init","hhl_init",  "id")
   simul_no_rcd_chain=simulate_from_data_delay(df=mydata, from_equilibrium = FALSE,
                                         initial_states = my_initial_state,
                                         f=1/69, gamma=1/383, r=1/60,  maxtime=2000,year=F, rcd=F)
@@ -212,8 +212,8 @@ test_that("test simulation of future scenarios starting from initial condition, 
 
   simul_no_rcd=simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=F)
 
-  my_initial_state=simul_no_rcd[simul_no_rcd$time==100,c("Il", "I0","Sl", "S0", "Tl", "T0","h", "hl", "hh", "hhl", "id")]
-  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init", "hl_init", "hh_init", "hhl_init",  "id")
+  my_initial_state=simul_no_rcd[simul_no_rcd$time==100,c("Ul", "U0","Sl", "S0", "Tl", "T0","h", "hl", "hh", "hhl", "id")]
+  names(my_initial_state)=c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init", "hl_init", "hh_init", "hhl_init",  "id")
   simul_no_rcd_chain=simulate_from_data_delay(df=mydata, from_equilibrium = FALSE,
                                         initial_states = my_initial_state,
                                         f=1/69, gamma=1/383, r=1/60,  maxtime=900,year=F, rcd=F) %>%

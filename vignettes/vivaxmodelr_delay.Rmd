@@ -18,7 +18,7 @@ It is an extension of @white2016 and @champagne2022, and can be represented by t
 ```{r pressure, echo=FALSE, fig.cap="Schematic representation of the model", out.width = '80%'}
 knitr::include_graphics("models_delay_cartoon.png")
 ```
-where $I_L$ is the proportion of untreated individuals with both blood and liver stage parasites, $I_0$ is the proportion of untreated individuals with blood stage parasites only, $T_L$ is the proportion of treated individuals with both blood and liver stage parasites, $T_0$ is the proportion of treated individuals with blood stage parasites only, $S_L$ is the proportion of individuals with liver stage parasites only, and $S_0$ is the  proportion of susceptible individuals. 
+where $U_L$ is the proportion of untreated individuals with both blood and liver stage parasites, $U_0$ is the proportion of untreated individuals with blood stage parasites only, $T_L$ is the proportion of treated individuals with both blood and liver stage parasites, $T_0$ is the proportion of treated individuals with blood stage parasites only, $S_L$ is the proportion of individuals with liver stage parasites only, and $S_0$ is the  proportion of susceptible individuals. 
 
 As in @white2016, it requires 4 biological parameters: $\lambda$ (transmission rate, called "lambda" in the package), $r$ (blood parasites clearance rate), $\gamma_L$ (liver  parasites clearance rate, called "gamma") and $f$ (relapse frequency). Values from the literature can be found for $r$, $\gamma_L$ and $f$. The parameter $\lambda$ is highly setting specific and can be calculated based on incidence and importation data using the functions from this package. This also provides estimates of setting specific reproduction numbers: $R_0$ (in the absence of control intervention) and $R_c$ (considering current control interventions).
 
@@ -96,16 +96,16 @@ simulation_model= simulate_vivax_interventions(df=mydata_withR0RC, my_interventi
 head(simulation_model)
 ```
 The variable "time" indicates the number of days since baseline. The other variables are the state variables of the model.
-The variable I indicates the proportion of all individuals with blood stage infection ($I=I_L+I_0+T_0+T_L$), i.e. prevalence (including any parasite concentration). The variable incidence indicates the incidence per 1000 person year.
+The variable I indicates the proportion of all individuals with blood stage infection ($I=U_L+U_0+T_0+T_L$), i.e. prevalence (including any parasite concentration). The variable incidence indicates the incidence per 1000 person year.
 All variables are detailed in the following table:
 
 ```{r echo=FALSE, results="asis"}
 library(knitr)
 col_id=c("id", "Unique identifier of the area", "")
 col_time=c("time", "Number of days since baseline", "days")
-col_Il=c("Il", "$I_L$, proportion of untreated individuals with both blood and liver stage parasites", "dimensionless")
-col_I0=c("I0", "$I_0$, proportion of untreated individuals with blood stage parasites only", "dimensionless")
-col_Il=c("Tl", "$T_L$, proportion of treated individuals with both blood and liver stage parasites", "dimensionless")
+col_Il=c("Ul", "$I_L$, proportion of untreated individuals with both blood and liver stage parasites", "dimensionless")
+col_U0=c("U0", "$I_0$, proportion of untreated individuals with blood stage parasites only", "dimensionless")
+col_Ul=c("Tl", "$T_L$, proportion of treated individuals with both blood and liver stage parasites", "dimensionless")
 col_I0=c("T0", "$T_0$, proportion of treated individuals with blood stage parasites only", "dimensionless")
 col_Sl=c("Sl", "$S_L$, proportion of individuals with liver stage parasites only", "dimensionless")
 col_S0=c("S0", "$S_0$, proportion of susceptible individuals", "dimensionless")
@@ -113,13 +113,13 @@ col_h=c("h", "Reported incidence", "cases per person  year if year=T or per pers
 col_hl=c("hl", "Local reported incidence", "cases per person  year if year=T or per person day if year=F")
 col_hh=c("hh", "Total incidence", "cases per person  year if year=T or per person day if year=F")
 col_hhl=c("hhl", "Total local incidence", "cases per person  year if year=T or per person day if year=F")
-col_I=c("I", "Prevalence ($I_L+I_0+T_L+T_0$)", "dimensionless")
+col_I=c("I", "Prevalence ($U_L+U_0+T_L+T_0$)", "dimensionless")
 col_p=c("p", "Proportion of imported cases", "dimensionless")
 col_inc=c("incidence", "Reported incidence", "cases per 1000 person year")
 col_int=c("intervention", "Name of the intervention", "")
 col_step=c("step", "Simulation step", "1 corresponds to the first simulation from equilibrium")
 data_name=rbind.data.frame(col_id, col_time, 
-                           col_Il,col_I0, col_Sl, col_S0, 
+                           col_Ul,col_U0, col_Sl, col_S0, 
                            col_h, col_hl, col_hh, col_hhl,
                            col_I, col_p, col_inc, col_int, col_step)
 names(data_name)=c("Column name", "Description", "Unit")

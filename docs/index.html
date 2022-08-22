@@ -43,7 +43,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -83,13 +83,12 @@
 The version used in the manuscript corresponds to released version <a href="https://github.com/SwissTPH/VivaxModelR/tree/v1.0.1" class="external-link">v1.0.1</a>.</p>
 <p>The current version includes additional malaria control interventions, as detailed in the <a href="https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr.html">vignette</a> (see below).</p>
 <p>The package can be installed using the devtools package:</p>
-<pre class="{r}"><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>  
-<span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SwissTPH/VivaxModelR"</span><span class="op">)</span></code></pre>
+<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SwissTPH/VivaxModelR"</span><span class="op">)</span></span></code></pre>
 <p>The scripts necessary to reproduce the manuscript figures are situated under <a href="https://github.com/SwissTPH/VivaxModelR/tree/main/demo/figures_UsingObservedIncidence" class="external-link">demo/figures_UsingObservedIncidence</a> (to be used with version <a href="https://github.com/SwissTPH/VivaxModelR/tree/v1.0.1" class="external-link">v1.0.1</a>).</p>
 <p>The vignette presenting how to use the package is available <a href="https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_delay.html">here</a>.<br>
 A simplified version of the package without delayed access to treatment is available <a href="https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr.html">here</a>.<br>
 A quick description for developers of the scripts in the package is available <a href="https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_dev_doc.html">here</a>.</p>
-<p>An extended version of the package allowing for stochastic simulations (based on <a href="https://cran.rstudio.com/web/packages/TiPS/index.html" class="external-link">Danesh et al. 2021</a>) can be found <a href="https://github.com/SwissTPH/VivaxModelR/tree/sto" class="external-link">here</a>.</p>
 </div>
 
   </div>
@@ -133,7 +132,7 @@ A quick description for developers of the scripts in the package is available <a
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

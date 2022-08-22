@@ -3,7 +3,7 @@ test_that("test solve model with CM", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.03,"delta"=0,
                   "alpha"=0.4, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul=simulate_vivax_delay_ode(parameters, ODEmodel =ode_vivax_delay , maxtime = 500000)
 
@@ -41,7 +41,7 @@ test_that("test solve model with CM and importation", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.02,"delta"=0.01,
                   "alpha"=0.4, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul=simulate_vivax_delay_ode(parameters, ODEmodel =ode_vivax_delay , maxtime = 500000)
 
@@ -79,7 +79,7 @@ test_that("test solve model with CM, importation and VC", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.02,"delta"=0.01,
                   "alpha"=0.4, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=0.7,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul=simulate_vivax_delay_ode(parameters, ODEmodel =ode_vivax_delay , maxtime = 500000)
 
@@ -118,21 +118,21 @@ test_that("test compare delay model when sigma=0 with non delay model", {
   parameters_d1=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.03,"delta"=0,
                   "alpha"=0.4, "beta"=0.7, "sigma"=0, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay1=simulate_vivax_delay_ode(parameters_d1, ODEmodel =ode_vivax_delay , maxtime = 5000)
 
   parameters_d2=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.03,"delta"=0,
                   "alpha"=0, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay2=simulate_vivax_delay_ode(parameters_d2, ODEmodel =ode_vivax_delay , maxtime = 5000)
 
   parameters_d3=list("r"=1/60, "gamma"=1/223,
                      "f"=1/72,"lambda"=0.4,"delta"=0,
                      "alpha"=1, "beta"=0, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                     "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                     "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay3=simulate_vivax_delay_ode(parameters_d3, ODEmodel =ode_vivax_delay , maxtime = 5000)
 
@@ -163,21 +163,21 @@ test_that("test compare delay model when sigma=0 with non delay model, with impo
   parameters_d1=list("r"=1/60, "gamma"=1/223,
                      "f"=1/72,"lambda"=0.03,"delta"=0.1,
                      "alpha"=0.4, "beta"=0.7, "sigma"=0, "rho"=0.4,"omega"=0.7,
-                     "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                     "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay1=simulate_vivax_delay_ode(parameters_d1, ODEmodel =ode_vivax_delay , maxtime = 5000)
 
   parameters_d2=list("r"=1/60, "gamma"=1/223,
                      "f"=1/72,"lambda"=0.03,"delta"=0.1,
                      "alpha"=0, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=0.7,
-                     "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                     "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay2=simulate_vivax_delay_ode(parameters_d2, ODEmodel =ode_vivax_delay , maxtime = 5000)
 
   parameters_d3=list("r"=1/60, "gamma"=1/223,
                      "f"=1/72,"lambda"=0.4,"delta"=0,
                      "alpha"=1, "beta"=0, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                     "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
+                     "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0)
 
   simul_delay3=simulate_vivax_delay_ode(parameters_d3, ODEmodel =ode_vivax_delay , maxtime = 5000)
 

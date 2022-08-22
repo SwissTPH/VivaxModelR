@@ -88,7 +88,7 @@ calculate_r0_rc_fromdata_delay=function(df, f=1/72, gamma=1/223, r=1/60,
 #' @description Uses the compartmental model to simulate a trajectory, starting from equilibrium variable
 #'
 #' @param df a dataframe containing the data, with one column called I containing the proportion
-#' of infectious individuals (I0+Il) at equilibrium, one column called lambda containing the transmission rate,
+#' of infectious individuals (U0+Ul+Tl+T0) at equilibrium, one column called lambda containing the transmission rate,
 #' and one variable called id which identifies uniquely each row in the dataset.
 #' Additional optional variables are: \cr
 #' rho (reporting rate), delta (importation rate) \cr
@@ -96,7 +96,7 @@ calculate_r0_rc_fromdata_delay=function(df, f=1/72, gamma=1/223, r=1/60,
 #' intervention levels in the future (in the simulation):  alpha.new (effective care), beta.new (proportion of liver stage cure), omega.new (intensity of vector control)
 #' @param from_equilibrium boolean indicating if the model is run from equilibrium (TRUE, default) or from a pre-specified initial condition, which should be specified in initial_states
 #' @param initial_states given initial condition, as a dataframe containing the variables
-#' "Il_init", "I0_init", "Sl_init", "S0_init", "Tl_init", "T0_init", "h_init",
+#' "Ul_init", "U0_init", "Sl_init", "S0_init", "Tl_init", "T0_init", "h_init",
 #' with one variable called id which identifies uniquely each row in the dataset. This input is not used when from_equilibrium=TRUE (default).
 #' @param f relapse frequency
 #' @param r blood clearance rate
@@ -143,7 +143,7 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
   if(from_equilibrium==FALSE){
     if(is.null(initial_states)){ stop("initial_states is missing")}
     if(!"id" %in% names(initial_states)){ stop("no id variable in initial_states")}
-    if((!"Il_init" %in% names(initial_states) | !"I0_init" %in% names(initial_states) | !"Sl_init" %in% names(initial_states) |
+    if((!"Ul_init" %in% names(initial_states) | !"U0_init" %in% names(initial_states) | !"Sl_init" %in% names(initial_states) |
         !"S0_init" %in% names(initial_states)|!"Tl_init" %in% names(initial_states)|!"T0_init" %in% names(initial_states)|
         !"h_init" %in% names(initial_states) |!"hl_init" %in% names(initial_states)|
        !"hh_init" %in% names(initial_states) |!"hhl_init" %in% names(initial_states))) {
@@ -155,9 +155,9 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
     df=merge(df, initial_states)
 
     if(sto){
-      df[,c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init")]=df[,c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init")]/df$N
+      df[,c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init")]=df[,c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init")]/df$N
     }
-    if( any(abs((df$Il_init+df$I0_init+df$Sl_init+df$S0_init+df$Tl_init+df$T0_init)-1)>1e-10)){ stop("initial states do not sum to 1")}
+    if( any(abs((df$Ul_init+df$U0_init+df$Sl_init+df$S0_init+df$Tl_init+df$T0_init)-1)>1e-10)){ stop("initial states do not sum to 1")}
 
 
   } else{
@@ -231,7 +231,7 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
     }
 
     if(from_equilibrium==TRUE){
-      # get equilibrium values for Sl, S0, Il and I0
+      # get equilibrium values
       equ_states=get_equilibrium_states_vivax_delay(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
                                                     alpha=df$alpha.old[i], beta=df$beta.old[i],sigma=df$sigma.old[i], rho=df$rho.old[i],
                                                     delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
@@ -253,9 +253,9 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
         }
       }
 
-      myparameters$I0=equ_states$I0
+      myparameters$U0=equ_states$U0
       myparameters$S0=equ_states$S0
-      myparameters$Il=equ_states$Il
+      myparameters$Ul=equ_states$Ul
       myparameters$Sl=equ_states$Sl
       myparameters$Tl=equ_states$Tl
       myparameters$T0=equ_states$T0
@@ -265,9 +265,9 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
       myparameters$hhl=equ_states$hhl
     } else{
       # extract from file
-      myparameters$I0=df$I0_init[i]
+      myparameters$U0=df$U0_init[i]
       myparameters$S0=df$S0_init[i]
-      myparameters$Il=df$Il_init[i]
+      myparameters$Ul=df$Ul_init[i]
       myparameters$Sl=df$Sl_init[i]
       myparameters$Tl=df$Tl_init[i]
       myparameters$T0=df$T0_init[i]

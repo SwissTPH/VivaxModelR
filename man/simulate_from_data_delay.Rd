@@ -25,7 +25,7 @@ simulate_from_data_delay(
 }
 \arguments{
 \item{df}{a dataframe containing the data, with one column called I containing the proportion
-of infectious individuals (I0+Il) at equilibrium, one column called lambda containing the transmission rate,
+of infectious individuals (U0+Ul+Tl+T0) at equilibrium, one column called lambda containing the transmission rate,
 and one variable called id which identifies uniquely each row in the dataset.
 Additional optional variables are: \cr
 rho (reporting rate), delta (importation rate) \cr
@@ -35,7 +35,7 @@ intervention levels in the future (in the simulation):  alpha.new (effective car
 \item{from_equilibrium}{boolean indicating if the model is run from equilibrium (TRUE, default) or from a pre-specified initial condition, which should be specified in initial_states}
 
 \item{initial_states}{given initial condition, as a dataframe containing the variables
-"Il_init", "I0_init", "Sl_init", "S0_init", "Tl_init", "T0_init", "h_init",
+"Ul_init", "U0_init", "Sl_init", "S0_init", "Tl_init", "T0_init", "h_init",
 with one variable called id which identifies uniquely each row in the dataset. This input is not used when from_equilibrium=TRUE (default).}
 
 \item{f}{relapse frequency}

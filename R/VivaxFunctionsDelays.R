@@ -19,8 +19,8 @@ ode_vivax_delay <- function(t, y, parameters) {
   omega=parameters["omega"][[1]](t)
   delta=parameters["delta"][[1]](t)
 
-  Il=y[1]
-  I0=y[2]
+  Ul=y[1]
+  U0=y[2]
   Sl=y[3]
   S0=y[4]
   Tl=y[5]
@@ -30,17 +30,17 @@ ode_vivax_delay <- function(t, y, parameters) {
   hh=y[9]
   hhl=y[10]
 
-  dIl= (1-alpha)*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Il+I0+Tl+T0)+delta)*I0 - gamma*Il - r*Il
-  dI0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(I0) +  gamma*Il - r*I0
-  dSl= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Il+ r*Tl
-  dS0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*I0+ r*T0
-  dTl= alpha*(omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Il+I0+Tl+T0)+delta)*T0
-  dT0= -(omega*lambda*(Il+I0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
-  dh= rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhl= rho*((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
-  dhh= ((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
-  dhhl= ((omega*lambda*(Il+I0+Tl+T0))*(S0+Sl) +f*Sl)
-  res=c(dIl, dI0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
+  dUl= (1-alpha)*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + (1-alpha)*f*Sl + (omega*lambda*(Ul+U0+Tl+T0)+delta)*U0 - gamma*Ul - r*Ul
+  dU0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(U0) +  gamma*Ul - r*U0
+  dSl= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(Sl) - f*Sl +(1-beta)*sigma*Tl -  gamma*Sl + r*Ul+ r*Tl
+  dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0
+  dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0
+  dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
+  dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
+  dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
+  res=c(dUl, dU0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
   return(list(res))
 }
 
@@ -69,8 +69,8 @@ simulate_vivax_delay_ode=function(parameters, ODEmodel=ode_vivax_delay, maxtime=
 
 
   #simulation
-  state      <- c(parameters["Il"][[1]],
-                  parameters["I0"][[1]],
+  state      <- c(parameters["Ul"][[1]],
+                  parameters["U0"][[1]],
                   parameters["Sl"][[1]],
                   parameters["S0"][[1]],
                   parameters["Tl"][[1]],
@@ -82,7 +82,7 @@ simulate_vivax_delay_ode=function(parameters, ODEmodel=ode_vivax_delay, maxtime=
   times <- seq(0, maxtime, by = 1)
   solveSIS <- deSolve::ode(y = state, times = times, func = ODEmodel, parms =parameters, method = "lsoda")
   solutionVivax=as.data.frame(solveSIS)
-  names(solutionVivax)=c("time", "Il", "I0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")
+  names(solutionVivax)=c("time", "Ul", "U0", "Sl", "S0", "Tl", "T0", "h", "hl", "hh", "hhl")
   if(year){solutionVivax=solutionVivax[(solutionVivax$time %%365 ==0),]}
   h0=ifelse(year, parameters["h"][[1]]*365, parameters["h"][[1]])
   solutionVivax$h=c(h0,diff(solutionVivax$h))
@@ -93,7 +93,7 @@ simulate_vivax_delay_ode=function(parameters, ODEmodel=ode_vivax_delay, maxtime=
   hhl0=ifelse(year, parameters["hhl"][[1]]*365, parameters["hhl"][[1]])
   solutionVivax$hhl=c(hhl0,diff(solutionVivax$hhl))
 
-  solutionVivax$I=solutionVivax$Il+solutionVivax$I0+solutionVivax$Tl+solutionVivax$T0
+  solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
   solutionVivax$p=(solutionVivax$h-solutionVivax$hl)/solutionVivax$h
 
   return(solutionVivax)
@@ -134,9 +134,9 @@ get_lambda_from_rc_vivax_delay <- function(Rc, f, r, gamma, alpha, beta, sigma, 
 
 #' @title Calculate equilibrium state variables, in model with delay to treatment
 #'
-#' @description Calculates equilibrium state variables I0, Il, T0, Tl, S0 and Sl based on I and model parameters
+#' @description Calculates equilibrium state variables U0, Ul, T0, Tl, S0 and Sl based on I and model parameters
 #'
-#' @param I proportion of infectious individuals at equilibrium (I0+Il)
+#' @param I proportion of infectious individuals at equilibrium (U0+Ul)
 #' @param lambda transmission rate
 #' @param f relapse frequency
 #' @param r blood clearance rate
@@ -148,24 +148,24 @@ get_lambda_from_rc_vivax_delay <- function(Rc, f, r, gamma, alpha, beta, sigma, 
 #' @param omega vector control intensity. If vector control is not the purpose of the analysis, omega can be fixed to 1.
 #' @param delta importation rate
 #'
-#' @return A list with the equilibrium states (I0, Il, S0 and Sl)
+#' @return A list with the equilibrium states (U0, Ul, S0 and Sl)
 #' @export
 #'
 get_equilibrium_states_vivax_delay <- function(I, lambda, r, gamma, f, alpha, beta, sigma, rho, delta, omega){
   lambda=lambda*omega
   TT=I*alpha*r/(r+(1-alpha)*sigma)  # T0+Tl
-  II=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma) #I0 + Il
+  UU=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma) #U0 + ul
   T0=TT*gamma/(lambda*I+delta+gamma+r+sigma)
   Tl=TT-T0
-  I0=II*gamma/(lambda*I+delta+gamma+r)
-  Il=II-I0
-  Sl=(r*Il+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
+  U0=UU*gamma/(lambda*I+delta+gamma+r)
+  Ul=UU-U0
+  Sl=(r*Ul+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
   S0=1-I-Sl
   h=rho*((lambda*I+delta)*(1-I)+f*Sl)
   hl=rho*((lambda*I)*(1-I)+f*Sl)
   hh=(lambda*I+delta)*(1-I)+f*Sl
   hhl=(lambda*I)*(1-I)+f*Sl
-  return(list("Il"=Il, "I0"=I0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0, "h"=h, "hl"=hl, "hh"=hh, "hhl"=hhl))
+  return(list("Ul"=Ul, "U0"=U0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0, "h"=h, "hl"=hl, "hh"=hh, "hhl"=hhl))
 }
 
 

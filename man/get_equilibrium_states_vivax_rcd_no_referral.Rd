@@ -24,7 +24,7 @@ get_equilibrium_states_vivax_rcd_no_referral(
 )
 }
 \arguments{
-\item{I}{proportion of infectious individuals at equilibrium (I0+Il)}
+\item{I}{proportion of infectious individuals at equilibrium (U0+Ul+T0+Tl)}
 
 \item{lambda}{transmission rate}
 
@@ -57,8 +57,8 @@ get_equilibrium_states_vivax_rcd_no_referral(
 \item{kappa}{common part in rho and alpha}
 }
 \value{
-A list with the equilibrium states (I0, Il, T0, Tl, S0 and Sl)
+A list with the equilibrium states (U0, Ul, T0, Tl, S0 and Sl)
 }
 \description{
-Calculates equilibrium state variables I0, Il, S0, Sl, T0 and Tl based on I and model parameters
+Calculates equilibrium state variables U0, Ul, S0, Sl, T0 and Tl based on I and model parameters
 }

@@ -217,7 +217,7 @@ test_that("test simulation of future scenarios, with rcd, with delays", {
   expect_lt(simul_rcd$I[simul_rcd$id==3 & simul_rcd$time==1825], simul_rcd_ref$I[simul_rcd_ref$id==3 & simul_no_rcd$time==1825], label = "no referral is better than referral")
 
   simul_rcd_true=data.frame(time=rep(1825, 3),
-                            Il=c(0.03164403  ,0.07705805  ,0.48330159  ), I0=c(0.004831643  ,0.009582254  ,0.040062752  ),
+                            Ul=c(0.03164403  ,0.07705805  ,0.48330159  ), U0=c(0.004831643  ,0.009582254  ,0.040062752  ),
                             Sl=c(0.03465808  ,0.08950477  ,0.30071105  ), S0=c(0.9273484  ,0.8208915  ,0.1663927  ),
                             Tl=c(0.001471987   ,0.002874158   ,0.009280484   ), T0=c(4.588674e-05  ,8.923783e-05  ,2.514149e-04  ),
                             h=c(0.04706137  ,0.20309653   ,0.62924511    ),
@@ -232,7 +232,7 @@ test_that("test simulation of future scenarios, with rcd, with delays", {
   expect_equal(simul_rcd[simul_rcd$time==1825,], simul_rcd_true,tolerance = 1e-06, label = "check if the values are the same as pre-computed ones, with RCD")
 
   simul_rcd_ref_true=data.frame(time=rep(1825, 3),
-                            Il=c(0.03164403  ,0.08379253   ,0.48151826   ), I0=c(0.004831643  ,0.010384723   ,0.039677877   ),
+                            Ul=c(0.03164403  ,0.08379253   ,0.48151826   ), U0=c(0.004831643  ,0.010384723   ,0.039677877   ),
                             Sl=c(0.03465808  ,0.09805748   ,0.29984063   ), S0=c(0.9273484  ,0.8005070   ,0.1583023   ),
                             Tl=c(0.001471987   ,0.006612432    ,0.019402570    ), T0=c(4.588674e-05  ,6.458097e-04  ,1.258329e-03  ),
                             h=c(0.04706137  ,0.22057574      ,0.62663826     ),
@@ -267,8 +267,8 @@ test_that("test simulation of future scenarios starting from initial condition, 
 
   simul_rcd=simulate_from_data_delay(mydata, f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=F, rcd=T)
 
-  my_initial_state=simul_rcd[simul_rcd$time==2000,c("Il", "I0","Sl", "S0","Tl", "T0","h", "hl","hh", "hhl", "id")]
-  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init","hhl_init", "id")
+  my_initial_state=simul_rcd[simul_rcd$time==2000,c("Ul", "U0","Sl", "S0","Tl", "T0","h", "hl","hh", "hhl", "id")]
+  names(my_initial_state)=c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init","hhl_init", "id")
   simul_rcd_chain=simulate_from_data_delay(df=mydata, from_equilibrium = FALSE,
                                      initial_states = my_initial_state,
                                      f=1/69, gamma=1/383, r=1/60,  maxtime=2000,year=F, rcd=T)
@@ -302,8 +302,8 @@ test_that("test simulation of future scenarios starting from initial condition, 
 
   simul_rcd=simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=T)
 
-  my_initial_state=simul_rcd[simul_rcd$time==100, c("Il", "I0","Sl", "S0","Tl", "T0","h","hl","hh","hhl", "id")]
-  names(my_initial_state)=c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init", "hl_init","hh_init", "hhl_init","id")
+  my_initial_state=simul_rcd[simul_rcd$time==100, c("Ul", "U0","Sl", "S0","Tl", "T0","h","hl","hh","hhl", "id")]
+  names(my_initial_state)=c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init", "hl_init","hh_init", "hhl_init","id")
   simul_rcd_chain=simulate_from_data_delay(df=mydata, from_equilibrium = FALSE,
                                      initial_states = my_initial_state,
                                      f=1/69, gamma=1/383, r=1/60,  maxtime=900,year=F, rcd=T) %>%
@@ -327,8 +327,8 @@ test_that("test simulation of future scenarios starting from initial condition, 
 
   simul_rcd_ref=simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=T, referral = T)
 
-  my_initial_state_ref=simul_rcd_ref[simul_rcd_ref$time==100, c("Il", "I0","Sl", "S0","Tl", "T0","h", "hl","hh", "hhl", "id")]
-  names(my_initial_state_ref)=c("Il_init", "I0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init", "hhl_init", "id")
+  my_initial_state_ref=simul_rcd_ref[simul_rcd_ref$time==100, c("Ul", "U0","Sl", "S0","Tl", "T0","h", "hl","hh", "hhl", "id")]
+  names(my_initial_state_ref)=c("Ul_init", "U0_init","Sl_init", "S0_init","Tl_init", "T0_init","h_init","hl_init","hh_init", "hhl_init", "id")
   simul_rcd_chain_ref=simulate_from_data_delay(df=mydata, from_equilibrium = FALSE,
                                            initial_states = my_initial_state_ref,
                                            f=1/69, gamma=1/383, r=1/60,  maxtime=900,year=F, rcd=T, referral = T) %>%

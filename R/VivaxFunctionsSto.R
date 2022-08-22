@@ -5,28 +5,28 @@
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay=function(){
-  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Il", # untreated infection
-                 "Sl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "S0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Tl", # treated infection
-                 "Sl [alpha*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Ul", # untreated infection
+                 "Sl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "S0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Tl", # treated infection
+                 "Sl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "S0 [(1-alpha)*(delta)*S0] -> Il", # untreated infection imported
-                 "Sl [(1-alpha)*(delta)*Sl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "S0 [(1-alpha)*(delta)*S0] -> Ul", # untreated infection imported
+                 "Sl [(1-alpha)*(delta)*Sl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "S0 [alpha*(delta)*S0] -> Tl", # treated infection imported
                  "Sl [alpha*(delta)*Sl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "Sl [(1-alpha)*f*Sl] -> Il", # untreated relapse
+                 "Sl [(1-alpha)*f*Sl] -> Ul", # untreated relapse
                  "Sl [alpha*f*Sl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "Sl [gamma*Sl] -> S0",  # liver clearance
-                 "Il [r*Il] -> Sl", # recovery
+                 "Ul [r*Ul] -> Sl", # recovery
                  "Tl [r*Tl] -> Sl", # recovery
-                 "I0 [r*I0] -> S0", # recovery
+                 "U0 [r*U0] -> S0", # recovery
                  "T0 [r*T0] -> S0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> Sl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> S0", # treatment rad cure
@@ -71,8 +71,8 @@ model_sto_vivax_delay=function(){
 simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), maxtime=1465, year=FALSE, sto_method="exact", runs=1, seeds=NULL){
 
   #simulation
-  state      = round(c(Il= parameters$Il,
-                 I0= parameters$I0,
+  state      = round(c(Ul= parameters$Ul,
+                 U0= parameters$U0,
                  Sl= parameters$Sl,
                  S0 = parameters$S0,
                  Tl= parameters$Tl,
@@ -128,7 +128,7 @@ simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), 
   all_time_steps=all_time_steps[all_time_steps <= maxtime]
 
   solutionVivax=solutionVivax  %>% dplyr::group_by(.data$time,.data$run) %>%
-    dplyr::summarise(Il=.data$Il[.data$Time==max(.data$Time)],I0=.data$I0[.data$Time==max(.data$Time)],
+    dplyr::summarise(Ul=.data$Ul[.data$Time==max(.data$Time)],U0=.data$U0[.data$Time==max(.data$Time)],
                      Sl=.data$Sl[.data$Time==max(.data$Time)],S0=.data$S0[.data$Time==max(.data$Time)],
                      Tl=.data$Tl[.data$Time==max(.data$Time)],T0=.data$T0[.data$Time==max(.data$Time)],
                      hh=sum(.data$is_hh), hhl=sum(.data$is_hhl), rcd_reac=sum(.data$is_rcd))
@@ -137,7 +137,7 @@ simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), 
 
   solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
   solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
-  solutionVivax$I=solutionVivax$Il+solutionVivax$I0+solutionVivax$Tl+solutionVivax$T0
+  solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
 
   solutionVivax$hh[solutionVivax$time==0]=ifelse(year, parameters$hh*365, parameters$hh)*parameters$N
   solutionVivax$hhl[solutionVivax$time==0]=ifelse(year, parameters$hhl*365, parameters$hhl)*parameters$N
@@ -154,9 +154,9 @@ simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), 
   solutionVivax_full=base::merge(solutionVivax, all_times_full, all=T)
 
   solutionVivax_full=solutionVivax_full[  with(solutionVivax_full, order(run, time)),]
-  index_list=base::which(is.na(solutionVivax_full$Il))
+  index_list=base::which(is.na(solutionVivax_full$Ul))
   for(i in index_list){
-    solutionVivax_full[i,c("Il", "I0", "Sl", "S0", "Tl", "T0", "I")]=solutionVivax_full[(i-1),c("Il", "I0", "Sl", "S0", "Tl", "T0", "I")]
+    solutionVivax_full[i,c("Ul", "U0", "Sl", "S0", "Tl", "T0", "I")]=solutionVivax_full[(i-1),c("Ul", "U0", "Sl", "S0", "Tl", "T0", "I")]
     solutionVivax_full[i,c("hh", "hhl", "h", "hl")]=c(0,0,0,0)
   }
 
@@ -175,28 +175,28 @@ simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), 
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay_mda=function(){
-  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Il", # untreated infection
-                 "SSl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "SS0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Tl", # treated infection
-                 "SSl [alpha*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Ul", # untreated infection
+                 "SSl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "SS0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Tl", # treated infection
+                 "SSl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "SS0 [(1-alpha)*(delta)*SS0] -> Il", # untreated infection imported
-                 "SSl [(1-alpha)*(delta)*SSl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "SS0 [(1-alpha)*(delta)*SS0] -> Ul", # untreated infection imported
+                 "SSl [(1-alpha)*(delta)*SSl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "SS0 [alpha*(delta)*SS0] -> Tl", # treated infection imported
                  "SSl [alpha*(delta)*SSl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "SSl [(1-alpha)*f*SSl] -> Il", # untreated relapse
+                 "SSl [(1-alpha)*f*SSl] -> Ul", # untreated relapse
                  "SSl [alpha*f*SSl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "SSl [gamma*SSl] -> SS0",  # liver clearance
-                 "Il [r*Il] -> SSl", # recovery
+                 "Ul [r*Ul] -> SSl", # recovery
                  "Tl [r*Tl] -> SSl", # recovery
-                 "I0 [r*I0] -> SS0", # recovery
+                 "U0 [r*U0] -> SS0", # recovery
                  "T0 [r*T0] -> SS0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> SSl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> SS0", # treatment rad cure
@@ -248,14 +248,14 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
 
 
   # apply the MDA on initial conditions
-  state_mda      = round(c(Il= parameters$Il*(1-MDAcov),
-                       I0= parameters$I0*(1-MDAcov),
+  state_mda      = round(c(Ul= parameters$Ul*(1-MDAcov),
+                       U0= parameters$U0*(1-MDAcov),
                        SSl= parameters$Sl*(1-MDAcov),
                        SS0 = parameters$S0*(1-MDAcov),
                        Tl= parameters$Tl*(1-MDAcov),
                        T0 = parameters$T0*(1-MDAcov),
-                       Pl=MDAcov*(1-MDArad_cure)*(parameters$Il+parameters$Tl+parameters$Sl),
-                       P0=MDAcov*(parameters$I0+ parameters$T0+parameters$S0+MDArad_cure*(parameters$Il+parameters$Tl+parameters$Sl))
+                       Pl=MDAcov*(1-MDArad_cure)*(parameters$Ul+parameters$Tl+parameters$Sl),
+                       P0=MDAcov*(parameters$U0+ parameters$T0+parameters$S0+MDArad_cure*(parameters$Ul+parameters$Tl+parameters$Sl))
   )*parameters$N)
 
   if(sum(state_mda)!=parameters$N){
@@ -300,11 +300,11 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
     this_solutionVivax_mda$Sl=this_solutionVivax_mda$SSl+ this_solutionVivax_mda$Pl
     this_solutionVivax_mda$S0=this_solutionVivax_mda$SS0+ this_solutionVivax_mda$P0
 
-    this_solutionVivax_mda=this_solutionVivax_mda[c("Time", "Reaction", "Nrep","Il","I0","Sl","S0","Tl","T0")]
+    this_solutionVivax_mda=this_solutionVivax_mda[c("Time", "Reaction", "Nrep","Ul","U0","Sl","S0","Tl","T0")]
 
     # simulation after prophylaxis
-    state_post_mda= c(Il= this_solutionVivax_mda$Il[nrow(this_solutionVivax_mda)],
-                      I0= this_solutionVivax_mda$I0[nrow(this_solutionVivax_mda)],
+    state_post_mda= c(Ul= this_solutionVivax_mda$Ul[nrow(this_solutionVivax_mda)],
+                      U0= this_solutionVivax_mda$U0[nrow(this_solutionVivax_mda)],
                       Sl= this_solutionVivax_mda$Sl[nrow(this_solutionVivax_mda)],
                       S0= this_solutionVivax_mda$S0[nrow(this_solutionVivax_mda)],
                       Tl= this_solutionVivax_mda$Tl[nrow(this_solutionVivax_mda)],
@@ -339,7 +339,7 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
 
 
   solutionVivax=solutionVivax  %>% dplyr::group_by(.data$time,.data$run) %>%
-    dplyr::summarise(Il=.data$Il[.data$Time==max(.data$Time)],I0=.data$I0[.data$Time==max(.data$Time)],
+    dplyr::summarise(Ul=.data$Ul[.data$Time==max(.data$Time)],U0=.data$U0[.data$Time==max(.data$Time)],
                      Sl=.data$Sl[.data$Time==max(.data$Time)],S0=.data$S0[.data$Time==max(.data$Time)],
                      Tl=.data$Tl[.data$Time==max(.data$Time)],T0=.data$T0[.data$Time==max(.data$Time)],
                      hh=sum(.data$is_hh), hhl=sum(.data$is_hhl), rcd_reac=sum(.data$is_rcd))
@@ -348,7 +348,7 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
 
   solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
   solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
-  solutionVivax$I=solutionVivax$Il+solutionVivax$I0+solutionVivax$Tl+solutionVivax$T0
+  solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
 
   solutionVivax$hh[solutionVivax$time==0]=ifelse(year, parameters$hh*365, parameters$hh)*parameters$N
   solutionVivax$hhl[solutionVivax$time==0]=ifelse(year, parameters$hhl*365, parameters$hhl)*parameters$N
@@ -365,9 +365,9 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
   solutionVivax_full=base::merge(solutionVivax, all_times_full, all=T)
 
   solutionVivax_full=solutionVivax_full[  with(solutionVivax_full, order(run, time)),]
-  index_list=base::which(is.na(solutionVivax_full$Il))
+  index_list=base::which(is.na(solutionVivax_full$Ul))
   for(i in index_list){
-    solutionVivax_full[i,c("Il", "I0", "Sl", "S0", "Tl", "T0", "I")]=solutionVivax_full[(i-1),c("Il", "I0", "Sl", "S0", "Tl", "T0", "I")]
+    solutionVivax_full[i,c("Ul", "U0", "Sl", "S0", "Tl", "T0", "I")]=solutionVivax_full[(i-1),c("Ul", "U0", "Sl", "S0", "Tl", "T0", "I")]
     solutionVivax_full[i,c("hh", "hhl", "h", "hl")]=c(0,0,0,0)
   }
 
@@ -387,35 +387,35 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay_rcd_referral =function(){
-  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Il", # untreated infection
-                 "Sl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "S0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Tl", # treated infection
-                 "Sl [alpha*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Ul", # untreated infection
+                 "Sl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "S0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Tl", # treated infection
+                 "Sl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "S0 [(1-alpha)*(delta)*S0] -> Il", # untreated infection imported
-                 "Sl [(1-alpha)*(delta)*Sl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "S0 [(1-alpha)*(delta)*S0] -> Ul", # untreated infection imported
+                 "Sl [(1-alpha)*(delta)*Sl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "S0 [alpha*(delta)*S0] -> Tl", # treated infection imported
                  "Sl [alpha*(delta)*Sl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "Sl [(1-alpha)*f*Sl] -> Il", # untreated relapse
+                 "Sl [(1-alpha)*f*Sl] -> Ul", # untreated relapse
                  "Sl [alpha*f*Sl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "Sl [gamma*Sl] -> S0",  # liver clearance
-                 "Il [r*Il] -> Sl", # recovery
+                 "Ul [r*Ul] -> Sl", # recovery
                  "Tl [r*Tl] -> Sl", # recovery
-                 "I0 [r*I0] -> S0", # recovery
+                 "U0 [r*U0] -> S0", # recovery
                  "T0 [r*T0] -> S0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> Sl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> S0", # treatment rad cure
                  "T0 [sigma*T0 ] -> S0", # treatment
 
-                 "Il [Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> Tl", # RCD referral
-                 "I0 [I0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> T0" # RCD referral
+                 "Ul [Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> Tl", # RCD referral
+                 "U0 [U0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> T0" # RCD referral
 
 
 
@@ -446,36 +446,36 @@ model_sto_vivax_delay_rcd_referral =function(){
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay_rcd_no_referral =function(){
-  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Il", # untreated infection
-                 "Sl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "S0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*S0/N] -> Tl", # treated infection
-                 "Sl [alpha*(omega*lambda*(Il+I0+Tl+T0))*Sl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("S0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Ul", # untreated infection
+                 "Sl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "S0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*S0/N] -> Tl", # treated infection
+                 "Sl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*Sl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "S0 [(1-alpha)*(delta)*S0] -> Il", # untreated infection imported
-                 "Sl [(1-alpha)*(delta)*Sl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "S0 [(1-alpha)*(delta)*S0] -> Ul", # untreated infection imported
+                 "Sl [(1-alpha)*(delta)*Sl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "S0 [alpha*(delta)*S0] -> Tl", # treated infection imported
                  "Sl [alpha*(delta)*Sl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "Sl [(1-alpha)*f*Sl] -> Il", # untreated relapse
+                 "Sl [(1-alpha)*f*Sl] -> Ul", # untreated relapse
                  "Sl [alpha*f*Sl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "Sl [gamma*Sl] -> S0",  # liver clearance
-                 "Il [r*Il] -> Sl", # recovery
+                 "Ul [r*Ul] -> Sl", # recovery
                  "Tl [r*Tl] -> Sl", # recovery
-                 "I0 [r*I0] -> S0", # recovery
+                 "U0 [r*U0] -> S0", # recovery
                  "T0 [r*T0] -> S0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> Sl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> S0", # treatment rad cure
                  "T0 [sigma*T0 ] -> S0", # treatment
 
-                 "Il [(1-beta)*Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> Sl", # RCD referral
-                 "Il [beta*Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> S0", # RCD referral
-                 "I0 [I0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> S0"
+                 "Ul [(1-beta)*Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> Sl", # RCD referral
+                 "Ul [beta*Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> S0", # RCD referral
+                 "U0 [U0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl)/N +f*Sl)/N):iota)] -> S0"
 
   )
 
@@ -506,35 +506,35 @@ model_sto_vivax_delay_rcd_no_referral =function(){
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay_rcd_referral_mda =function(){
-  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Il", # untreated infection
-                 "SSl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "SS0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Tl", # treated infection
-                 "SSl [alpha*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Ul", # untreated infection
+                 "SSl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "SS0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Tl", # treated infection
+                 "SSl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "SS0 [(1-alpha)*(delta)*SS0] -> Il", # untreated infection imported
-                 "SSl [(1-alpha)*(delta)*SSl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "SS0 [(1-alpha)*(delta)*SS0] -> Ul", # untreated infection imported
+                 "SSl [(1-alpha)*(delta)*SSl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "SS0 [alpha*(delta)*SS0] -> Tl", # treated infection imported
                  "SSl [alpha*(delta)*SSl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "SSl [(1-alpha)*f*SSl] -> Il", # untreated relapse
+                 "SSl [(1-alpha)*f*SSl] -> Ul", # untreated relapse
                  "SSl [alpha*f*SSl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "SSl [gamma*SSl] -> SS0",  # liver clearance
-                 "Il [r*Il] -> SSl", # recovery
+                 "Ul [r*Ul] -> SSl", # recovery
                  "Tl [r*Tl] -> SSl", # recovery
-                 "I0 [r*I0] -> SS0", # recovery
+                 "U0 [r*U0] -> SS0", # recovery
                  "T0 [r*T0] -> SS0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> SSl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> SS0", # treatment rad cure
                  "T0 [sigma*T0 ] -> SS0", # treatment
 
-                 "Il [Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> Tl", # RCD referral
-                 "I0 [I0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> T0", # RCD referral
+                 "Ul [Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> Tl", # RCD referral
+                 "U0 [U0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> T0", # RCD referral
 
                  "Pl [gamma*Pl ] -> P0" # liver clearance in prophylaxis compartment
 
@@ -565,36 +565,36 @@ model_sto_vivax_delay_rcd_referral_mda =function(){
 #' reactions_incidence: a list of vectors indicating which reactions correspond to the incidence variables hh and hhl
 #' @export
 model_sto_vivax_delay_rcd_no_referral_mda =function(){
-  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Il", # untreated infection
-                 "SSl [(1-alpha)*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Il", # untreated infection
-                 "I0 [(omega*lambda*(Il+I0+Tl+T0))*I0/N] -> Il", # untreated reinfection
-                 "SS0 [alpha*(omega*lambda*(Il+I0+Tl+T0))*SS0/N] -> Tl", # treated infection
-                 "SSl [alpha*(omega*lambda*(Il+I0+Tl+T0))*SSl/N] -> Tl", # treated infection
-                 "T0 [(omega*lambda*(Il+I0+Tl+T0))*T0/N] -> Tl", # treated reinfection
+  reactions <- c("SS0 [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Ul", # untreated infection
+                 "SSl [(1-alpha)*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Ul", # untreated infection
+                 "U0 [(omega*lambda*(Ul+U0+Tl+T0))*U0/N] -> Ul", # untreated reinfection
+                 "SS0 [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SS0/N] -> Tl", # treated infection
+                 "SSl [alpha*(omega*lambda*(Ul+U0+Tl+T0))*SSl/N] -> Tl", # treated infection
+                 "T0 [(omega*lambda*(Ul+U0+Tl+T0))*T0/N] -> Tl", # treated reinfection
 
-                 "SS0 [(1-alpha)*(delta)*SS0] -> Il", # untreated infection imported
-                 "SSl [(1-alpha)*(delta)*SSl] -> Il", # untreated infection imported
-                 "I0 [(delta)*I0] -> Il", # untreated reinfection imported
+                 "SS0 [(1-alpha)*(delta)*SS0] -> Ul", # untreated infection imported
+                 "SSl [(1-alpha)*(delta)*SSl] -> Ul", # untreated infection imported
+                 "U0 [(delta)*U0] -> Ul", # untreated reinfection imported
                  "SS0 [alpha*(delta)*SS0] -> Tl", # treated infection imported
                  "SSl [alpha*(delta)*SSl] -> Tl", # treated infection imported
                  "T0 [(delta)*T0] -> Tl", # treated reinfection imported
 
-                 "SSl [(1-alpha)*f*SSl] -> Il", # untreated relapse
+                 "SSl [(1-alpha)*f*SSl] -> Ul", # untreated relapse
                  "SSl [alpha*f*SSl] -> Tl", # treated relapse
-                 "Il [gamma*Il] -> I0",  # liver clearance
+                 "Ul [gamma*Ul] -> U0",  # liver clearance
                  "Tl [gamma*Tl] -> T0",  # liver clearance
                  "SSl [gamma*SSl] -> SS0",  # liver clearance
-                 "Il [r*Il] -> SSl", # recovery
+                 "Ul [r*Ul] -> SSl", # recovery
                  "Tl [r*Tl] -> SSl", # recovery
-                 "I0 [r*I0] -> SS0", # recovery
+                 "U0 [r*U0] -> SS0", # recovery
                  "T0 [r*T0] -> SS0", # recovery
                  "Tl [(1-beta)*sigma*Tl] -> SSl", # treatment no rad cure
                  "Tl [beta*sigma*Tl] -> SS0", # treatment rad cure
                  "T0 [sigma*T0 ] -> SS0", # treatment
 
-                 "Il [(1-beta)*Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SSl", # RCD referral
-                 "Il [beta*Il*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SS0", # RCD referral
-                 "I0 [I0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Il+I0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SS0",
+                 "Ul [(1-beta)*Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SSl", # RCD referral
+                 "Ul [beta*Ul*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SS0", # RCD referral
+                 "U0 [U0*nu*tau*eta*(!(iota<rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N)?(rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(SS0+SSl)/N +f*SSl)/N):iota)] -> SS0",
 
                  "Pl [gamma*Pl ] -> P0" # liver clearance in prophylaxis compartment
 

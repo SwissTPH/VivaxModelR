@@ -19,7 +19,7 @@ get_equilibrium_states_vivax_delay(
 )
 }
 \arguments{
-\item{I}{proportion of infectious individuals at equilibrium (I0+Il)}
+\item{I}{proportion of infectious individuals at equilibrium (U0+Ul)}
 
 \item{lambda}{transmission rate}
 
@@ -42,8 +42,8 @@ get_equilibrium_states_vivax_delay(
 \item{omega}{vector control intensity. If vector control is not the purpose of the analysis, omega can be fixed to 1.}
 }
 \value{
-A list with the equilibrium states (I0, Il, S0 and Sl)
+A list with the equilibrium states (U0, Ul, S0 and Sl)
 }
 \description{
-Calculates equilibrium state variables I0, Il, T0, Tl, S0 and Sl based on I and model parameters
+Calculates equilibrium state variables U0, Ul, T0, Tl, S0 and Sl based on I and model parameters
 }

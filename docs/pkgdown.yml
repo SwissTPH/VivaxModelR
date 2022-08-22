@@ -1,11 +1,11 @@
-pandoc: 2.7.3
-pkgdown: 2.0.2
+pandoc: '2.18'
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   vivaxmodelr: vivaxmodelr.html
   vivaxmodelr_delay: vivaxmodelr_delay.html
   vivaxmodelr_dev_doc: vivaxmodelr_dev_doc.html
-last_built: 2022-03-31T17:47Z
+last_built: 2022-08-19T14:59Z
 urls:
   reference: https://swisstph.github.io/VivaxModelR/reference
   article: https://swisstph.github.io/VivaxModelR/articles

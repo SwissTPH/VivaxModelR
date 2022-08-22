@@ -5,7 +5,7 @@ test_that("test time varying vector control working", {
   parameters=list("r"=1/60, "gamma"=1/223,
                   "f"=1/72,"lambda"=0.03,"delta"=1.854486e-05,
                   "alpha"=0.4, "beta"=0.7, "sigma"=1/15, "rho"=0.4,"omega"=1,
-                  "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0, "N"=10000)
+                  "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0,"hh"=0, "hhl"=0, "T0"=0, "Tl"=0, "N"=10000)
 
   # fixed parameters
   simul_sto=simulate_vivax_delay_sto(parameters, STOmodel=mySTOmodel, runs = 10, maxtime = 1465, year=T)
@@ -119,7 +119,7 @@ test_that("test simulation of future scenarios, with stochastic model", {
                tolerance =2e-02, label = "constant simulation almost constant")
 
   # ggplot(simul.PQ)+
-  #   geom_line(aes(x=time, y=Il, color="Il", group=run))+
+  #   geom_line(aes(x=time, y=Ul, color="Ul", group=run))+
   #   geom_line(aes(x=time, y=S0, color="S0", group=run))+
   #   facet_wrap(.~id)
   #
@@ -129,7 +129,7 @@ test_that("test simulation of future scenarios, with stochastic model", {
 
   simul.TQ_mean=simul.TQ %>% dplyr::group_by(.data$id, .data$time) %>% dplyr::summarise_all("mean") %>% data.frame() %>%
     dplyr::left_join(mydata[c("id", "N")]) %>%
-    dplyr::mutate(Il=.data$Il/.data$N, I0=.data$I0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
+    dplyr::mutate(Ul=.data$Ul/.data$N, U0=.data$U0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
                   I=.data$I/.data$N, hh=.data$hh/.data$N,hhl=.data$hhl/.data$N,h=.data$h/.data$N,hl=.data$hl/.data$N)
 
   row.names(simul.TQ.det)=NULL
@@ -181,7 +181,7 @@ test_that("test simulation of future scenarios", {
 
   simul2_mean=simul2 %>% dplyr::group_by(.data$time, .data$id, .data$intervention) %>% dplyr::summarise_all("mean") %>% data.frame()%>%
     dplyr::left_join(mydata[c("id", "N")]) %>%
-    dplyr::mutate(Il=.data$Il/.data$N, I0=.data$I0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
+    dplyr::mutate(Ul=.data$Ul/.data$N, U0=.data$U0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
                   I=.data$I/.data$N, hh=.data$hh/.data$N,hhl=.data$hhl/.data$N,h=.data$h/.data$N,hl=.data$hl/.data$N)
 
 
@@ -190,7 +190,7 @@ test_that("test simulation of future scenarios", {
   row.names(simul_1_2)=NULL
 
   expect_equal(simul2_mean %>% dplyr::arrange(id, intervention, time) %>% dplyr::select(-step, -run, -N, -p, -incidence),
-               simul_1_2%>% dplyr::arrange(id, intervention, time) %>% dplyr::select(time, id, intervention, Il, I0, Sl, S0, Tl, T0, hh, hhl, h, hl, I ) ,
+               simul_1_2%>% dplyr::arrange(id, intervention, time) %>% dplyr::select(time, id, intervention, Ul, U0, Sl, S0, Tl, T0, hh, hhl, h, hl, I ) ,
                tolerance = 5e-02, label = "chaining from equilibrium is not the same as simulating from equilibrium")
 
   simul2_minmax=simul2 %>% dplyr::select(-p, -step) %>% tidyr::pivot_longer(cols=c(-time, -run, -id, -incidence, -intervention)) %>%
@@ -218,7 +218,7 @@ test_that("test compare MDA in delay model with non MDA model (no RCD)", {
   parameters_mda=list("r"=1/60, "gamma"=1/383,
                       "f"=1/69,"lambda"=0.013,"delta"=3.562799e-05,
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
-                      "I0"=0.037, "S0"=0.38, "Sl"=0.2686, "Il"=0.3, "Tl"=0.014, "T0"=0.0004,
+                      "U0"=0.037, "S0"=0.38, "Sl"=0.2686, "Ul"=0.3, "Tl"=0.014, "T0"=0.0004,
                       "h"=0.001, "hl"=0, "hh"=0, "hhl"=0,
                       "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000)
 
@@ -338,7 +338,7 @@ test_that("test simulation of future scenarios, with MDA and delay", {
   simul2_mean=simul2 %>% dplyr::group_by(.data$time, .data$id, .data$intervention) %>% dplyr::summarise_all("mean") %>%
     data.frame()%>% dplyr::select(-run)%>%
     dplyr::left_join(mydata[c("id", "N")]) %>%
-    dplyr::mutate(Il=.data$Il/.data$N, I0=.data$I0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
+    dplyr::mutate(Ul=.data$Ul/.data$N, U0=.data$U0/.data$N,  Sl=.data$Sl/.data$N, S0=.data$S0/.data$N, Tl=.data$Tl/.data$N, T0=.data$T0/.data$N,
                   I=.data$I/.data$N, hh=.data$hh/.data$N,hhl=.data$hhl/.data$N,h=.data$h/.data$N,hl=.data$hl/.data$N)
 
   row.names(simul2_mean)=NULL
@@ -351,7 +351,7 @@ test_that("test simulation of future scenarios, with MDA and delay", {
   row.names(simul2_det)=NULL
 
   expect_equal(simul2_mean  %>% dplyr::arrange(id, intervention, time)%>% dplyr::select(-N, -p , - incidence),
-               simul2_det  %>% dplyr::arrange(id, intervention, time)%>% dplyr::select(time, id, intervention, Il, I0, Sl, S0, Tl, T0, hh, hhl, h, hl, I, step ),
+               simul2_det  %>% dplyr::arrange(id, intervention, time)%>% dplyr::select(time, id, intervention, Ul, U0, Sl, S0, Tl, T0, hh, hhl, h, hl, I, step ),
                tolerance = 5e-02, label = "MDA sto and non sto")
 
     # ggplot(simul2 )+
