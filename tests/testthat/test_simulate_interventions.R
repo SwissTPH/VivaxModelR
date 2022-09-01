@@ -102,8 +102,8 @@ test_that("test simulation of future scenarios, with RCD", {
   r=1/60
   mydata2=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T)
@@ -148,8 +148,8 @@ test_that("test simulation of future scenarios, with RCD and delay", {
   r=1/60
   mydata2=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T , delay = T)
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T)
@@ -193,8 +193,8 @@ test_that("test simulation of future scenarios, with RCD and delay and referral"
   r=1/60
   mydata2=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T, delay = T )
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
-  int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=0.5, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=2, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=0.5, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=2, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T, referral = T)
@@ -290,15 +290,14 @@ test_that("test simulation of future scenarios, with RCD and delay (RCD at basel
   mydata$nu=c(5, 5)
   mydata$tau=c(2, 2)
   mydata$eta=c(1, 1)
-  mydata$kappa=c(0.3, 0.3)
   mydata$omega=c(1,1)
   f=1/72
   gamma=1/223
   r=1/60
   mydata2=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T, rcd=T , delay=TRUE)
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
-  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T, rcd_at_baseline = T)

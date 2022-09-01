@@ -121,23 +121,22 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
 
   if(rcd==TRUE){
     if(!"iota.new" %in% names(intervention_object) | !"tau.new" %in% names(intervention_object)|
-        !"nu.new" %in% names(intervention_object)| !"eta.new" %in% names(intervention_object)| !"kappa.new" %in% names(intervention_object) ){
-      stop("some rcd parameters (iota.new, nu.new, tau.new, eta.new or kappa.new) are missing in df, please use model without rcd")
+        !"nu.new" %in% names(intervention_object)| !"eta.new" %in% names(intervention_object) ){
+      stop("some rcd parameters (iota.new, nu.new, tau.new or eta.new) are missing in df, please use model without rcd")
     }
 
 
     if(rcd_at_baseline==TRUE){
 
       if(!"iota" %in% names(df) | !"iota_star" %in% names(df) | !"tau" %in% names(df)|
-         !"nu" %in% names(df)| !"eta" %in% names(df)| !"kappa" %in% names(df) ){
-        stop("some rcd parameters (iota_star, nu, tau, eta or kappa) are missing in df, please use model without rcd")
+         !"nu" %in% names(df)| !"eta" %in% names(df)){
+        stop("some rcd parameters (iota_star, nu, tau or eta) are missing in df, please use model without rcd")
       }
 
       new_df$iota.old=new_df$iota
       new_df$nu.old=new_df$nu
       new_df$tau.old=new_df$tau
       new_df$eta.old=new_df$eta
-      new_df$kappa.old=new_df$kappa
     }
 
     if(is.na(intervention_object$iota.new)){
@@ -156,11 +155,6 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
       new_df$eta.new =  ifelse(rcd_at_baseline,  new_df$eta.old, 0)
       warning("no eta parameter, assumed eta=0 or eta=eta.old")
     } else new_df$eta.new = intervention_object$eta.new
-    if(is.na(intervention_object$kappa.new)){
-      new_df$kappa.new =  ifelse(rcd_at_baseline,  new_df$kappa.old, 1)
-      warning("no kappa parameter, assumed kappa=1 or kappa=kappa.old")
-    } else new_df$kappa.new = intervention_object$kappa.new
-
 
 
   }
@@ -393,7 +387,7 @@ calibrate_vivax_equilibrium=function(df, f=1/72, gamma=1/223, r=1/60, delay=FALS
     warning("There is a sigma parameter in df: are you sure you don't want to use the model with delay in treatment?")
   }
 
-  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)| !"kappa" %in% names(df)) & rcd==TRUE ){
+  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)) & rcd==TRUE ){
     stop("RCD parameters are missing, please add them or use model without RCD")
   }
 

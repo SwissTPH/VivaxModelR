@@ -188,16 +188,16 @@ ggplot(simulation_model2_MDA)+
 
 
 ### Reactive case detection
-Reactive case detection (RCD) can also be included as a future intervention, following the framework by @chitnis2019 and @das2021. It is represented with 4 parameters. $\iota$ is the maximum number of reported cases that can be investigated per day (normalised by population size), $\nu$ is the number of individuals tested in each investigation around a reported case, $\tau$ is the targeting ratio reflecting the increased probability of case detection in the vicinity of a confirmed case (see @chitnis2019) and $\eta$ is probability for a positive case detected by RCD to be effectively cured. It is assumed that the probability of liver-stage clearance is the same for people detected via RCD as for treated individuals in general (equal to $\beta$). $\kappa$ is defined in relation to the case management cascade and it represents the common part between $\rho$ and $\alpha$ : it is required for the calculation of incidence.
+Reactive case detection (RCD) can also be included as a future intervention, following the framework by @chitnis2019 and @das2021. It is represented with 4 parameters. $\iota$ is the maximum number of reported cases that can be investigated per day (normalised by population size), $\nu$ is the number of individuals tested in each investigation around a reported case, $\tau$ is the targeting ratio reflecting the increased probability of case detection in the vicinity of a confirmed case (see @chitnis2019) and $\eta$ is probability for a positive case detected by RCD to be effectively cured. It is assumed that the probability of liver-stage clearance is the same for people detected via RCD as for treated individuals in general (equal to $\beta$).
 
 
 #### Simulate a future scenario with the fitted model, including reactive case detection
 
 We define new intervention objects with the RCD parameters:
 ```{r}
-intervention_objectC_rcd=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectC_rcd2=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectC_rcd3=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=Inf, "nu.new"=5, "tau.new"=2, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
+intervention_objectC_rcd=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=0.5, "rho.new"=NA )
+intervention_objectC_rcd2=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=2, "eta.new"=1, "rho.new"=NA  )
+intervention_objectC_rcd3=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=1/5, "iota.new"=Inf, "nu.new"=5, "tau.new"=2, "eta.new"=1,"rho.new"=NA )
 ```
 In the third scenario, the neighborhood of all cases reported are investigated.  
 The interventions can be simulated as before, adding the option 'rcd=TRUE'. When the delay model is used (delay=TRUE), there are two options for the underlying RCD model: individuals detected by RCD are either treated immediately (referral=FALSE, default) or they have to be referred to a health facility for testing, and hence are treated with similar delays as those detected when seeking care (referral=TRUE).
@@ -224,9 +224,9 @@ Following @chitnis2019, the targeting ratio $\tau$ can be made varying over time
 ```
 This function can be used as an input in the intervention object for $\tau$.
 ```{r}
-intervention_objectC_rcd_tv=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=0.5, "kappa.new"=1, "rho.new"=NA )
-intervention_objectC_rcd2_tv=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1,"kappa.new"=1, "rho.new"=NA  )
-intervention_objectC_rcd3_tv=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1 , "kappa.new"=1,"rho.new"=NA )
+intervention_objectC_rcd_tv=list(intervention_name="intervC + rcd 50%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=0.5, "rho.new"=NA )
+intervention_objectC_rcd2_tv=list(intervention_name="intervC + rcd 100%", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,  "iota.new"=5/7/10000, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1, "rho.new"=NA  )
+intervention_objectC_rcd3_tv=list(intervention_name="intervC + rcd 100% ++", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=Inf, "nu.new"=5, "tau.new"=my_tau, "eta.new"=1,"rho.new"=NA )
 ```
 
 ```{r , fig.width = 7}
@@ -240,7 +240,7 @@ ggplot(rbind(simulation_model2 %>% dplyr::mutate(timevaryingtau="no"),simulation
 
 #### Calibrating the model with RCD at baseline
 
-If there is some RCD already at baseline, this can be accounted for during the model calibration step. The initial dataset should contain the RCD parameters, i.e. $\iota$, $\nu$, $\tau$, $\eta$ and $\kappa$
+If there is some RCD already at baseline, this can be accounted for during the model calibration step. The initial dataset should contain the RCD parameters, i.e. $\iota$, $\nu$, $\tau$ and $\eta$.
 
 ```{r}
 mydata_rcd=mydata
@@ -248,7 +248,6 @@ mydata_rcd$iota=c(5/7/365, Inf) # number of index cases investigated per day
 mydata_rcd$nu=c(5, 10) # number of secondary cases investigated
 mydata_rcd$tau=c(5,5)  # targeting ratio
 mydata_rcd$eta=c(0.95,0.95)  # probability of detection of a case
-mydata_rcd$kappa=c(0.18,0.13) # common part between rho and alpha (please refer to case management cascade)
 ```
 
 The calibration step is then executed with the option rcd=T.
@@ -268,7 +267,7 @@ my_h1=mydata_rcd$h[mydata_rcd$id=="regionA"] *0.9
 my_h2=mydata_rcd$h[mydata_rcd$id=="regionB"] *0.1  # we assume in this example that 10% of the reported cases were detected via RCD
 calculate_tau_rcd(h1=my_h1 , h2=my_h2, 
                   alpha= mydata_rcd$alpha[mydata_rcd$id=="regionA"], rho= mydata_rcd$rho[mydata_rcd$id=="regionA"],
-                  kappa= mydata_rcd$kappa[mydata_rcd$id=="regionA"], iota= mydata_rcd$iota[mydata_rcd$id=="regionA"], 
+                  iota= mydata_rcd$iota[mydata_rcd$id=="regionA"], 
                   nu= mydata_rcd$nu[mydata_rcd$id=="regionA"], eta= mydata_rcd$eta[mydata_rcd$id=="regionA"], 
                   r= 1/60 )
 ```

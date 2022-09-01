@@ -4,7 +4,7 @@
 \alias{calculate_h1_rcd}
 \title{Calculate h1 from aggregated incidence data}
 \usage{
-calculate_h1_rcd(h, alpha, rho, kappa, iota, nu, tau, eta, r)
+calculate_h1_rcd(h, alpha, rho, iota, nu, tau, eta, r)
 }
 \arguments{
 \item{h}{daily incidence}
@@ -12,8 +12,6 @@ calculate_h1_rcd(h, alpha, rho, kappa, iota, nu, tau, eta, r)
 \item{alpha}{effective treatment probability}
 
 \item{rho}{observation rate}
-
-\item{kappa}{common part in rho and alpha}
 
 \item{iota}{RCD parameter: maximum number of index cases investigated per population per unit of time}
 

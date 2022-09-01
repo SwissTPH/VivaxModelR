@@ -179,7 +179,6 @@ simulate_from_data=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/
       myparameters$tau=ifelse(is.list(df$tau.new[i]),df$tau.new[i][[1]],df$tau.new[i])
       myparameters$nu=df$nu.new[i]
       myparameters$eta=df$eta.new[i]
-      myparameters$kappa=df$kappa.new[i]
     }
     if(mda){
       myparameters$MDAcov=df$MDAcov.new[i]
@@ -199,7 +198,7 @@ simulate_from_data=function(df, from_equilibrium=TRUE, initial_states=NULL, f=1/
                                                 alpha=df$alpha.old[i], beta=df$beta.old[i], rho=df$rho.old[i],
                                                 delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
                                                 omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)),
-                                                iota_star =df$iota_star[i], nu=df$nu.old[i], tau=df$tau.old[i],eta=df$eta.old[i],kappa=df$kappa.old[i])
+                                                iota_star =df$iota_star[i], nu=df$nu.old[i], tau=df$tau.old[i],eta=df$eta.old[i])
       }
 
       myparameters$I0=equ_states$I0

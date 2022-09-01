@@ -4,7 +4,7 @@
 \alias{calculate_tau_rcd}
 \title{Calculate the targeting ratio from incidence data with information on RCD}
 \usage{
-calculate_tau_rcd(h1, h2, alpha, rho, kappa, iota, nu, eta, r)
+calculate_tau_rcd(h1, h2, alpha, rho, iota, nu, eta, r)
 }
 \arguments{
 \item{h1}{daily incidence, directly detected cases}
@@ -14,8 +14,6 @@ calculate_tau_rcd(h1, h2, alpha, rho, kappa, iota, nu, eta, r)
 \item{alpha}{effective treatment probability}
 
 \item{rho}{observation rate}
-
-\item{kappa}{common part in rho and alpha}
 
 \item{iota}{RCD parameter: maximum number of index cases investigated per population per unit of time}
 

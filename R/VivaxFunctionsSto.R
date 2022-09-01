@@ -133,10 +133,8 @@ simulate_vivax_delay_sto=function(parameters, STOmodel=model_sto_vivax_delay(), 
                      Tl=.data$Tl[.data$Time==max(.data$Time)],T0=.data$T0[.data$Time==max(.data$Time)],
                      hh=sum(.data$is_hh), hhl=sum(.data$is_hhl), rcd_reac=sum(.data$is_rcd))
 
-  corr_factor_rcd=ifelse(any(solutionVivax$rcd_reac), (1-parameters$alpha-parameters$rho+parameters$rho*parameters$alpha/parameters$kappa)/(1-parameters$alpha),0)
-
-  solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
-  solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
+  solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac
+  solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac
   solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
 
   solutionVivax$hh[solutionVivax$time==0]=ifelse(year, parameters$hh*365, parameters$hh)*parameters$N
@@ -344,10 +342,9 @@ simulate_vivax_delay_mda_sto=function(parameters, STOmodel=model_sto_vivax_delay
                      Tl=.data$Tl[.data$Time==max(.data$Time)],T0=.data$T0[.data$Time==max(.data$Time)],
                      hh=sum(.data$is_hh), hhl=sum(.data$is_hhl), rcd_reac=sum(.data$is_rcd))
 
-  corr_factor_rcd=ifelse(any(solutionVivax$rcd_reac), (1-parameters$alpha-parameters$rho+parameters$rho*parameters$alpha/parameters$kappa)/(1-parameters$alpha),0)
 
-  solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
-  solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac*corr_factor_rcd
+  solutionVivax$h=solutionVivax$hh*parameters$rho + solutionVivax$rcd_reac
+  solutionVivax$hl=solutionVivax$hhl*parameters$rho + solutionVivax$rcd_reac
   solutionVivax$I=solutionVivax$Ul+solutionVivax$U0+solutionVivax$Tl+solutionVivax$T0
 
   solutionVivax$hh[solutionVivax$time==0]=ifelse(year, parameters$hh*365, parameters$hh)*parameters$N

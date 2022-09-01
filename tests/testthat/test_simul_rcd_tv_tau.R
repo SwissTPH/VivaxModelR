@@ -9,7 +9,7 @@ test_that("test compare RCD incl. time varying tau in non delay model with non R
                       "f"=1/72,"lambda"=0.00155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0,
-                      "hl"=0, "hh"=0, "hhl"=0,"kappa"=1,
+                      "hl"=0, "hh"=0, "hhl"=0,
                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters_rcd_tv=parameters_rcd
@@ -36,7 +36,7 @@ test_that("test compare RCD incl. time varying tau in non delay model with non R
                        "f"=1/72,"lambda"=0.0055531,"delta"=0.0001,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1,
-                       "h"=0, "hr"=0,"hl"=0,  "hh"=0, "hhl"=0,"kappa"=1,
+                       "h"=0, "hr"=0,"hl"=0,  "hh"=0, "hhl"=0,
                        "tau"=1.5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters2_rcd_tv=parameters2_rcd
@@ -69,7 +69,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
                       "f"=1/72,"lambda"=0.00155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
-                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,
                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
 
@@ -98,7 +98,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
                        "f"=1/72,"lambda"=0.00155531,"delta"=0.0001,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters2_rcd_tv=parameters2_rcd
@@ -133,7 +133,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                       "f"=1/72,"lambda"=0.00455531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,
                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters_rcd_tv=parameters_rcd
@@ -162,7 +162,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                        "f"=1/72,"lambda"=0.00155531,"delta"=0.001,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters2_rcd_tv=parameters2_rcd
@@ -198,7 +198,7 @@ test_that("test compare the 3 RCD models", {
                       "f"=1/72,"lambda"=0.0155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
-                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,
                       "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
 
   parameters_rcd_nodelay=parameters_rcd
@@ -223,7 +223,7 @@ test_that("test compare the 3 RCD models", {
                        "f"=1/72,"lambda"=0.0155531,"delta"=0,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
-                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,
                        "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
   parameters2_rcd_infsigma=parameters2_rcd; parameters2_rcd_infsigma$sigma=1/0.4
   parameters2_rcd_0sigma=parameters2_rcd; parameters2_rcd_0sigma$sigma=0
@@ -267,8 +267,8 @@ test_that("test simulation of future scenarios, with RCD and time varying tau", 
     return(varying_tau(nu=5, pr=pr, N=10000))
   }
 
-  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
-  int_B=list(intervention_name="B", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "rho.new"=0.3, "kappa.new"=0.3)
+  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
+  int_B=list(intervention_name="B", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "rho.new"=0.3)
   my_intervention_list=list(int_A,int_B)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T)

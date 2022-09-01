@@ -18,8 +18,7 @@ get_equilibrium_states_vivax_rcd(
   iota_star,
   nu,
   tau,
-  eta,
-  kappa
+  eta
 )
 }
 \arguments{
@@ -50,8 +49,6 @@ get_equilibrium_states_vivax_rcd(
 \item{tau}{RCD parameter: targeting ratio of the RCD}
 
 \item{eta}{RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)}
-
-\item{kappa}{common part in rho and alpha}
 }
 \value{
 A list with the equilibrium states (I0, Il, S0 and Sl)

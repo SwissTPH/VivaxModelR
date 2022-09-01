@@ -15,7 +15,6 @@ ode_vivax_rcd <- function(t, y, parameters) {
   alpha=parameters["alpha"][[1]]
   beta=parameters["beta"][[1]]
   rho=parameters["rho"][[1]]
-  kappa=parameters["kappa"][[1]]
   delta=parameters["delta"][[1]](t)
   omega=parameters["omega"][[1]](t)
   iota=parameters["iota"][[1]]
@@ -27,7 +26,6 @@ ode_vivax_rcd <- function(t, y, parameters) {
     tau=function(pr){return(tau0)}
   } else{ tau=tau0}
 
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   Il=y[1]
   I0=y[2]
@@ -43,9 +41,9 @@ ode_vivax_rcd <- function(t, y, parameters) {
   dI0= -(omega*lambda*(Il+I0)+delta)*(I0) +  gamma*Il - r*I0 -I0*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
   dSl= -(1-alpha*(1-beta))*(omega*lambda*(Il+I0)+delta)*(Sl) - (1-alpha*(1-beta))*f*Sl +(omega*lambda*(Il+I0)+delta)*alpha*(1-beta)*S0 -  gamma*Sl + r*Il +(1-beta)*Il*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
   dS0= -(1-alpha*beta)*(omega*lambda*(Il+I0)+delta)*(S0) + (omega*lambda*(Il+I0)+delta)*alpha*beta*Sl +alpha*beta*f*Sl +  gamma*Sl + r*I0 + (beta*Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
-  dh= rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))*corr_factor_rcd
+  dh= rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) + (Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))
   dhr= rho*f*Sl
-  dhl= rho*((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))*corr_factor_rcd
+  dhl= rho*((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))
   dhh= ((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)
   dhhl= ((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)
   res=c(dIl, dI0, dSl, dS0, dh, dhr, dhl, dhh, dhhl)
@@ -71,7 +69,6 @@ ode_vivax_delay_rcd_referral <- function(t, y, parameters) {
   alpha=parameters["alpha"][[1]]
   beta=parameters["beta"][[1]]
   rho=parameters["rho"][[1]]
-  kappa=parameters["kappa"][[1]]
   sigma=parameters["sigma"][[1]]
   omega=parameters["omega"][[1]](t)
   delta=parameters["delta"][[1]](t)
@@ -83,8 +80,6 @@ ode_vivax_delay_rcd_referral <- function(t, y, parameters) {
   if(is.numeric(tau0)){
     tau=function(pr){return(tau0)}
   } else{ tau=tau0}
-
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   Ul=y[1]
   U0=y[2]
@@ -103,8 +98,8 @@ ode_vivax_delay_rcd_referral <- function(t, y, parameters) {
   dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0
   dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0 +Ul*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +U0*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(Ul+U0+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
   dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
   res=c(dUl, dU0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
@@ -130,7 +125,6 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
   alpha=parameters["alpha"][[1]]
   beta=parameters["beta"][[1]]
   rho=parameters["rho"][[1]]
-  kappa=parameters["kappa"][[1]]
   sigma=parameters["sigma"][[1]]
   omega=parameters["omega"][[1]](t)
   delta=parameters["delta"][[1]](t)
@@ -142,8 +136,6 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
   if(is.numeric(tau0)){
     tau=function(pr){return(tau0)}
   } else{ tau=tau0}
-
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   Ul=y[1]
   U0=y[2]
@@ -162,8 +154,8 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
   dS0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0) +beta*sigma*Tl+ sigma *T0 +  gamma*Sl + r*U0+ r*T0 +(beta*Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dTl= alpha*(omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) + alpha*f*Sl - sigma*Tl -r*Tl -gamma*Tl+ (omega*lambda*(Ul+U0+Tl+T0)+delta)*T0
   dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
-  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
-  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))*corr_factor_rcd
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+Tl+T0))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
   dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
   res=c(dUl, dU0, dSl, dS0, dTl, dT0, dh, dhl, dhh, dhhl)
@@ -184,7 +176,6 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
 #' @param h daily incidence
 #' @param alpha effective treatment probability
 #' @param rho observation rate
-#' @param kappa common part in rho and alpha
 #' @param iota RCD parameter: maximum number of index cases investigated per population per unit of time
 #' @param nu RCD parameter: number of secondary cases investigated per index case
 #' @param tau RCD parameter: targeting ratio of the RCD
@@ -195,12 +186,11 @@ ode_vivax_delay_rcd_no_referral <- function(t, y, parameters) {
 #'
 #' @export
 #'
-calculate_h1_rcd=function(h, alpha, rho, kappa, iota, nu, tau, eta, r ){
-  corr_factor_rcd_sub=1-alpha+rho*alpha/kappa
+calculate_h1_rcd=function(h, alpha, rho, iota, nu, tau, eta, r ){
 
   rcd_sub=nu*tau*eta
-  h1_capped=(rho*rcd_sub*h-rho*r+sqrt((rho*rcd_sub*h-rho*r)^2+4*rho*r*h*corr_factor_rcd_sub*rcd_sub))/(2*rcd_sub*corr_factor_rcd_sub)
-  h1_fixed=h*rho*(r+iota*rcd_sub)/(rho*r+iota*rcd_sub*corr_factor_rcd_sub)
+  h1_capped=(rho*rcd_sub*h-rho*r+sqrt((rho*rcd_sub*h-rho*r)^2+4*rho*r*h*(1-alpha+rho)*rcd_sub))/(2*rcd_sub*(1-alpha+rho))
+  h1_fixed=h*rho*(r+iota*rcd_sub)/(rho*r+iota*rcd_sub*(1-alpha+rho))
   h1=ifelse(h1_capped<=iota & rcd_sub>0, h1_capped, h1_fixed)
 
   return(h1)
@@ -215,7 +205,6 @@ calculate_h1_rcd=function(h, alpha, rho, kappa, iota, nu, tau, eta, r ){
 #' @param h2 daily incidence, reactively detected cases
 #' @param alpha effective treatment probability
 #' @param rho observation rate
-#' @param kappa common part in rho and alpha
 #' @param iota RCD parameter: maximum number of index cases investigated per population per unit of time
 #' @param nu RCD parameter: number of secondary cases investigated per index case
 #' @param eta RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)
@@ -225,16 +214,15 @@ calculate_h1_rcd=function(h, alpha, rho, kappa, iota, nu, tau, eta, r ){
 #'
 #' @export
 #'
-calculate_tau_rcd=function(h1, h2, alpha, rho, kappa, iota, nu, eta, r ){
+calculate_tau_rcd=function(h1, h2, alpha, rho, iota, nu, eta, r ){
 
   if(h2< 1e-09){stop("h2=0, we cannot compute tau")}
   if(iota==0 | nu==0 | eta==0){stop("Some RCD parameters =0, we cannot compute tau")}
   iota_star=min(iota, h1)
-  corr_factor_rcd_num=1-alpha-rho+rho*alpha/kappa
 
-  I = ((1-alpha)/r )*(h1/rho - h2/corr_factor_rcd_num)
+  I = (1/r )*(h1*(1-alpha)/rho - h2)
 
-  tau = h2*(1-alpha)/(iota_star*nu*eta*I*corr_factor_rcd_num)
+  tau = h2/(iota_star*nu*eta*I)
 
   return(tau)
 }
@@ -326,7 +314,6 @@ solve_lambda_vivax_rcd <- function(h, h1, r,  f, gamma, alpha, beta, rho, p, ome
 #' @param alpha effective treatment probability
 #' @param beta probability of liver clearance
 #' @param rho observation rate
-#' @param kappa common part in rho and alpha
 #' @param omega vector control intensity. If vector control is not the purpose of the analysis, omega can be fixed to 1.
 #' @param delta importation rate
 #' @param iota_star RCD parameter: maximum number of index cases investigated per population per unit of time at equilibrium
@@ -337,18 +324,17 @@ solve_lambda_vivax_rcd <- function(h, h1, r,  f, gamma, alpha, beta, rho, p, ome
 #' @return A list with the equilibrium states (I0, Il, S0 and Sl)
 #' @export
 #'
-get_equilibrium_states_vivax_rcd <- function(I, lambda, r, gamma, f, alpha, beta, rho, delta, omega, iota_star, nu, tau, eta,kappa){
+get_equilibrium_states_vivax_rcd <- function(I, lambda, r, gamma, f, alpha, beta, rho, delta, omega, iota_star, nu, tau, eta){
   lambda=lambda*omega
   rcd_term=iota_star*nu*tau*eta
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   Il=I*(lambda*I+delta+r+rcd_term)/(lambda*I+delta+gamma+r+rcd_term)
   I0=I-Il
   Sl=((r+(1-beta)*rcd_term)*Il+alpha*(1-beta)*(lambda*I+delta)*(1-I))/(lambda*I+delta+(1-alpha*(1-beta))*f+gamma)
   S0=1-I-Sl
-  h=rho*((lambda*(I0+Il)+delta)*(S0+Sl)+f*Sl)+rcd_term*I*corr_factor_rcd
+  h=rho*((lambda*(I0+Il)+delta)*(S0+Sl)+f*Sl)+rcd_term*I
   hr=rho*f*Sl
-  hl=rho*((lambda*(I0+Il))*(S0+Sl)+f*Sl)+rcd_term*I*corr_factor_rcd
+  hl=rho*((lambda*(I0+Il))*(S0+Sl)+f*Sl)+rcd_term*I
   hh=(lambda*(I0+Il)+delta)*(S0+Sl)+f*Sl
   hhl=(lambda*(I0+Il))*(S0+Sl)+f*Sl
   return(list("Il"=Il, "I0"=I0, "Sl"=Sl, "S0"=S0,
@@ -456,7 +442,6 @@ solve_lambda_vivax_rcd_no_referral <- function(h, h1, r,  f, gamma, alpha, beta,
 #' @param beta probability of liver clearance
 #' @param sigma delay to treatment (1/duration of the delay)
 #' @param rho observation rate
-#' @param kappa common part in rho and alpha
 #' @param omega vector control intensity. If vector control is not the purpose of the analysis, omega can be fixed to 1.
 #' @param delta importation rate
 #' @param iota_star RCD parameter: maximum number of index cases investigated per population per unit of time at equilibrium
@@ -467,10 +452,9 @@ solve_lambda_vivax_rcd_no_referral <- function(h, h1, r,  f, gamma, alpha, beta,
 #' @return A list with the equilibrium states (U0, Ul, T0, Tl, S0 and Sl)
 #' @export
 #'
-get_equilibrium_states_vivax_rcd_no_referral <- function(I, lambda, r, gamma, f, alpha, beta, rho, sigma, delta, omega, iota_star, nu, tau, eta, kappa){
+get_equilibrium_states_vivax_rcd_no_referral <- function(I, lambda, r, gamma, f, alpha, beta, rho, sigma, delta, omega, iota_star, nu, tau, eta){
   lambda=lambda*omega
   rcd_term=iota_star*nu*tau*eta
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   TT=I*alpha*(r+rcd_term)/(r+(1-alpha)*sigma+alpha*rcd_term)  # T0+Tl
   UU=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+alpha*rcd_term) #U0 + Ul
@@ -481,8 +465,8 @@ get_equilibrium_states_vivax_rcd_no_referral <- function(I, lambda, r, gamma, f,
   Sl=(r*Ul+(1-beta)*rcd_term*Ul+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
   S0=1-I-Sl
 
-  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
-  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
+  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU
+  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU
   hh= ((lambda*I+delta)*(1-I) +f*Sl)
   hhl= (lambda*I*(1-I) +f*Sl)
   return(list("Ul"=Ul, "U0"=U0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
@@ -596,17 +580,15 @@ solve_lambda_vivax_rcd_referral <- function(h, h1, r,  f, gamma, alpha, beta, si
 #' @param delta importation rate
 #' @param iota_star RCD parameter: maximum number of index cases investigated per population per unit of time at equilibrium
 #' @param nu RCD parameter: number of secondary cases investigated per index case
-#' @param kappa common part in rho and alpha
 #' @param tau RCD parameter: targeting ratio of the RCD
 #' @param eta RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)
 #'
 #' @return A list with the equilibrium states (I0, Il, T0, Tl, S0 and Sl)
 #' @export
 #'
-get_equilibrium_states_vivax_rcd_referral <- function(I, lambda, r, gamma, f, alpha, beta, rho, sigma, delta, omega, iota_star, nu, tau, eta, kappa){
+get_equilibrium_states_vivax_rcd_referral <- function(I, lambda, r, gamma, f, alpha, beta, rho, sigma, delta, omega, iota_star, nu, tau, eta){
   lambda=lambda*omega
   rcd_term=iota_star*nu*tau*eta
-  corr_factor_rcd=(1-alpha-rho+rho*alpha/kappa)/(1-alpha)
 
   UU=I*(1-alpha)*(r+sigma)/(r+(1-alpha)*sigma+rcd_term) #I0 + Il
   TT=I-UU  # T0+Tl
@@ -617,8 +599,8 @@ get_equilibrium_states_vivax_rcd_referral <- function(I, lambda, r, gamma, f, al
   Sl=(r*Ul+(r+(1-beta)*sigma)*Tl)/(lambda*I+delta+gamma+f)
   S0=1-I-Sl
 
-  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
-  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU*corr_factor_rcd
+  h=rho*((lambda*(I)+delta)*(1-I)+f*Sl)+rcd_term*UU
+  hl=rho*((lambda*(I))*(1-I)+f*Sl)+rcd_term*UU
   hh= ((lambda*I+delta)*(1-I) +f*Sl)
   hhl= (lambda*I*(1-I) +f*Sl)
   return(list("Ul"=Ul, "U0"=U0, "Tl"=Tl, "T0"=T0, "Sl"=Sl, "S0"=S0,
