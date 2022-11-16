@@ -168,7 +168,7 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
   #####################################
   # indicate the model to simulate from (rcd or not, mda or not)
 
-  if(sto==TRUE & rcd==TRUE & any(is.numeric(df$tau))==FALSE){stop("stochastic version of RCD model with time varying tau is not implemented yet")}
+  if(sto==TRUE & rcd==TRUE & any(is.numeric(df$tau.new))==FALSE){stop("stochastic version of RCD model with time varying tau is not implemented yet")}
 
   my_ode_model=ifelse(rcd, ifelse(referral,ode_vivax_delay_rcd_referral,ode_vivax_delay_rcd_no_referral),
                      ode_vivax_delay)
