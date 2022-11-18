@@ -11,6 +11,7 @@
 #' @param mda a boolean indicating if the model including mass drug administration (MDA) prophylaxis should be used. Default (FALSE) is the model without MDA
 #' @param mystart an integer indicating the time index of the start of the simulation (this is used to chain interventions appropriately)
 #' @param rcd_at_baseline a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline
+#' @param maxtime number of time steps for simulation
 #'
 #' @return A dataframe with the required input parameters for future simulation
 #'
@@ -19,7 +20,7 @@
 #' If omega.new is not provided in intervention_object it is equal to omega.
 #' If rho.new is not provided in intervention_object it is equal to rho
 #'
-format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE, mda=FALSE, mystart, rcd_at_baseline=FALSE){
+format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE, mda=FALSE, mystart, rcd_at_baseline=FALSE, maxtime){
 
   if(!"rho" %in% names(df)){
     df$rho=1
@@ -57,7 +58,9 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
   if(is.data.frame(intervention_object$omega.new)){
     if((!"time" %in% names(intervention_object$omega.new) ) | (!"value" %in% names(intervention_object$omega.new) )){
       stop("omega is a dataframe but does not have the correct variable names, i.e. time and value")
-    } else{
+    }else if(max(intervention_object$omega.new$time)< maxtime) {
+      stop("the dataframe omega should include values until maxtime" )
+    }else{
       # create the linear interpolation, and ensure that the time start matches if interventions are chained
       omega_t=create_approximation(x=intervention_object$omega.new$time, y=intervention_object$omega.new$value,
                                    start=mystart)
@@ -85,6 +88,8 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
     if(is.data.frame(intervention_object$delta.new)){
       if((!"time" %in% names(intervention_object$delta) ) | (!"value" %in% names(intervention_object$delta) )){
         stop("delta is a dataframe but does not have the correct variable names, i.e. time and value")
+      }else if(max(intervention_object$delta.new$time)< maxtime) {
+        stop("the dataframe delta should include values until maxtime" )
       } else{
         if(!"id" %in% names(intervention_object$delta) ){
           # create the linear interpolation, and ensure that the time start matches if interventions are chained
@@ -263,7 +268,8 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
   for (interv in intervention_list){
 
     df_full=rbind(df_full, format_data_simulation(df, interv, delay=delay, rcd=rcd, mda=mda, rcd_at_baseline=rcd_at_baseline,
-                                                  mystart=ifelse(is.null(previous_simulation), 0, max(previous_simulation$time)) ))
+                                                  mystart=ifelse(is.null(previous_simulation), 0, max(previous_simulation$time)),
+                                                  maxtime=maxtime))
   }
   df_full$id0=df_full$id
   df_full$id=paste0(df_full$id0, df_full$intervention)

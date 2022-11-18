@@ -11,7 +11,8 @@ format_data_simulation(
   rcd = FALSE,
   mda = FALSE,
   mystart,
-  rcd_at_baseline = FALSE
+  rcd_at_baseline = FALSE,
+  maxtime
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ where NA can be replaced by scalars or kepts as such.}
 \item{mystart}{an integer indicating the time index of the start of the simulation (this is used to chain interventions appropriately)}
 
 \item{rcd_at_baseline}{a boolean indicating if the model was calibrated using the RCD model (i.e. there is some RCD at baseline already). Default (FALSE) is the model without RCD at baseline}
+
+\item{maxtime}{number of time steps for simulation}
 }
 \value{
 A dataframe with the required input parameters for future simulation

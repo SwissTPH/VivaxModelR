@@ -15,7 +15,8 @@ test_that("test time varying vector control working", {
   omega_t <- approxfun(my_omega)
 
   mydata_tv=mydata
-  mydata_tv$omega.old=c(omega_t(0), omega_t(0), omega_t(0))
+  #mydata_tv$omega.old=c(omega_t(0), omega_t(0), omega_t(0))
+  mydata_tv$omega.old=c(omega_t, omega_t, omega_t)
   mydata_tv$omega.new=c(omega_t, omega_t, omega_t)
   simul.tv=simulate_from_data(mydata_tv,  f=1/69, gamma=1/383, r=1/60,  maxtime=60*365,year=F)
 
@@ -56,7 +57,8 @@ test_that("test time varying vector control working, with delays", {
   omega_t <- approxfun(my_omega)
 
   mydata_tv=mydata
-  mydata_tv$omega.old=c(omega_t(0), omega_t(0), omega_t(0))
+  #mydata_tv$omega.old=c(omega_t(0), omega_t(0), omega_t(0))
+  mydata_tv$omega.old=c(omega_t, omega_t, omega_t)
   mydata_tv$omega.new=c(omega_t, omega_t, omega_t)
   simul.tv=simulate_from_data_delay(mydata_tv,  f=1/69, gamma=1/383, r=1/60,  maxtime=60*365,year=F)
 

@@ -233,21 +233,21 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
       # get equilibrium values
       equ_states=get_equilibrium_states_vivax_delay(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
                                                     alpha=df$alpha.old[i], beta=df$beta.old[i],sigma=df$sigma.old[i], rho=df$rho.old[i],
-                                                    delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
-                                                    omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)))
+                                                    delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[[i]](0)),
+                                                    omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[[i]](0)))
 
       if(rcd_at_baseline){
         if(referral){
           equ_states=get_equilibrium_states_vivax_rcd_referral(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
                                                                   alpha=df$alpha.old[i], beta=df$beta.old[i],sigma=df$sigma.old[i], rho=df$rho.old[i],
-                                                                  delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
-                                                                  omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)),
+                                                                  delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[[i]](0)),
+                                                                  omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[[i]](0)),
                                                                   iota_star =df$iota_star[i], nu=df$nu.old[i], tau=df$tau.old[i],eta=df$eta.old[i])
         }else{
           equ_states=get_equilibrium_states_vivax_rcd_no_referral(I=df[i,]$I, lambda=as.numeric(df[i,]$lambda), r=r, gamma=gamma, f=f,
                                                                   alpha=df$alpha.old[i], beta=df$beta.old[i],sigma=df$sigma.old[i], rho=df$rho.old[i],
-                                                                  delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[i](0)),
-                                                                  omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[i](0)),
+                                                                  delta=ifelse(is.numeric(df$delta[i]), df$delta[i], df$delta[[i]](0)),
+                                                                  omega=ifelse(is.numeric(df$omega.old[i]), df$omega.old[i], df$omega.old[[i]](0)),
                                                                   iota_star =df$iota_star[i], nu=df$nu.old[i], tau=df$tau.old[i],eta=df$eta.old[i])
         }
       }
