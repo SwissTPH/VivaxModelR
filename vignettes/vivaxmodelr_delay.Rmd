@@ -1,7 +1,7 @@
 ---
 title: "VivaxModelR: full version"
 subtitle: "An R package to simulate *P. vivax* dynamics, model with delayed access to treatment"
-author: "Clara Champagne, Maximilian Gerhards, Emilie Pothin"
+author: "Clara Champagne, Maximilian Gerhards, Justin Lana, Arnaud Le Menach, Emilie Pothin"
 output: rmarkdown::html_vignette
 bibliography: bibliography.json
 vignette: >

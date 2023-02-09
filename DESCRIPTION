@@ -6,14 +6,19 @@ Authors@R:
            family = "Champagne",
            role = c("aut", "cre"),
            email = "clara.champagne@swisstph.ch"),
+    person(given = "Maximilian",
+           family = "Gerhards",
+           role = c("aut")),
+    person(given = "Justin",
+           family = "Lana",
+           role = c("aut")),
+    person(given = "Arnaud",
+           family = "Le Menach",
+           role = c("aut")),
     person(given = "Emilie",
            family = "Pothin",
            role = c("aut"),
-           email = "emilie.pothin@swisstph.ch"),
-    person(given = "Maximilian",
-           family = "Gerhards",
-           role = c("aut"),
-           email = "maximilian.gerhards@gmx.de"))
+           email = "emilie.pothin@swisstph.ch"))
 Description: This packages contains functions to simulate Plasmodium Vivax dynamics using a compartmental model.
 License: MIT + file LICENSE
 Encoding: UTF-8

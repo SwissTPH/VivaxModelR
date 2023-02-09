@@ -20,8 +20,10 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Maximilian Gerhards
+  \item Justin Lana
+  \item Arnaud Le Menach
   \item Emilie Pothin \email{emilie.pothin@swisstph.ch}
-  \item Maximilian Gerhards \email{maximilian.gerhards@gmx.de}
 }
 
 }
