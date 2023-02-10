@@ -26,3 +26,4 @@ The vignette presenting how to use the package is available [here](https://swiss
 A simplified version of the package without delayed access to treatment is available [here](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr.html).  
 A quick description for developers of the scripts in the package is available [here](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_dev_doc.html).
 
+
