@@ -144,22 +144,43 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
       new_df$eta.old=new_df$eta
     }
 
-    if(is.na(intervention_object$iota.new)){
-      new_df$iota.new = ifelse(rcd_at_baseline,  new_df$iota.old, 0)
-      warning("no iota parameter, assumed iota=0 or iota=iota.old")
-    } else new_df$iota.new = intervention_object$iota.new
-    if(is.na(intervention_object$nu.new)){
-      new_df$nu.new =  ifelse(rcd_at_baseline,  new_df$nu.old, 0)
-      warning("no nu parameter, assumed nu=0 or nu=nu.old")
-    }  else new_df$nu.new = intervention_object$nu.new
-    if(is.na(intervention_object$tau.new)){
-      new_df$tau.new =  ifelse(rcd_at_baseline,  new_df$tau.old, 1)
-      warning("no tau parameter, assumed tau=1 or tau=tau.old")
-    } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
-    if(is.na(intervention_object$eta.new)){
-      new_df$eta.new =  ifelse(rcd_at_baseline,  new_df$eta.old, 0)
-      warning("no eta parameter, assumed eta=0 or eta=eta.old")
-    } else new_df$eta.new = intervention_object$eta.new
+    if(rcd_at_baseline){
+      if(is.na(intervention_object$iota.new)){
+        new_df$iota.new = new_df$iota.old
+        warning("no iota parameter, assumed iota=iota.old")
+      } else new_df$iota.new = intervention_object$iota.new
+      if(is.na(intervention_object$nu.new)){
+        new_df$nu.new =  new_df$nu.old
+        warning("no nu parameter, assumed nu=nu.old")
+      }  else new_df$nu.new = intervention_object$nu.new
+      if(is.na(intervention_object$tau.new)){
+        new_df$tau.new =  new_df$tau.old
+        warning("no tau parameter, assumed tau=tau.old")
+      } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
+      if(is.na(intervention_object$eta.new)){
+        new_df$eta.new =  new_df$eta.old
+        warning("no eta parameter, assumed eta=eta.old")
+      } else new_df$eta.new = intervention_object$eta.new
+
+    } else {
+      if(is.na(intervention_object$iota.new)){
+        new_df$iota.new = 0
+        warning("no iota parameter, assumed iota=0")
+      } else new_df$iota.new = intervention_object$iota.new
+      if(is.na(intervention_object$nu.new)){
+        new_df$nu.new =  0
+        warning("no nu parameter, assumed nu=0")
+      }  else new_df$nu.new = intervention_object$nu.new
+      if(is.na(intervention_object$tau.new)){
+        new_df$tau.new =  1
+        warning("no tau parameter, assumed tau=1")
+      } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
+      if(is.na(intervention_object$eta.new)){
+        new_df$eta.new =  0
+        warning("no eta parameter, assumed eta=0d")
+      } else new_df$eta.new = intervention_object$eta.new
+
+    }
 
 
   }
