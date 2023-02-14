@@ -71,11 +71,12 @@
 
       
 
-      </header><script src="vivaxmodelr_dev_doc_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>VivaxModelR: developer doc</h1>
-                        <h4 data-toc-skip class="author">Clara Champagne</h4>
+                        <h4 data-toc-skip class="author">Clara
+Champagne</h4>
             
       
       
@@ -85,22 +86,42 @@
 
     
     
-<p>This document explains the structure of the various functions contained in the package. These functions are provided in the <strong>R</strong> folder.</p>
-<p>The model code, i.e. containing the definition of the ODEs, and formulae for reproduction numbers, equilibrium relationships and transmission rate calibration are provided in the following scripts:</p>
+<p>This document explains the structure of the various functions
+contained in the package. These functions are provided in the
+<strong>R</strong> folder.</p>
+<p>The model code, i.e. containing the definition of the ODEs, and
+formulae for reproduction numbers, equilibrium relationships and
+transmission rate calibration are provided in the following scripts:</p>
 <ul>
 <li>
-<strong>VivaxFunctions.R</strong> for the models without delayed access to treatment, without RCD and without MDA.</li>
+<strong>VivaxFunctions.R</strong> for the models without delayed
+access to treatment, without RCD and without MDA.</li>
 <li>
-<strong>VivaxFunctionsDelays.R</strong> for the models with delayed access to treatment, without RCD and without MDA.</li>
+<strong>VivaxFunctionsDelays.R</strong> for the models with delayed
+access to treatment, without RCD and without MDA.</li>
 <li>
-<strong>VivaxFunctionsRCD.R</strong> for the models with RCD (with and without delayed access to treatment).</li>
+<strong>VivaxFunctionsRCD.R</strong> for the models with RCD (with
+and without delayed access to treatment).</li>
 <li>
-<strong>VivaxFunctionsDelays.R</strong> for the models with MDA (with and without delayed access to treatment).</li>
+<strong>VivaxFunctionsDelays.R</strong> for the models with MDA
+(with and without delayed access to treatment).</li>
 <li>
-<strong>VivaxFunctionsSto.R</strong> for the stochastic implementation of all models</li>
+<strong>VivaxFunctionsSto.R</strong> for the stochastic
+implementation of all models</li>
 </ul>
-<p>Wrapper functions to apply the model to a full dataset in which each row corresponds to a different setting are available in the following scripts: - <strong>CalculateFromData.R</strong> for the models without delayed access to treatment(with and without MDA and RCD). Contains both calibration and forward simulation. - <strong>CalculateFromDataDelay.R</strong> for the models with delayed access to treatment (with and without MDA and RCD). Contains both calibration and forward simulation. - <strong>CalculateFromDataRCD.R</strong> for the calibration with RCD at baseline</p>
-<p>Finally, high level wrapper functions are available in <strong>simulate_interventions.R</strong> and auxiliary functions in <strong>aux_functions</strong>.</p>
+<p>Wrapper functions to apply the model to a full dataset in which each
+row corresponds to a different setting are available in the following
+scripts: - <strong>CalculateFromData.R</strong> for the models without
+delayed access to treatment(with and without MDA and RCD). Contains both
+calibration and forward simulation. -
+<strong>CalculateFromDataDelay.R</strong> for the models with delayed
+access to treatment (with and without MDA and RCD). Contains both
+calibration and forward simulation. -
+<strong>CalculateFromDataRCD.R</strong> for the calibration with RCD at
+baseline</p>
+<p>Finally, high level wrapper functions are available in
+<strong>simulate_interventions.R</strong> and auxiliary functions in
+<strong>aux_functions</strong>.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -113,12 +134,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Clara Champagne, Emilie Pothin, Maximilian Gerhards.</p>
+<p>Developed by Clara Champagne, Maximilian Gerhards, Justin Lana, Arnaud Le Menach, Emilie Pothin.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
