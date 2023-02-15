@@ -8,7 +8,7 @@ Simulations and calculations on a compartmental model for *Plasmodium Vivax* dyn
 
 This code is associated with the following manuscripts:
 
-- Champagne C., Gerhards M. , Lana J., Le Menach A., Pothin E.  **"Quantifying the impact of interventions against Plasmodium vivax malaria: a model for country-specific use"**.  
+- [Champagne C., Gerhards M. , Lana J., Le Menach A., Pothin E.  **"Quantifying the impact of interventions against Plasmodium vivax malaria: a model for country-specific use"**](https://www.medrxiv.org/content/10.1101/2023.02.10.23285652v1).  
 The version used in this manuscript corresponds to the [main version](https://github.com/SwissTPH/VivaxModelR). It includes various control interventions, as detailed in the user [vignette](https://swisstph.github.io/VivaxModelR/articles/vivaxmodelr_delay.html). The scripts necessary to reproduce the manuscript figures are situated under [demo/figures_SimulatedExample](https://github.com/SwissTPH/VivaxModelR/tree/main/demo/figures_SimulatedExample). 
 
 - [Champagne C., Gerhards M. , Lana J., García Espinosa B., Bradley C., González O., Cohen J.,Le Menach A., White M., Pothin E.  **"Using observed incidence to calibrate the transmission level of a mathematical model for *Plasmodium vivax* dynamics including case management and importation"**, Mathematical Biosciences, 2021](https://www.sciencedirect.com/science/article/pii/S0025556421001541).  
