@@ -88,8 +88,8 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
     if(is.data.frame(intervention_object$delta.new)){
       if((!"time" %in% names(intervention_object$delta) ) | (!"value" %in% names(intervention_object$delta) )){
         stop("delta is a dataframe but does not have the correct variable names, i.e. time and value")
-      }else if(max(intervention_object$delta.new$time)< maxtime) {
-        stop("the dataframe delta should include values until maxtime" )
+      }else if(max(intervention_object$delta.new$time)< maxtime+1) {
+        stop("the dataframe delta should include values until maxtime+1" )
       } else{
         if(!"id" %in% names(intervention_object$delta) ){
           # create the linear interpolation, and ensure that the time start matches if interventions are chained
@@ -201,7 +201,7 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
     }  else new_df$MDAp_length.new = intervention_object$MDAp_length.new
     if(is.na(intervention_object$MDArad_cure.new)){
       new_df$MDArad_cure.new = 0
-      warning("no MDArad_cure parameter, assumed MDArad_cure=1")
+      warning("no MDArad_cure parameter, assumed MDArad_cure=0")
     } else new_df$MDArad_cure.new = intervention_object$MDArad_cure.new
 
   }
