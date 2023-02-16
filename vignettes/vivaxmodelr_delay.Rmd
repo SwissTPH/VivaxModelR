@@ -390,7 +390,7 @@ This database includes 100 replicates of the $R_0$ and $R_c$ calculation, includ
 
 
 ### Including demographic stochasticity
-The default version of the model is based on ordinary differential equations, and is therefore deterministic. It neglects the randomness in very small populations. For very low transmission settings (< 20 reported cases annually), a stochastic implementation of the model simulations relying on the **TiPS** package (@tips_cran, @tips_biorxiv) is available with the option **sto=TRUE**.  This package may require the additional installation of the [Rtools](https://cran.r-project.org/bin/windows/Rtools/) package in order to function properly. 
+The default version of the model is based on ordinary differential equations, and is therefore deterministic. It neglects the randomness in very small populations. For very low transmission settings (< 20 reported cases annually), a stochastic implementation of the model simulations relying on the **TiPS** package (@tips_cran, @tips_article) is available with the option **sto=TRUE**.  This package may require the additional installation of the [Rtools](https://cran.r-project.org/bin/windows/Rtools/) package in order to function properly. 
 For each area, the population size **N** needs to be indicated in the input database:
 
 ```{r}
