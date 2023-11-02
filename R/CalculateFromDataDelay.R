@@ -163,7 +163,7 @@ simulate_from_data_delay=function(df, from_equilibrium=TRUE, initial_states=NULL
   } else{
     message("simulating from equilibrium")
     if(!"I" %in% names(df)){ stop("no I variable in df")}
-    if(rcd){ message("We start from the equilibrium without RCD")}
+    if(rcd){ if(!rcd_at_baseline){message("We start from the equilibrium without RCD")}}
   }
   #####################################
   # indicate the model to simulate from (rcd or not, mda or not)

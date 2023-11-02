@@ -334,9 +334,9 @@ simulate_vivax_interventions=function(df, intervention_list, previous_simulation
     this_from_equilibrium=TRUE
     myinitialstate=NULL
 
-    if(rcd){
-      message("We start from the equilibrium without RCD")
-    }
+    # if(rcd){
+    #   message("We start from the equilibrium without RCD")
+    # }
   }
 
 
