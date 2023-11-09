@@ -4,7 +4,7 @@
 \alias{calculate_h1_rcd}
 \title{Calculate h1 from aggregated incidence data}
 \usage{
-calculate_h1_rcd(h, alpha, rho, iota, nu, tau, eta, r)
+calculate_h1_rcd(h, alpha, rho, iota, nu, tau, eta, r, rho2)
 }
 \arguments{
 \item{h}{daily incidence}
@@ -22,6 +22,8 @@ calculate_h1_rcd(h, alpha, rho, iota, nu, tau, eta, r)
 \item{eta}{RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)}
 
 \item{r}{blood clearance rate}
+
+\item{rho2}{RCD parameter: observation rate for reactively-detected cases}
 }
 \value{
 A scalar equal to the equilibrium value for h1

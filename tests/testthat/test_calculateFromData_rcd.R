@@ -13,7 +13,7 @@ test_that("test calculation of lambda on data, with RCD", {
                     rho=c(1,1,1,0.4,0.4,0.4),
                     omega=c(1,1,1,0.8,0.8,0.8),
                     iota=c(5/7/365,10000, Inf, 5/7/365,Inf, Inf),
-                    nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1))%>%
+                    nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1),rho2=c(1,1,1,1,1,1))%>%
     dplyr::mutate(h=incidence_year2day(incidence))
 
   new_data_all =calculate_r0_rc_fromdata_rcd(df=mydata, f=1/72, gamma=1/223, r=1/60, return.all = T)
@@ -40,7 +40,7 @@ test_that("test calculation of lambda on data, with RCD and delays", {
                     omega=c(1,1,1,0.8,0.8,0.8),
                     sigma=c(1/15,1/15,1/15,1/10,1/10,1/10),
                     iota=c(5/7/365,10000, Inf, 5/7/365,Inf, Inf),
-                    nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1))%>%
+                    nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1),rho2=c(1,1,1,1,1,1))%>%
     dplyr::mutate(h=incidence_year2day(incidence))
 
   mydata_ref=data.frame(incidence=c(187.1244   , 103.0747,21.98137   ,102.7095   , 76.89312 ,54.29549 ),
@@ -51,7 +51,7 @@ test_that("test calculation of lambda on data, with RCD and delays", {
                         omega=c(1,1,1,0.8,0.8,0.8),
                         sigma=c(1/15,1/15,1/15,1/10,1/10,1/10),
                         iota=c(5/7/365,10000, Inf, 5/7/365,Inf, Inf),
-                        nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1))%>%
+                        nu=c(5,5,5,5,5,5), tau=c(5,5,5,5,5,5),eta=c(1,0.9,1,1,0.9,1),rho2=c(1,1,1,1,1,1))%>%
     dplyr::mutate(h=incidence_year2day(incidence))
 
 
@@ -76,7 +76,7 @@ test_that("test simulation of future scenarios, with rcd", {
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=rho)
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=rho, rho2.new=c(1,1,1))
 
   expect_error(simulate_from_data(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=T, rcd=T),
                "RCD parameters are missing, please add them or use model without RCD", label = "error when missing RCD parameter")
@@ -121,7 +121,7 @@ test_that("test simulation of future scenarios starting from initial condition, 
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,0),iota.new=c(5/7/10000,0,5/7/10000), kappa.new=rho)
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,0),iota.new=c(5/7/10000,0,5/7/10000), kappa.new=rho, rho2.new=c(1,1,1))
 
   simul_rcd=simulate_from_data(mydata, f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=F, rcd=T)
 
@@ -149,7 +149,7 @@ test_that("test simulation of future scenarios starting from initial condition, 
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1),iota.new=c(5/7/10000,5/7/10000,5/7/10000), kappa.new=rho)
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1),iota.new=c(5/7/10000,5/7/10000,5/7/10000), kappa.new=rho, rho2.new=c(1,1,1))
 
   simul_rcd=simulate_from_data(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=T)
 
@@ -193,7 +193,7 @@ test_that("test simulation of future scenarios, with rcd, with delays", {
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=c(0.18,0.18,0.18))
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=c(0.18,0.18,0.18), rho2.new=c(1,1,1))
 
   expect_error(simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=T, rcd=T),
                "RCD parameters are missing, please add them or use model without RCD", label = "error when missing RCD parameter")
@@ -263,7 +263,7 @@ test_that("test simulation of future scenarios starting from initial condition, 
       delta=c(0.000035654059 ,5.4114206e-05,3.772780814e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,0), kappa.new=rho,iota.new=c(5/7/10000,0,5/7/10000))
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,0), kappa.new=rho,iota.new=c(5/7/10000,0,5/7/10000), rho2.new=c(1,1,1))
 
   simul_rcd=simulate_from_data_delay(mydata, f=1/69, gamma=1/383, r=1/60,      maxtime=2000,year=F, rcd=T)
 
@@ -298,7 +298,7 @@ test_that("test simulation of future scenarios starting from initial condition, 
       delta=c(3.562799e-05,2.694904e-04,1.854486e-03),
       id=c(1,2,3),
       omega.old=c(0.7,0.7,0.7),
-      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=rho,iota.new=c(5/7/10000,5/7/10000,5/7/10000))
+      nu.new=c(0,10,5), tau.new=c(5,5,5), eta.new=c(1,1,1), kappa.new=rho,iota.new=c(5/7/10000,5/7/10000,5/7/10000), rho2.new=c(1,1,1))
 
   simul_rcd=simulate_from_data_delay(mydata,    f=1/69, gamma=1/383, r=1/60,      maxtime=1000,year=F, rcd=T)
 

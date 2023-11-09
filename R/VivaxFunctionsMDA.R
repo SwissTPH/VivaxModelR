@@ -69,6 +69,7 @@ ode_vivax_rcd_mda <- function(t, y, parameters) {
   iota=parameters["iota"][[1]]
   nu=parameters["nu"][[1]]
   eta=parameters["eta"][[1]]
+  rho2=parameters["rho2"][[1]]
   tau0=parameters["tau"][[1]]
 
   if(is.numeric(tau0)){
@@ -94,9 +95,9 @@ ode_vivax_rcd_mda <- function(t, y, parameters) {
   dS0= -(1-alpha*beta)*(omega*lambda*(Il+I0)+delta)*(S0) + (omega*lambda*(Il+I0)+delta)*alpha*beta*Sl +alpha*beta*f*Sl +  gamma*Sl + r*I0 + (beta*Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)+(Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
+  dh= rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)+rho2*(Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl) )
   dhr= rho*f*Sl
-  dhl= rho*((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)+ (Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))
+  dhl= rho*((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)+ rho2*(Il+I0)*nu*tau(pr=(I0+Il))*eta*min(iota,rho*((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl))
   dhh= ((omega*lambda*(Il+I0)+delta)*(S0+Sl) + f*Sl)
   dhhl= ((omega*lambda*(Il+I0))*(S0+Sl) + f*Sl)
 
@@ -274,6 +275,7 @@ ode_vivax_delay_rcd_referral_mda <- function(t, y, parameters) {
   iota=parameters["iota"][[1]]
   nu=parameters["nu"][[1]]
   eta=parameters["eta"][[1]]
+  rho2=parameters["rho2"][[1]]
   tau0=parameters["tau"][[1]]
 
   if(is.numeric(tau0)){
@@ -301,8 +303,8 @@ ode_vivax_delay_rcd_referral_mda <- function(t, y, parameters) {
   dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0 +U0*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + rho2*(Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ rho2*(Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
   dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
 
@@ -334,6 +336,7 @@ ode_vivax_delay_rcd_no_referral_mda <- function(t, y, parameters) {
   iota=parameters["iota"][[1]]
   nu=parameters["nu"][[1]]
   eta=parameters["eta"][[1]]
+  rho2=parameters["rho2"][[1]]
   tau0=parameters["tau"][[1]]
 
   if(is.numeric(tau0)){
@@ -362,8 +365,8 @@ ode_vivax_delay_rcd_no_referral_mda <- function(t, y, parameters) {
   dT0= -(omega*lambda*(Ul+U0+Tl+T0)+delta)*(T0) - sigma*T0+gamma*Tl - r*T0
   dPl= -gamma*Pl
   dP0= gamma*Pl
-  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
-  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ (Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dh= rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl) + rho2*(Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
+  dhl= rho*((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)+ rho2*(Ul+U0)*nu*tau(pr=(U0+Ul+T0+Tl))*eta*min(iota,rho*((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl))
   dhh= ((omega*lambda*(Ul+U0+Tl+T0)+delta)*(S0+Sl) +f*Sl)
   dhhl= ((omega*lambda*(Ul+U0+Tl+T0))*(S0+Sl) +f*Sl)
 

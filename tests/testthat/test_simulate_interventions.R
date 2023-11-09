@@ -241,6 +241,7 @@ test_that("test simulation of future scenarios, with delays", {
   gamma=1/223
   r=1/60
   mydata1=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T)
+  mydata1$rho2=NULL
   mydata2=calculate_r0_rc_fromdata(mydata,f=f, gamma=gamma, r=r, return.all = T )
   expect_equal(mydata1, mydata2, tolerance = 1e-09, label = "test high level function for calibration")
   expect_error(calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T, rcd=T))
@@ -258,6 +259,7 @@ test_that("test simulation of future scenarios, with delays", {
   mydata_d=mydata
   mydata_d$sigma=c(1/15, 1/15)
   mydata1d=calibrate_vivax_equilibrium(mydata_d,f=f, gamma=gamma, r=r, return.all = T, delay = TRUE )
+  mydata1d$rho2=NULL
   mydata2d=calculate_r0_rc_fromdata_delay(mydata_d,f=f, gamma=gamma, r=r, return.all = T )
   expect_equal(mydata1d, mydata2d, tolerance = 1e-09, label = "test high level function for calibration")
   expect_lt(mydata1d$R0[1],mydata1$R0[1], label = "R0 higher when no delays")

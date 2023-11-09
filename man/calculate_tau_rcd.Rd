@@ -4,7 +4,7 @@
 \alias{calculate_tau_rcd}
 \title{Calculate the targeting ratio from incidence data with information on RCD}
 \usage{
-calculate_tau_rcd(h1, h2, alpha, rho, iota, nu, eta, r)
+calculate_tau_rcd(h1, h2, alpha, rho, iota, nu, eta, r, rho2)
 }
 \arguments{
 \item{h1}{daily incidence, directly detected cases}
@@ -22,6 +22,8 @@ calculate_tau_rcd(h1, h2, alpha, rho, iota, nu, eta, r)
 \item{eta}{RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)}
 
 \item{r}{blood clearance rate}
+
+\item{rho2}{RCD parameter: observation rate for reactively-detected cases}
 }
 \value{
 a scalar equal to the targeting ratio tau.

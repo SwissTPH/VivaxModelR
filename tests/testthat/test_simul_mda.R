@@ -40,7 +40,7 @@ test_that("test compare MDA in non delay model with non MDA model (RCD model but
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1,
                       "I0"=0.0284293, "S0"=0.5629338, "Sl"=0.2010802, "Il"=0.2075568,
                       "h"=0.0008539906, "hr"=0.000524557, "hl"=0, "hh"=0, "hhl"=0,
-                      "tau"=5, "nu"=5, "iota"=0, "eta"=1,"kappa"=0.18,
+                      "tau"=5, "nu"=5, "iota"=0, "eta"=1,"kappa"=0.18,"rho2"=1,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
@@ -76,7 +76,7 @@ test_that("test compare MDA in non delay model with non MDA model (with RCD)", {
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1,
                       "I0"=0.01206, "S0"=0.8225808, "Sl"=0.08523101, "Il"=0.08012824,
                       "h"=0.0003336124, "hr"=0.0002223417, "hl"=0, "hh"=0, "hhl"=0,
-                      "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18,
+                      "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18,"rho2"=1,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
@@ -148,7 +148,7 @@ test_that("test compare MDA in delay model with non MDA model (RCD model but no 
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
                       "U0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Ul"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
                       "h"=0.0009225553,"hl"=0, "hh"=0, "hhl"=0,
-                      "tau"=5, "nu"=5, "iota"=0, "eta"=1,"kappa"=0.18,
+                      "tau"=5, "nu"=5, "iota"=0, "eta"=1,"kappa"=0.18,"rho2"=1,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
@@ -188,7 +188,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD)", {
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1,
                       "U0"=0.03029989, "S0"=0.5172503, "Sl"=0.2172999, "Ul"=0.2246329, "Tl"=0.01020732, "T0"=0.0003098104,
                       "h"=0.0009225553,"hl"=0, "hh"=0, "hhl"=0,
-                      "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18,
+                      "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18,"rho2"=1,
                       "MDAcov"=0.5, "MDAp_length"=30, "MDArad_cure"=0.5)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0

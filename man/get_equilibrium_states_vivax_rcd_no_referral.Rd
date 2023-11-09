@@ -19,7 +19,8 @@ get_equilibrium_states_vivax_rcd_no_referral(
   iota_star,
   nu,
   tau,
-  eta
+  eta,
+  rho2
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ get_equilibrium_states_vivax_rcd_no_referral(
 \item{tau}{RCD parameter: targeting ratio of the RCD}
 
 \item{eta}{RCD parameter: probability that an investigated cases is detected (symptoms, test sensitivity, etc.)}
+
+\item{rho2}{RCD parameter: observation rate for reactively-detected cases}
 }
 \value{
 A list with the equilibrium states (U0, Ul, T0, Tl, S0 and Sl)

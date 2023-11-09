@@ -4,7 +4,7 @@ test_that("test compare RCD in delay model (non referral) with non RCD model", {
                       "f"=1/72,"lambda"=0.0155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=0.5,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
-                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
                       "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "N"=10000)
 
   mySTOmodel=model_sto_vivax_delay_rcd_no_referral()
@@ -38,7 +38,7 @@ test_that("test compare RCD in delay model (non referral) with non RCD model", {
                        "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "N"=10000)
 
   simul_sto=simulate_vivax_delay_sto(parameters=parameters, STOmodel=mySTOmodel, runs = 10, maxtime = 1465, year=T)
@@ -66,7 +66,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                   "f"=1/72,"lambda"=0.0155531,"delta"=0,
                   "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                   "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
                   "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "N"=10000)
 
   mySTOmodel=model_sto_vivax_delay_rcd_referral()
@@ -100,7 +100,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                   "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
                   "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                   "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,
+                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
                   "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "N"=10000)
 
   simul_sto=simulate_vivax_delay_sto(parameters=parameters, STOmodel=mySTOmodel, runs = 15, maxtime = 1465, year=T)
@@ -335,7 +335,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD)", {
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
                       "U0"=0.037, "S0"=0.38, "Sl"=0.2686, "Ul"=0.3, "Tl"=0.014, "T0"=0.0004,
                       "h"=0.001, "hl"=0, "hh"=0, "hhl"=0,
-                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18)
+                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18, "rho2"=1)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
   parameters_mda_0p=parameters_mda; parameters_mda_0p$MDAp_length=1
@@ -430,7 +430,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD non refe
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
                       "U0"=0.037, "S0"=0.38, "Sl"=0.2686, "Ul"=0.3, "Tl"=0.014, "T0"=0.0004,
                       "h"=0.001, "hl"=0, "hh"=0, "hhl"=0,
-                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18)
+                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18, "rho2"=1)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
   parameters_mda_0p=parameters_mda; parameters_mda_0p$MDAp_length=1

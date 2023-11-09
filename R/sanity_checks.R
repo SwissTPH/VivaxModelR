@@ -69,11 +69,11 @@ sanity_checks_inputs_simulate=function(df, delay, rcd, mda, sto, rcd_at_baseline
     warning("no delta.new in df, assumed delta.new=delta")
   }
 
-  if((!"iota.new" %in% names(df) | !"tau.new" %in% names(df) | !"nu.new" %in% names(df) | !"eta.new" %in% names(df)) & rcd==TRUE){
+  if((!"iota.new" %in% names(df) | !"tau.new" %in% names(df) | !"nu.new" %in% names(df) | !"eta.new" %in% names(df)| !"rho2.new" %in% names(df)) & rcd==TRUE){
     stop("RCD parameters are missing, please add them or use model without RCD")
   }
 
-  if((!"iota_star" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df)) & rcd_at_baseline==TRUE){
+  if((!"iota_star" %in% names(df) | !"tau.old" %in% names(df) | !"nu.old" %in% names(df) | !"eta.old" %in% names(df) | !"rho2.old" %in% names(df)) & rcd_at_baseline==TRUE){
     stop("RCD parameters are missing at baseline, please add them or use model without RCD (rcd_at_baseline=F)")
   }
 
@@ -125,7 +125,7 @@ sanity_checks_inputs_calculate=function(df, delay, rcd_at_baseline){
     warning("no beta in df, assumed beta=1")
   }
 
-  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)) & rcd_at_baseline==TRUE ){
+  if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)| !"rho2" %in% names(df)) & rcd_at_baseline==TRUE ){
     stop("RCD parameters are missing, please add them or use model without RCD")
   }
   return(df)

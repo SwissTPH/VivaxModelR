@@ -269,7 +269,7 @@ calculate_tau_rcd(h1=my_h1 , h2=my_h2,
                   alpha= mydata_rcd$alpha[mydata_rcd$id=="regionA"], rho= mydata_rcd$rho[mydata_rcd$id=="regionA"],
                   iota= mydata_rcd$iota[mydata_rcd$id=="regionA"], 
                   nu= mydata_rcd$nu[mydata_rcd$id=="regionA"], eta= mydata_rcd$eta[mydata_rcd$id=="regionA"], 
-                  r= 1/60 )
+                  r= 1/60, rho2=1 )
 ```
 
 

@@ -10,7 +10,7 @@ test_that("test compare RCD incl. time varying tau in non delay model with non R
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hr"=0,
                       "hl"=0, "hh"=0, "hhl"=0,
-                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters_rcd_tv=parameters_rcd
   parameters_rcd_tv$tau=my_tau
@@ -37,7 +37,7 @@ test_that("test compare RCD incl. time varying tau in non delay model with non R
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1,
                        "h"=0, "hr"=0,"hl"=0,  "hh"=0, "hhl"=0,
-                       "tau"=1.5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                       "tau"=1.5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters2_rcd_tv=parameters2_rcd
   parameters2_rcd_tv$tau=my_tau
@@ -70,7 +70,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,
-                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
 
   parameters_rcd_tv=parameters_rcd
@@ -99,7 +99,7 @@ test_that("test compare RCD incl. time varying tau  in delay model (non referral
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,
-                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters2_rcd_tv=parameters2_rcd
   parameters2_rcd_tv$tau=my_tau
@@ -134,7 +134,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,
-                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters_rcd_tv=parameters_rcd
   parameters_rcd_tv$tau=my_tau
@@ -163,7 +163,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,
-                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters2_rcd_tv=parameters2_rcd
   parameters2_rcd_tv$tau=my_tau
@@ -199,7 +199,7 @@ test_that("test compare the 3 RCD models", {
                       "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                       "sigma"=1/15, "T0"=0, "Tl"=0,
-                      "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                      "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
 
   parameters_rcd_nodelay=parameters_rcd
   parameters_rcd_nodelay$Il=parameters_rcd$Ul
@@ -224,7 +224,7 @@ test_that("test compare the 3 RCD models", {
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
                        "sigma"=1/15, "T0"=0, "Tl"=0,
-                       "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1)
+                       "tau"=my_tau, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=1)
   parameters2_rcd_infsigma=parameters2_rcd; parameters2_rcd_infsigma$sigma=1/0.4
   parameters2_rcd_0sigma=parameters2_rcd; parameters2_rcd_0sigma$sigma=0
 

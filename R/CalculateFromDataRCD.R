@@ -49,9 +49,10 @@ calculate_r0_rc_fromdata_rcd=function(df, f=1/72, gamma=1/223, r=1/60,
     my.nu=dataTransform$nu[i]
     my.eta=dataTransform$eta[i]
     my.tau=dataTransform$tau[i]
+    my.rho2=dataTransform$rho2[i]
     if(is.na(my.h)==FALSE & is.infinite(my.h)==FALSE  &  (my.h)>=h.cutoff){
       my.h1=calculate_h1_rcd(h=my.h, alpha=my.alpha,rho=my.rho,
-                          iota=my.iota, nu=my.nu,eta=my.eta, tau=my.tau,r=r )
+                          iota=my.iota, nu=my.nu,eta=my.eta, tau=my.tau,r=r,rho2=my.rho2 )
 
 
       my.lambda.solve=solve_lambda_vivax_rcd(h=my.h, h1=my.h1, r=r,  gamma=gamma, f=f,
@@ -137,9 +138,10 @@ calculate_r0_rc_fromdata_delay_rcd=function(df, f=1/72, gamma=1/223, r=1/60,
     my.nu=dataTransform$nu[i]
     my.eta=dataTransform$eta[i]
     my.tau=dataTransform$tau[i]
+    my.rho2=dataTransform$rho2[i]
     if(is.na(my.h)==FALSE & is.infinite(my.h)==FALSE  &  (my.h)>=h.cutoff){
       my.h1=calculate_h1_rcd(h=my.h, alpha=my.alpha,rho=my.rho,
-                             iota=my.iota, nu=my.nu,eta=my.eta, tau=my.tau,r=r )
+                             iota=my.iota, nu=my.nu,eta=my.eta, tau=my.tau,r=r,rho2=my.rho2 )
 
       if(referral){
         my.lambda.solve=solve_lambda_vivax_rcd_referral(h=my.h, h1=my.h1, r=r,  gamma=gamma, f=f,

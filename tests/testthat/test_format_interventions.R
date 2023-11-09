@@ -116,25 +116,25 @@ test_that("test formating data for intervention simulation, with RCD", {
   expectdata0=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), rho=c(0.43,0.55),
                          rho.old=c(0.43,0.55), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                          rho.new=c(0.43,0.55), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13),
-                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                          intervention="0")
 
   expectdata0_0=data.frame(id=c("regionA","regionB"), rho=c(1,1), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                            rho.old=c(1,1), alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                            rho.new=c(1,1), alpha.new=c(0,0), beta.new=c(1,1), omega.new=c(1, 1),
-                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                            intervention="0")
 
   expectdataA=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), rho=c(0.43,0.55),
                          rho.old=c(0.43,0.55),alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                          rho.new=c(0.8,0.8),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                          intervention="A")
 
   expectdataA_0=data.frame(id=c("regionA","regionB"), rho=c(1,1), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                            rho.old=c(1,1), alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                            rho.new=c(0.8,0.8),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                            intervention="A")
 
 
@@ -162,49 +162,49 @@ test_that("test formating data for intervention simulation, with delay and RCD",
   expectdata0=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                          rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                          rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13),
-                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                          intervention="0")
 
   expectdata0_d=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                            rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                            rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13), sigma.old=c(1/15, 1/15), sigma.new=c(1/15, 1/15),
-                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                            intervention="0")
 
   expectdata0_0=data.frame(id=c("regionA","regionB"),rho=c(1,1), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                            rho.old=c(1,1), alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                            rho.new=c(1,1), alpha.new=c(0,0), beta.new=c(1,1), omega.new=c(1, 1),
-                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                            intervention="0")
 
   expectdata0_0d=data.frame(id=c("regionA","regionB"),sigma=c(1/15, 1/15), rho=c(1,1),alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                             rho.old=c(1,1), alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                             rho.new=c(1,1), alpha.new=c(0,0), beta.new=c(1,1), omega.new=c(1, 1), sigma.old=c(1/15, 1/15), sigma.new=c(1/15, 1/15),
-                            iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                            iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                             intervention="0")
 
   expectdataA=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                          rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                          rho.new=c(0.77,0.77), alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                          intervention="A")
 
   expectdataAd=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                           rho.old=c(0.22,0.21),alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
                           rho.new=c(0.77,0.77),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6), sigma.old=c(1/15, 1/15), sigma.new=c(1/5, 1/5),
-                          iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                          iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                           intervention="A")
 
   expectdataA_0=data.frame(id=c("regionA","regionB"),rho=c(1,1), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                            rho.old=c(1,1),alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                            rho.new=c(0.77,0.77),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                           iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                            intervention="A")
 
   expectdataA_0d=data.frame(id=c("regionA","regionB"), sigma=c(1/15, 1/15), rho=c(1,1), alpha=c(0,0), beta=c(1,1), omega=c(1, 1),
                             rho.old=c(1,1),alpha.old=c(0,0), beta.old=c(1,1), omega.old=c(1, 1),
                             rho.new=c(0.77,0.77),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6), sigma.old=c(1/15, 1/15), sigma.new=c(1/5, 1/5),
-                            iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                            iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                             intervention="A")
 
 
@@ -240,33 +240,33 @@ test_that("test formating data for intervention simulation, with RCD at baseline
   expectdata0=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                          iota=c(5/7/1000, 1000/7/1000),iota_star=c(5/7/1000, 1000/7/1000), nu=c(5,8), eta=c(0.5, 0.75), tau=c(12,4),
                          rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                         rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13),
-                         iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),
-                         iota.new=c(5/7/1000,1000/7/1000), nu.new=c(5,8), tau.new=c(12,4), eta.new=c(0.5,0.75),
+                         rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13),rho2=c(1,1),
+                         iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),rho2.old=c(1,1),
+                         iota.new=c(5/7/1000,1000/7/1000), nu.new=c(5,8), tau.new=c(12,4), eta.new=c(0.5,0.75),rho2.new=c(1,1),
                          intervention="0")
 
   expectdata0_d=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                            iota=c(5/7/1000, 1000/7/1000),iota_star=c(5/7/1000, 1000/7/1000), nu=c(5,8), eta=c(0.5, 0.75), tau=c(12,4),
                            rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                           rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13), sigma.old=c(1/15, 1/15), sigma.new=c(1/15, 1/15),
-                           iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),
-                           iota.new=c(5/7/1000,1000/7/1000), nu.new=c(5,8), tau.new=c(12,4), eta.new=c(0.5,0.75),
+                           rho.new=c(0.22,0.21), alpha.new=c(0.17, 0.12), beta.new=c(0.43,0.42), omega.new=c(0.18, 0.13), sigma.old=c(1/15, 1/15), sigma.new=c(1/15, 1/15), rho2=c(1,1),
+                           iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),rho2.old=c(1,1),
+                           iota.new=c(5/7/1000,1000/7/1000), nu.new=c(5,8), tau.new=c(12,4), eta.new=c(0.5,0.75),rho2.new=c(1,1),
                            intervention="0")
 
   expectdataA=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                          iota=c(5/7/1000, 1000/7/1000),iota_star=c(5/7/1000, 1000/7/1000), nu=c(5,8), eta=c(0.5, 0.75), tau=c(12,4),
                          rho.old=c(0.22,0.21), alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                         rho.new=c(0.77,0.77), alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),
-                         iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),
-                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                         rho.new=c(0.77,0.77), alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6),rho2=c(1,1),
+                         iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),rho2.old=c(1,1),
+                         iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                          intervention="A")
 
   expectdataAd=data.frame(id=c("regionA","regionB"), alpha=c(0.17, 0.12), beta=c(0.43,0.42), omega=c(0.18, 0.13), sigma=c(1/15, 1/15), rho=c(0.22,0.21),
                           iota=c(5/7/1000, 1000/7/1000),iota_star=c(5/7/1000, 1000/7/1000), nu=c(5,8), eta=c(0.5, 0.75), tau=c(12,4),
                           rho.old=c(0.22,0.21),alpha.old=c(0.17, 0.12), beta.old=c(0.43,0.42), omega.old=c(0.18, 0.13),
-                          rho.new=c(0.77,0.77),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6), sigma.old=c(1/15, 1/15), sigma.new=c(1/5, 1/5),
-                          iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),
-                          iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),
+                          rho.new=c(0.77,0.77),alpha.new=c(0.7, 0.7), beta.new=c(0.8,0.8), omega.new=c(0.6, 0.6), sigma.old=c(1/15, 1/15), sigma.new=c(1/5, 1/5),rho2=c(1,1),
+                          iota.old=c(5/7/1000, 1000/7/1000), nu.old=c(5,8), tau.old=c(12,4), eta.old=c(0.5,0.75),rho2.old=c(1,1),
+                          iota.new=c(5/7/10000,5/7/10000), nu.new=c(5,5), tau.new=c(2,2), eta.new=c(0.5,0.5),rho2.new=c(1,1),
                           intervention="A")
 
   expect_equal(format_data_simulation(df, interv0, delay = F, rcd=T, rcd_at_baseline = T), expectdata0, label = " no intervention no delay, rcd")

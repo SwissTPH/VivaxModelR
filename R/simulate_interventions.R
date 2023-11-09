@@ -127,7 +127,7 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
   if(rcd==TRUE){
     if(!"iota.new" %in% names(intervention_object) | !"tau.new" %in% names(intervention_object)|
         !"nu.new" %in% names(intervention_object)| !"eta.new" %in% names(intervention_object) ){
-      stop("some rcd parameters (iota.new, nu.new, tau.new or eta.new) are missing in df, please use model without rcd")
+      stop("some rcd parameters (iota.new, nu.new, tau.new, eta.new) are missing in df, please use model without rcd")
     }
 
 
@@ -135,13 +135,18 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
 
       if(!"iota" %in% names(df) | !"iota_star" %in% names(df) | !"tau" %in% names(df)|
          !"nu" %in% names(df)| !"eta" %in% names(df)){
-        stop("some rcd parameters (iota_star, nu, tau or eta) are missing in df, please use model without rcd")
+        stop("some rcd parameters (iota_star, nu, tau, eta) are missing in df, please use model without rcd")
+      }
+      if(!"rho2" %in% names(df)){
+        new_df$rho2=1
+        warning("no rho2 parameter, assumed rho2=1")
       }
 
       new_df$iota.old=new_df$iota
       new_df$nu.old=new_df$nu
       new_df$tau.old=new_df$tau
       new_df$eta.old=new_df$eta
+      new_df$rho2.old=new_df$rho2
     }
 
     if(rcd_at_baseline){
@@ -161,6 +166,13 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
         new_df$eta.new =  new_df$eta.old
         warning("no eta parameter, assumed eta=eta.old")
       } else new_df$eta.new = intervention_object$eta.new
+      if(!"rho2.new" %in% names(intervention_object)){
+        new_df$rho2.new =  new_df$rho2.old
+        warning("no rho2 parameter, assumed rho2=rho2.old")
+      } else if(is.na(intervention_object$rho2.new)){
+        new_df$rho2.new =  new_df$rho2.old
+        warning("no rho2 parameter, assumed rho2=rho2.old")
+      } else new_df$rho2.new = intervention_object$rho2.new
 
     } else {
       if(is.na(intervention_object$iota.new)){
@@ -177,8 +189,15 @@ format_data_simulation=function(df, intervention_object, delay=FALSE, rcd=FALSE,
       } else new_df$tau.new = ifelse(is.numeric(intervention_object$tau.new), intervention_object$tau.new, list(intervention_object$tau.new))
       if(is.na(intervention_object$eta.new)){
         new_df$eta.new =  0
-        warning("no eta parameter, assumed eta=0d")
+        warning("no eta parameter, assumed eta=0")
       } else new_df$eta.new = intervention_object$eta.new
+      if(!"rho2.new" %in% names(intervention_object)){
+        new_df$rho2.new =  1
+        warning("no rho2 parameter, assumed rho2=1")
+      } else if (is.na(intervention_object$rho2.new)){
+        new_df$rho2.new =  1
+        warning("no rho2 parameter, assumed rho2=1")
+      } else new_df$rho2.new = intervention_object$rho2.new
 
     }
 
@@ -416,6 +435,11 @@ calibrate_vivax_equilibrium=function(df, f=1/72, gamma=1/223, r=1/60, delay=FALS
 
   if((!"iota" %in% names(df) | !"tau" %in% names(df) | !"nu" %in% names(df) | !"eta" %in% names(df)) & rcd==TRUE ){
     stop("RCD parameters are missing, please add them or use model without RCD")
+  }
+
+  if(!"rho2" %in% names(df)){
+    df$rho2 =  1
+    warning("no rho2 parameter, assumed rho2=1")
   }
 
   if(delay){
