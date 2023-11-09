@@ -4,7 +4,7 @@ test_that("test compare RCD in delay model (non referral) with non RCD model", {
                       "f"=1/72,"lambda"=0.0155531,"delta"=0,
                       "alpha"=0, "beta"=1, "rho"=0.5,"omega"=1,
                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0, "hl"=0,"hh"=0, "hhl"=0,
-                      "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,"rho2"=1,
                       "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "N"=10000)
 
   mySTOmodel=model_sto_vivax_delay_rcd_no_referral()
@@ -38,7 +38,7 @@ test_that("test compare RCD in delay model (non referral) with non RCD model", {
                        "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
                        "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                        "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                       "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,"rho2"=1,
                        "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "N"=10000)
 
   simul_sto=simulate_vivax_delay_sto(parameters=parameters, STOmodel=mySTOmodel, runs = 10, maxtime = 1465, year=T)
@@ -66,7 +66,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                   "f"=1/72,"lambda"=0.0155531,"delta"=0,
                   "alpha"=0, "beta"=1, "rho"=1,"omega"=1,
                   "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
+                  "sigma"=1/15, "T0"=0, "Tl"=0,"rho2"=1,
                   "tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "N"=10000)
 
   mySTOmodel=model_sto_vivax_delay_rcd_referral()
@@ -100,7 +100,7 @@ test_that("test compare RCD in delay model (referral) with non RCD model", {
                   "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
                   "alpha"=0.2, "beta"=0.7, "rho"=1,"omega"=0.9,
                   "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hr"=0,"hl"=0,"hh"=0, "hhl"=0,
-                  "sigma"=1/15, "T0"=0, "Tl"=0,"kappa"=1,"rho2"=1,
+                  "sigma"=1/15, "T0"=0, "Tl"=0,"rho2"=1,
                   "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "N"=10000)
 
   simul_sto=simulate_vivax_delay_sto(parameters=parameters, STOmodel=mySTOmodel, runs = 15, maxtime = 1465, year=T)
@@ -140,8 +140,8 @@ test_that("test simulation of future scenarios, with RCD and delay", {
   r=1/60
   mydata2=calculate_r0_rc_fromdata_delay(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A","alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A","alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T, sto=T, runs=10)
@@ -245,8 +245,8 @@ test_that("test simulation of future scenarios, with RCD and delay, referral", {
   r=1/60
   mydata2=calculate_r0_rc_fromdata_delay(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
-  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T, sto=T, runs=10, referral = T)
@@ -335,7 +335,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD)", {
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
                       "U0"=0.037, "S0"=0.38, "Sl"=0.2686, "Ul"=0.3, "Tl"=0.014, "T0"=0.0004,
                       "h"=0.001, "hl"=0, "hh"=0, "hhl"=0,
-                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18, "rho2"=1)
+                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "rho2"=1)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
   parameters_mda_0p=parameters_mda; parameters_mda_0p$MDAp_length=1
@@ -430,7 +430,7 @@ test_that("test compare MDA in delay model with non MDA model (with RCD non refe
                       "alpha"=0.18*0.95, "beta"=0.431, "rho"=0.18,"omega"=1, "sigma"=1/15,
                       "U0"=0.037, "S0"=0.38, "Sl"=0.2686, "Ul"=0.3, "Tl"=0.014, "T0"=0.0004,
                       "h"=0.001, "hl"=0, "hh"=0, "hhl"=0,
-                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1,"kappa"=0.18, "rho2"=1)
+                      "MDAcov"=0.5, "MDAp_length"=100, "MDArad_cure"=0.5, "N"=10000,"tau"=5, "nu"=5, "iota"=50/7/10000, "eta"=1, "rho2"=1)
 
   parameters_mda_0c=parameters_mda; parameters_mda_0c$MDAcov=0
   parameters_mda_0p=parameters_mda; parameters_mda_0p$MDAp_length=1
@@ -534,13 +534,13 @@ test_that("test simulation of future scenarios, with MDA, RCD (non referral) and
   mydata2=calculate_r0_rc_fromdata_delay(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
   int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA,
-             "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
+             "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
   int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA,
-             "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+             "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   int_0M=list(intervention_name="MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=100, "MDArad_cure.new"=0,
-              "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
+              "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
   int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=100, "MDArad_cure.new"=0,
-              "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+              "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A, int_0M,int_AM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1, delay=T,mda = F, sto=T, runs=10, rcd=T)
@@ -598,13 +598,13 @@ test_that("test simulation of future scenarios, with MDA, RCD (non referral) and
   mydata2=calculate_r0_rc_fromdata_delay(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
   int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA,
-             "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
+             "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
   int_A=list(intervention_name="A", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA,
-             "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+             "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   int_0M=list(intervention_name="MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=100, "MDArad_cure.new"=0,
-              "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA, "kappa.new"=NA)
+              "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
   int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=100, "MDArad_cure.new"=0,
-              "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "kappa.new"=0.3)
+              "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
   my_intervention_list=list(int_0,int_A, int_0M,int_AM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1, delay=T,mda = F, sto=T, runs=10, rcd=T, referral = T)
@@ -664,7 +664,7 @@ test_that("test simulation of future scenarios, with RCD incl. time varying tau 
     return(varying_tau(nu=5, pr=pr, N=10000))
   }
 
-  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "kappa.new"=0.18)
+  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau)
   expect_error(simulate_vivax_interventions(df=mydata2, intervention_list = list(int_B),
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1,mda = F, rcd=T, delay = T, referral = F, sto=T))
   expect_error(simulate_vivax_interventions(df=mydata2, intervention_list = list(int_B),

@@ -310,10 +310,10 @@ test_that("test simulation of future scenarios, with MDA and RCD incl. time vary
     return(varying_tau(nu=5, pr=pr, N=10000))
   }
 
-  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "kappa.new"=0.18)
-  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_BM=list(intervention_name="B+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "kappa.new"=0.18)
+  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
+  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau)
+  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
+  int_BM=list(intervention_name="B+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau)
   my_intervention_list=list(int_A, int_B,int_AM,int_BM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1,mda = F, rcd=T)
@@ -375,10 +375,10 @@ test_that("test simulation of future scenarios, with RCD incl. time varying tau 
   }
 
 
-  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "kappa.new"=0.18)
-  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_BM=list(intervention_name="B+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau, "kappa.new"=0.18)
+  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
+  int_B=list(intervention_name="B","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA,"MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau)
+  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
+  int_BM=list(intervention_name="B+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA,"sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=my_tau)
   my_intervention_list=list(int_A, int_B,int_AM,int_BM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1,mda = F, rcd=T, delay = T, referral = F)

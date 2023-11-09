@@ -104,10 +104,10 @@ test_that("test simulation of future scenarios, with MDA and RCD", {
   r=1/60
   mydata2=calculate_r0_rc_fromdata(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
-  int_0=list(intervention_name="baseline","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_0M=list(intervention_name="MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "kappa.new"=0.18)
-  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
+  int_0=list(intervention_name="baseline","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA)
+  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
+  int_0M=list(intervention_name="MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA)
+  int_AM=list(intervention_name="A+MDA","rho.new"=NA, "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=5/7/10000, "nu.new"=5, "eta.new"=1, "tau.new"=5)
   my_intervention_list=list(int_0,int_A, int_0M,int_AM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1,mda = F, rcd=T)
@@ -151,10 +151,10 @@ test_that("test simulation of future scenarios, with MDA and delay and RCD", {
   r=1/60
   mydata2=calculate_r0_rc_fromdata_delay(mydata,f=f, gamma=gamma, r=r, return.all = T )
 
-  int_0=list(intervention_name="baseline", "rho.new"=NA,"alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "kappa.new"=0.18)
-  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=3/7/10000, "nu.new"=3, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
-  int_0M=list(intervention_name="MDA", "rho.new"=NA,"alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "kappa.new"=0.18)
-  int_AM=list(intervention_name="A+MDA", "rho.new"=NA,"alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=3/7/10000, "nu.new"=3, "eta.new"=1, "tau.new"=5, "kappa.new"=0.18)
+  int_0=list(intervention_name="baseline", "rho.new"=NA,"alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA)
+  int_A=list(intervention_name="A","rho.new"=NA, "alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=NA, "MDAp_length.new"=NA, "MDArad_cure.new"=NA, "iota.new"=3/7/10000, "nu.new"=3, "eta.new"=1, "tau.new"=5)
+  int_0M=list(intervention_name="MDA", "rho.new"=NA,"alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA)
+  int_AM=list(intervention_name="A+MDA", "rho.new"=NA,"alpha.new"=0.22, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "MDAcov.new"=0.3, "MDAp_length.new"=30, "MDArad_cure.new"=0, "iota.new"=3/7/10000, "nu.new"=3, "eta.new"=1, "tau.new"=5)
   my_intervention_list=list(int_0,int_A, int_0M,int_AM)
   simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
                                       f=f, gamma=gamma, r=r, year=F, maxtime = 365*1, delay=T,mda = F, rcd=T)

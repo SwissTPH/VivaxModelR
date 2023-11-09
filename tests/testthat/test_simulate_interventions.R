@@ -251,7 +251,6 @@ test_that("test simulation of future scenarios, with delays", {
   mydata_r$nu=c(5,8)
   mydata_r$tau=c(5,5)
   mydata_r$eta=c(0.9,1)
-  mydata_r$kappa=c(0.18,0.13)
   mydata1_r=calibrate_vivax_equilibrium(mydata_r,f=f, gamma=gamma, r=r, return.all = T, rcd=T)
   expect_lt(mydata1$R0[1],mydata1_r$R0[1], label = "R0 higher when rcd")
   expect_lt(mydata1$R0[2],mydata1_r$R0[2], label = "R0 higher when rcd")
