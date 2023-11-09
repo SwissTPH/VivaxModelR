@@ -812,3 +812,330 @@ test_that("test solve RCD in delay model (referral)", {
 
 
 
+
+test_that("test solve RCD in delay model (non referral), with rho2", {
+
+  parameters_rcd=list("r"=1/60, "gamma"=1/223,
+                      "f"=1/72,"lambda"=0.023,"delta"=0,
+                      "alpha"=0.5, "beta"=0.4, "rho"=0.7,"omega"=1,
+                      "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.9)
+
+  parameters_rcd_1rho2=parameters_rcd; parameters_rcd_1rho2$rho2=1
+
+  rcd_1rho2=simulate_vivax_delay_ode(parameters=parameters_rcd_1rho2 , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)
+  vivax_rcd=simulate_vivax_delay_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)
+  expect_equal(subset(rcd_1rho2,select=-c(h, hl)), subset(vivax_rcd,select=-c(h, hl)))
+  expect_gt(rcd_1rho2$hl[5000], vivax_rcd$hl[5000])
+  expect_gt(rcd_1rho2$h[5000], vivax_rcd$h[5000])
+
+
+
+  h1=calculate_h1_rcd(h=vivax_rcd$h[5000], alpha=parameters_rcd$alpha,
+                      rho=parameters_rcd$rho,
+                      iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                      eta=parameters_rcd$eta, tau=parameters_rcd$tau,
+                      r=parameters_rcd$r, rho2=parameters_rcd$rho2 )
+  expect_equal(h1, vivax_rcd$hh[5000]*parameters_rcd$rho)
+
+
+  mylambda_calc=solve_lambda_vivax_rcd_no_referral(h=vivax_rcd$h[5000],h1=h1,
+                                                   r=parameters_rcd$r,f=parameters_rcd$f,
+                                                   gamma=parameters_rcd$gamma,
+                                                   alpha=parameters_rcd$alpha, beta=parameters_rcd$beta,
+                                                   rho=parameters_rcd$rho, sigma=parameters_rcd$sigma,
+                                                   p=vivax_rcd$p[5000],
+                                                   omega=parameters_rcd$omega,
+                                                   iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                                                   eta=parameters_rcd$eta, tau=parameters_rcd$tau, return.all = T)
+
+  expect_equal(mylambda_calc$lambda_real, parameters_rcd$lambda, tolerance = 1e-09, label = "lambda")
+
+  eq_vivax_rcd=get_equilibrium_states_vivax_rcd_no_referral(I=vivax_rcd$I[5000],
+                                                            lambda=parameters_rcd$lambda, sigma=parameters_rcd$sigma,
+                                                            r=parameters_rcd$r, gamma=parameters_rcd$gamma, f=parameters_rcd$f,
+                                                            alpha=parameters_rcd$alpha,  beta=parameters_rcd$beta, rho=parameters_rcd$rho,
+                                                            delta=parameters_rcd$delta, omega=parameters_rcd$omega,
+                                                            iota_star=mylambda_calc$iota_star, nu=parameters_rcd$nu,
+                                                            tau=parameters_rcd$tau, eta=parameters_rcd$eta, rho2=parameters_rcd$rho2)
+  expect_equal(eq_vivax_rcd, as.list(vivax_rcd[5000,names(eq_vivax_rcd)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau=calculate_tau_rcd(h1=vivax_rcd$hh[5000]*parameters_rcd$rho, h2=vivax_rcd$h[5000]-vivax_rcd$hh[5000]*parameters_rcd$rho,
+                           alpha=parameters_rcd$alpha,
+                           rho=parameters_rcd$rho,
+                           iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                           eta=parameters_rcd$eta,
+                           r=parameters_rcd$r, rho2=parameters_rcd$rho2)
+  expect_equal(my_tau,parameters_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+  parameters2_rcd=list("r"=1/60, "gamma"=1/223,
+                       "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
+                       "alpha"=0.2, "beta"=0.7, "rho"=0.5,"omega"=0.9,
+                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,
+                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.8)
+
+  parameters2_rcd_1rho2=parameters2_rcd; parameters2_rcd_1rho2$rho2=1
+
+  rcd2_1rho2=simulate_vivax_delay_ode(parameters=parameters2_rcd_1rho2 , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)
+  vivax2_rcd=simulate_vivax_delay_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_delay_rcd_no_referral, maxtime=5000, year=FALSE)
+
+  h1_2=calculate_h1_rcd(h=vivax2_rcd$h[5000], alpha=parameters2_rcd$alpha,
+                        rho=parameters2_rcd$rho,
+                        iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                        eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                        r=parameters2_rcd$r , rho2=parameters2_rcd$rho2 )
+  expect_equal(h1_2, vivax2_rcd$hh[5000]*parameters2_rcd$rho)
+
+  mylambda_calc2=solve_lambda_vivax_rcd_no_referral(h=vivax2_rcd$h[5000],h1=h1_2,
+                                                    r=parameters2_rcd$r,f=parameters2_rcd$f,
+                                                    gamma=parameters2_rcd$gamma,
+                                                    alpha=parameters2_rcd$alpha, beta=parameters2_rcd$beta,
+                                                    rho=parameters2_rcd$rho, sigma=parameters2_rcd$sigma,
+                                                    p=vivax2_rcd$p[5000],
+                                                    omega=parameters2_rcd$omega,
+                                                    iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                                                    eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                                                    return.all = T)
+
+
+  expect_equal(mylambda_calc2$lambda_real, parameters2_rcd$lambda, tolerance = 1e-09, label = "lambda, rcd no delay with CM")
+
+  eq_vivax_rcd2=get_equilibrium_states_vivax_rcd_no_referral(I=vivax2_rcd$I[5000],
+                                                             lambda=parameters2_rcd$lambda, sigma=parameters2_rcd$sigma,
+                                                             r=parameters2_rcd$r, gamma=parameters2_rcd$gamma, f=parameters2_rcd$f,
+                                                             alpha=parameters2_rcd$alpha,  beta=parameters2_rcd$beta, rho=parameters2_rcd$rho,
+                                                             delta=parameters2_rcd$delta, omega=parameters2_rcd$omega,
+                                                             iota_star=mylambda_calc2$iota_star, nu=parameters2_rcd$nu,
+                                                             tau=parameters2_rcd$tau, eta=parameters2_rcd$eta, rho2=parameters2_rcd$rho2)
+  expect_equal(eq_vivax_rcd2, as.list(vivax2_rcd[5000,names(eq_vivax_rcd2)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau2=calculate_tau_rcd(h1=vivax2_rcd$hh[5000]*parameters2_rcd$rho, h2=vivax2_rcd$h[5000]-vivax2_rcd$hh[5000]*parameters2_rcd$rho,
+                            alpha=parameters2_rcd$alpha,
+                            rho=parameters2_rcd$rho,
+                            iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                            eta=parameters2_rcd$eta,
+                            r=parameters2_rcd$r, rho2=parameters2_rcd$rho2)
+  expect_equal(my_tau2,parameters2_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+})
+
+
+
+
+test_that("test solve RCD in delay model (referral), with rho2", {
+
+  parameters_rcd=list("r"=1/60, "gamma"=1/223,
+                      "f"=1/72,"lambda"=0.023,"delta"=0,
+                      "alpha"=0.5, "beta"=0.4, "rho"=0.7,"omega"=1,
+                      "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0,
+                      "sigma"=1/15, "T0"=0, "Tl"=0,
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.9)
+
+  parameters_rcd_1rho2=parameters_rcd; parameters_rcd_1rho2$rho2=1
+
+  rcd_1rho2=simulate_vivax_delay_ode(parameters=parameters_rcd_1rho2 , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=5000, year=FALSE)
+  vivax_rcd=simulate_vivax_delay_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=5000, year=FALSE)
+  expect_equal(subset(rcd_1rho2,select=-c(h, hl)), subset(vivax_rcd,select=-c(h, hl)))
+  expect_gt(rcd_1rho2$hl[5000], vivax_rcd$hl[5000])
+  expect_gt(rcd_1rho2$h[5000], vivax_rcd$h[5000])
+
+
+
+  h1=calculate_h1_rcd(h=vivax_rcd$h[5000], alpha=parameters_rcd$alpha,
+                      rho=parameters_rcd$rho,
+                      iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                      eta=parameters_rcd$eta, tau=parameters_rcd$tau,
+                      r=parameters_rcd$r, rho2=parameters_rcd$rho2 )
+  expect_equal(h1, vivax_rcd$hh[5000]*parameters_rcd$rho)
+
+
+  mylambda_calc=solve_lambda_vivax_rcd_referral(h=vivax_rcd$h[5000],h1=h1,
+                                                   r=parameters_rcd$r,f=parameters_rcd$f,
+                                                   gamma=parameters_rcd$gamma,
+                                                   alpha=parameters_rcd$alpha, beta=parameters_rcd$beta,
+                                                   rho=parameters_rcd$rho, sigma=parameters_rcd$sigma,
+                                                   p=vivax_rcd$p[5000],
+                                                   omega=parameters_rcd$omega,
+                                                   iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                                                   eta=parameters_rcd$eta, tau=parameters_rcd$tau, return.all = T)
+
+  expect_equal(mylambda_calc$lambda_real, parameters_rcd$lambda, tolerance = 1e-09, label = "lambda")
+
+  eq_vivax_rcd=get_equilibrium_states_vivax_rcd_referral(I=vivax_rcd$I[5000],
+                                                            lambda=parameters_rcd$lambda, sigma=parameters_rcd$sigma,
+                                                            r=parameters_rcd$r, gamma=parameters_rcd$gamma, f=parameters_rcd$f,
+                                                            alpha=parameters_rcd$alpha,  beta=parameters_rcd$beta, rho=parameters_rcd$rho,
+                                                            delta=parameters_rcd$delta, omega=parameters_rcd$omega,
+                                                            iota_star=mylambda_calc$iota_star, nu=parameters_rcd$nu,
+                                                            tau=parameters_rcd$tau, eta=parameters_rcd$eta, rho2=parameters_rcd$rho2)
+  expect_equal(eq_vivax_rcd, as.list(vivax_rcd[5000,names(eq_vivax_rcd)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau=calculate_tau_rcd(h1=vivax_rcd$hh[5000]*parameters_rcd$rho, h2=vivax_rcd$h[5000]-vivax_rcd$hh[5000]*parameters_rcd$rho,
+                           alpha=parameters_rcd$alpha,
+                           rho=parameters_rcd$rho,
+                           iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                           eta=parameters_rcd$eta,
+                           r=parameters_rcd$r, rho2=parameters_rcd$rho2)
+  expect_equal(my_tau,parameters_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+  parameters2_rcd=list("r"=1/60, "gamma"=1/223,
+                       "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
+                       "alpha"=0.2, "beta"=0.7, "rho"=0.5,"omega"=0.9,
+                       "U0"=0, "S0"=0.9, "Sl"=0, "Ul"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0,
+                       "sigma"=1/15, "T0"=0, "Tl"=0,
+                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.8)
+
+  parameters2_rcd_1rho2=parameters2_rcd; parameters2_rcd_1rho2$rho2=1
+
+  rcd2_1rho2=simulate_vivax_delay_ode(parameters=parameters2_rcd_1rho2 , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=5000, year=FALSE)
+  vivax2_rcd=simulate_vivax_delay_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_delay_rcd_referral, maxtime=5000, year=FALSE)
+
+  h1_2=calculate_h1_rcd(h=vivax2_rcd$h[5000], alpha=parameters2_rcd$alpha,
+                        rho=parameters2_rcd$rho,
+                        iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                        eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                        r=parameters2_rcd$r , rho2=parameters2_rcd$rho2 )
+  expect_equal(h1_2, vivax2_rcd$hh[5000]*parameters2_rcd$rho)
+
+  mylambda_calc2=solve_lambda_vivax_rcd_referral(h=vivax2_rcd$h[5000],h1=h1_2,
+                                                    r=parameters2_rcd$r,f=parameters2_rcd$f,
+                                                    gamma=parameters2_rcd$gamma,
+                                                    alpha=parameters2_rcd$alpha, beta=parameters2_rcd$beta,
+                                                    rho=parameters2_rcd$rho, sigma=parameters2_rcd$sigma,
+                                                    p=vivax2_rcd$p[5000],
+                                                    omega=parameters2_rcd$omega,
+                                                    iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                                                    eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                                                    return.all = T)
+
+
+  expect_equal(mylambda_calc2$lambda_real, parameters2_rcd$lambda, tolerance = 1e-09, label = "lambda, rcd no delay with CM")
+
+  eq_vivax_rcd2=get_equilibrium_states_vivax_rcd_referral(I=vivax2_rcd$I[5000],
+                                                             lambda=parameters2_rcd$lambda, sigma=parameters2_rcd$sigma,
+                                                             r=parameters2_rcd$r, gamma=parameters2_rcd$gamma, f=parameters2_rcd$f,
+                                                             alpha=parameters2_rcd$alpha,  beta=parameters2_rcd$beta, rho=parameters2_rcd$rho,
+                                                             delta=parameters2_rcd$delta, omega=parameters2_rcd$omega,
+                                                             iota_star=mylambda_calc2$iota_star, nu=parameters2_rcd$nu,
+                                                             tau=parameters2_rcd$tau, eta=parameters2_rcd$eta, rho2=parameters2_rcd$rho2)
+  expect_equal(eq_vivax_rcd2, as.list(vivax2_rcd[5000,names(eq_vivax_rcd2)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau2=calculate_tau_rcd(h1=vivax2_rcd$hh[5000]*parameters2_rcd$rho, h2=vivax2_rcd$h[5000]-vivax2_rcd$hh[5000]*parameters2_rcd$rho,
+                            alpha=parameters2_rcd$alpha,
+                            rho=parameters2_rcd$rho,
+                            iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                            eta=parameters2_rcd$eta,
+                            r=parameters2_rcd$r, rho2=parameters2_rcd$rho2)
+  expect_equal(my_tau2,parameters2_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+})
+
+
+
+test_that("test solve RCD in non-delay model, with rho2", {
+
+  parameters_rcd=list("r"=1/60, "gamma"=1/223,
+                      "f"=1/72,"lambda"=0.025,"delta"=0,
+                      "alpha"=0.4, "beta"=0.4, "rho"=0.7,"omega"=1,
+                      "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0, "hr"=0,
+                      "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.9)
+
+  parameters_rcd_1rho2=parameters_rcd; parameters_rcd_1rho2$rho2=1
+
+  rcd_1rho2=simulate_vivax_ode(parameters=parameters_rcd_1rho2 , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
+  vivax_rcd=simulate_vivax_ode(parameters=parameters_rcd , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
+  expect_equal(subset(rcd_1rho2,select=-c(h, hl)), subset(vivax_rcd,select=-c(h, hl)))
+  expect_gt(rcd_1rho2$hl[5000], vivax_rcd$hl[5000])
+  expect_gt(rcd_1rho2$h[5000], vivax_rcd$h[5000])
+
+
+
+  h1=calculate_h1_rcd(h=vivax_rcd$h[5000], alpha=parameters_rcd$alpha,
+                      rho=parameters_rcd$rho,
+                      iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                      eta=parameters_rcd$eta, tau=parameters_rcd$tau,
+                      r=parameters_rcd$r, rho2=parameters_rcd$rho2 )
+  expect_equal(h1, vivax_rcd$hh[5000]*parameters_rcd$rho)
+
+
+  mylambda_calc=solve_lambda_vivax_rcd(h=vivax_rcd$h[5000],h1=h1,
+                                                r=parameters_rcd$r,f=parameters_rcd$f,
+                                                gamma=parameters_rcd$gamma,
+                                                alpha=parameters_rcd$alpha, beta=parameters_rcd$beta,
+                                                rho=parameters_rcd$rho,
+                                                p=vivax_rcd$p[5000],
+                                                omega=parameters_rcd$omega,
+                                                iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                                                eta=parameters_rcd$eta, tau=parameters_rcd$tau, return.all = T)
+
+  expect_equal(mylambda_calc$lambda_real, parameters_rcd$lambda, tolerance = 1e-09, label = "lambda")
+
+  eq_vivax_rcd=get_equilibrium_states_vivax_rcd(I=vivax_rcd$I[5000],
+                                                         lambda=parameters_rcd$lambda,
+                                                         r=parameters_rcd$r, gamma=parameters_rcd$gamma, f=parameters_rcd$f,
+                                                         alpha=parameters_rcd$alpha,  beta=parameters_rcd$beta, rho=parameters_rcd$rho,
+                                                         delta=parameters_rcd$delta, omega=parameters_rcd$omega,
+                                                         iota_star=mylambda_calc$iota_star, nu=parameters_rcd$nu,
+                                                         tau=parameters_rcd$tau, eta=parameters_rcd$eta, rho2=parameters_rcd$rho2)
+  expect_equal(eq_vivax_rcd, as.list(vivax_rcd[5000,names(eq_vivax_rcd)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau=calculate_tau_rcd(h1=vivax_rcd$hh[5000]*parameters_rcd$rho, h2=vivax_rcd$h[5000]-vivax_rcd$hh[5000]*parameters_rcd$rho,
+                           alpha=parameters_rcd$alpha,
+                           rho=parameters_rcd$rho,
+                           iota=parameters_rcd$iota, nu=parameters_rcd$nu,
+                           eta=parameters_rcd$eta,
+                           r=parameters_rcd$r, rho2=parameters_rcd$rho2)
+  expect_equal(my_tau,parameters_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+  parameters2_rcd=list("r"=1/60, "gamma"=1/223,
+                       "f"=1/72,"lambda"=0.0155531,"delta"=0.01,
+                       "alpha"=0.2, "beta"=0.7, "rho"=0.5,"omega"=0.9,
+                       "I0"=0, "S0"=0.9, "Sl"=0, "Il"=0.1, "h"=0, "hl"=0, "hh"=0, "hhl"=0,"hr"=0,
+                       "tau"=5, "nu"=5, "iota"=5/7/10000, "eta"=1, "rho2"=0.8)
+
+  parameters2_rcd_1rho2=parameters2_rcd; parameters2_rcd_1rho2$rho2=1
+
+  rcd2_1rho2=simulate_vivax_ode(parameters=parameters2_rcd_1rho2 , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
+  vivax2_rcd=simulate_vivax_ode(parameters=parameters2_rcd , ODEmodel=ode_vivax_rcd, maxtime=5000, year=FALSE)
+
+  h1_2=calculate_h1_rcd(h=vivax2_rcd$h[5000], alpha=parameters2_rcd$alpha,
+                        rho=parameters2_rcd$rho,
+                        iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                        eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                        r=parameters2_rcd$r , rho2=parameters2_rcd$rho2 )
+  expect_equal(h1_2, vivax2_rcd$hh[5000]*parameters2_rcd$rho)
+
+  mylambda_calc2=solve_lambda_vivax_rcd(h=vivax2_rcd$h[5000],h1=h1_2,
+                                                 r=parameters2_rcd$r,f=parameters2_rcd$f,
+                                                 gamma=parameters2_rcd$gamma,
+                                                 alpha=parameters2_rcd$alpha, beta=parameters2_rcd$beta,
+                                                 rho=parameters2_rcd$rho,
+                                                 p=vivax2_rcd$p[5000],
+                                                 omega=parameters2_rcd$omega,
+                                                 iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                                                 eta=parameters2_rcd$eta, tau=parameters2_rcd$tau,
+                                                 return.all = T)
+
+
+  expect_equal(mylambda_calc2$lambda_real, parameters2_rcd$lambda, tolerance = 1e-09, label = "lambda, rcd no delay with CM")
+
+  eq_vivax_rcd2=get_equilibrium_states_vivax_rcd(I=vivax2_rcd$I[5000],
+                                                          lambda=parameters2_rcd$lambda,
+                                                          r=parameters2_rcd$r, gamma=parameters2_rcd$gamma, f=parameters2_rcd$f,
+                                                          alpha=parameters2_rcd$alpha,  beta=parameters2_rcd$beta, rho=parameters2_rcd$rho,
+                                                          delta=parameters2_rcd$delta, omega=parameters2_rcd$omega,
+                                                          iota_star=mylambda_calc2$iota_star, nu=parameters2_rcd$nu,
+                                                          tau=parameters2_rcd$tau, eta=parameters2_rcd$eta, rho2=parameters2_rcd$rho2)
+  expect_equal(eq_vivax_rcd2, as.list(vivax2_rcd[5000,names(eq_vivax_rcd2)]), tolerance = 1e-09, label = "equilibrium values, rcd no delay")
+
+  my_tau2=calculate_tau_rcd(h1=vivax2_rcd$hh[5000]*parameters2_rcd$rho, h2=vivax2_rcd$h[5000]-vivax2_rcd$hh[5000]*parameters2_rcd$rho,
+                            alpha=parameters2_rcd$alpha,
+                            rho=parameters2_rcd$rho,
+                            iota=parameters2_rcd$iota, nu=parameters2_rcd$nu,
+                            eta=parameters2_rcd$eta,
+                            r=parameters2_rcd$r, rho2=parameters2_rcd$rho2)
+  expect_equal(my_tau2,parameters2_rcd$tau, tolerance = 1e-09, label = "calculating tau with h2 and h1")
+
+})

@@ -225,7 +225,7 @@ calculate_tau_rcd=function(h1, h2, alpha, rho, iota, nu, eta, r, rho2 ){
   if(iota==0 | nu==0 | eta==0){stop("Some RCD parameters =0, we cannot compute tau")}
   iota_star=min(iota, h1)
 
-  I = (1/r )*(h1*(1-alpha)/rho - h2)
+  I = (1/r )*(h1*(1-alpha)/rho - h2/rho2)
 
   tau = h2/(iota_star*nu*eta*I*rho2)
 
