@@ -326,3 +326,55 @@ test_that("test simulation of future scenarios, with RCD and delay (RCD at basel
                tolerance = 1e-07, label = "baseline stays constant")
 
 })
+
+
+test_that("test simulation of future scenarios, with RCD and delay (RCD at baseline, rho2)", {
+
+  mydata=data.frame(incidence=c(23,112),id=c(1,2))
+  mydata$h=incidence_year2day(mydata$incidence)
+  mydata$rho=c(0.18,0.13)
+  mydata$beta=c(0.43,0.42)
+  mydata$alpha=c(0.17, 0.12)
+  mydata$sigma=c(1/15, 1/15)
+  mydata$prop_import=c(0,0.01)
+  mydata$iota=c(5/7/10000, 5/7/10000)
+  mydata$nu=c(5, 5)
+  mydata$tau=c(5, 5)
+  mydata$eta=c(1, 1)
+  mydata$rho2=c(0.7, 0.7)
+  mydata$omega=c(1,1)
+  f=1/72
+  gamma=1/223
+  r=1/60
+  mydata2=calibrate_vivax_equilibrium(mydata,f=f, gamma=gamma, r=r, return.all = T, rcd=T , delay=TRUE)
+
+  int_0=list(intervention_name="baseline", "alpha.new"=NA, "beta.new"=NA, "omega.new"=NA, "sigma.new"=NA, "iota.new"=NA, "nu.new"=NA, "eta.new"=NA, "tau.new"=NA, "rho.new"=NA)
+  int_A=list(intervention_name="A", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=10, "eta.new"=1, "tau.new"=5, "rho.new"=0.3)
+  int_B=list(intervention_name="B", "alpha.new"=0.3, "beta.new"=0.6, "omega.new"=0.9, "sigma.new"=1/5, "iota.new"=5/7/10000, "nu.new"=10, "eta.new"=1, "tau.new"=5, "rho.new"=0.3, "rho2.new"=0.8)
+  my_intervention_list=list(int_0,int_A, int_B)
+  simul1=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
+                                      f=f, gamma=gamma, r=r, year=F, maxtime = 365*3, rcd=T, delay=T, rcd_at_baseline = T)
+
+  simul2=simulate_vivax_interventions(df=mydata2, intervention_list=my_intervention_list, previous_simulation=simul1,
+                                      f=f, gamma=gamma, r=r, year=F ,maxtime = 365*3, rcd=T, delay=T, rcd_at_baseline = T)
+
+  simul_1_2=simulate_vivax_interventions(df=mydata2, intervention_list = my_intervention_list,
+                                         f=f, gamma=gamma, r=r, year=F, maxtime = 365*6, rcd=T, delay=T, rcd_at_baseline = T)
+  row.names(simul2)=NULL
+  row.names(simul_1_2)=NULL
+
+  expect_equal(simul2 %>% dplyr::arrange(id, intervention, time) %>% dplyr::select(-step),
+               simul_1_2%>% dplyr::arrange(id, intervention, time) %>% dplyr::select(-step) ,
+               tolerance = 1e-07, label = "chaining from equilibrium is not the same as simulating from equilibrium")
+
+  simul_1_2$rho=ifelse(simul_1_2$intervention=="A" & simul_1_2$time>0, 0.3,ifelse(simul_1_2$id==1, 0.18,0.13))
+  expect_equal(simul_1_2[simul_1_2$id==1,c("h", "hh")], simul_1_2[simul_1_2$id==1,c("h", "hh")], label = "no importation: h=hl")
+  expect_gt(simul_1_2[simul_1_2$id==2,]$h[1000], simul_1_2$hl[1000], label = "with importation: h>hl")
+  expect_gt(simul_1_2[simul_1_2$id==2,]$hh[1000], simul_1_2[simul_1_2$id==2,]$hhl[1000], label = "with importation: hh>hhl")
+  expect_gt(simul_1_2$h[1000]/simul_1_2$rho[1000], simul_1_2$hh[1000], label = "h/rho>hh")
+
+  expect_equal(data.frame(subset(simul_1_2, subset = (intervention=="A"), select = -c(h, hl, intervention, incidence, p, rho)),
+                          row.names = 1:4382),
+               data.frame(subset(simul_1_2, subset = (intervention=="B"), select = -c(h, hl, intervention, incidence, p, rho)),
+                          row.names = 1:4382))
+})
