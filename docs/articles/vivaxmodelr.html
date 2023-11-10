@@ -161,18 +161,20 @@ example).</p>
 <p>Run the model and save the results in a new database.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata_withR0RC</span><span class="op">=</span><span class="fu"><a href="../reference/calibrate_vivax_equilibrium.html">calibrate_vivax_equilibrium</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">mydata</span>, f<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">72</span>, gamma<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">223</span>, r<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">60</span>, return.all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in calibrate_vivax_equilibrium(df = mydata, f = 1/72, gamma = 1/223, :</span></span>
+<span><span class="co">#&gt; no rho2 parameter, assumed rho2=1</span></span>
 <span><span class="co">#&gt; Warning in solve_lambda_vivax(h = my.h, r = r, gamma = gamma, f = f, alpha =</span></span>
 <span><span class="co">#&gt; my.alpha, : imaginary parts discarded in coercion</span></span></code></pre></div>
 <p>Visualise the output: several additional columns were created,
 including <span class="math inline">\(R_0\)</span> and <span class="math inline">\(R_c\)</span> for each region/year.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata_withR0RC</span></span>
-<span><span class="co">#&gt;        id incidence prop_import            h alpha beta  rho omega      lambda</span></span>
-<span><span class="co">#&gt; 1 regionA        23         0.0 0.0000630137  0.17 0.43 0.18     1 0.008913383</span></span>
-<span><span class="co">#&gt; 2 regionB       112         0.1 0.0003068493  0.12 0.42 0.13     1 0.007613010</span></span>
-<span><span class="co">#&gt;          Rc       R0       delta          I</span></span>
-<span><span class="co">#&gt; 1 1.0266852 1.322669 0.000000000 0.01743379</span></span>
-<span><span class="co">#&gt; 2 0.9498208 1.129705 0.000269643 0.12462803</span></span></code></pre></div>
+<span><span class="co">#&gt;        id incidence prop_import            h alpha beta  rho omega rho2</span></span>
+<span><span class="co">#&gt; 1 regionA        23         0.0 0.0000630137  0.17 0.43 0.18     1    1</span></span>
+<span><span class="co">#&gt; 2 regionB       112         0.1 0.0003068493  0.12 0.42 0.13     1    1</span></span>
+<span><span class="co">#&gt;        lambda        Rc       R0       delta          I</span></span>
+<span><span class="co">#&gt; 1 0.008913383 1.0266852 1.322669 0.000000000 0.01743379</span></span>
+<span><span class="co">#&gt; 2 0.007613010 0.9498208 1.129705 0.000269643 0.12462803</span></span></code></pre></div>
 <p>The transmission rate lambda has been calibrated to the incidence and
 import proportion and it can be used to simulate future scenarios. The
 quantity <span class="math inline">\(\delta\)</span> (called “delta”)
