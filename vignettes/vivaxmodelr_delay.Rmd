@@ -11,7 +11,7 @@ vignette: >
 ---
 
 This package contains functions to simulate a compartmental model for Plasmodium Vivax and calculate the associated reproduction number for a given epidemiological setting, based on data on reported local and imported cases.
-The model includes case management and vector control.
+The model includes case management and vector control and is presented in @champagne2024.
 
 
 It is an extension of @white2016 and @champagne2022, and can be represented by the following diagram:

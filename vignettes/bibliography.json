@@ -425,6 +425,60 @@
 				]
 			]
 		}
+	},
+	{
+		"id": "champagne2024",
+		"type": "article-journal",
+		"abstract": "In order to evaluate the impact of various intervention strategies on Plasmodium vivax dynamics in low endemicity settings without significant seasonal pattern, we introduce a simple mathematical model that can be easily adapted to reported case numbers similar to that collected by surveillance systems in various countries. The model includes case management, vector control, mass drug administration and reactive case detection interventions and is implemented in both deterministic and stochastic frameworks. It is available as an R package to enable users to calibrate and simulate it with their own data. Although we only illustrate its use on fictitious data, by simulating and comparing the impact of various intervention combinations on malaria risk and burden, this model could be a useful tool for strategic planning, implementation and resource mobilization.",
+		"container-title": "Epidemics",
+		"DOI": "10.1016/j.epidem.2024.100747",
+		"ISSN": "1755-4365",
+		"journalAbbreviation": "Epidemics",
+		"page": "100747",
+		"source": "ScienceDirect",
+		"title": "Quantifying the impact of interventions against Plasmodium vivax: A model for country-specific use",
+		"title-short": "Quantifying the impact of interventions against Plasmodium vivax",
+		"URL": "https://www.sciencedirect.com/science/article/pii/S1755436524000082",
+		"author": [
+			{
+				"family": "Champagne",
+				"given": "C."
+			},
+			{
+				"family": "Gerhards",
+				"given": "M."
+			},
+			{
+				"family": "Lana",
+				"given": "J."
+			},
+			{
+				"family": "Le Menach",
+				"given": "A."
+			},
+			{
+				"family": "Pothin",
+				"given": "E."
+			}
+		],
+		"accessed": {
+			"date-parts": [
+				[
+					"2024",
+					2,
+					7
+				]
+			]
+		},
+		"issued": {
+			"date-parts": [
+				[
+					"2024",
+					2,
+					5
+				]
+			]
+		}
 	}
 
 ]
