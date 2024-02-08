@@ -4,6 +4,7 @@ subtitle: "An R package to simulate *P. vivax* dynamics, model with delayed acce
 author: "Clara Champagne, Maximilian Gerhards, Justin Lana, Arnaud Le Menach, Emilie Pothin"
 output: rmarkdown::html_vignette
 bibliography: bibliography.json
+citation_package: natbib
 vignette: >
   %\VignetteIndexEntry{VivaxModelRDelays}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,7 +15,7 @@ This package contains functions to simulate a compartmental model for Plasmodium
 The model includes case management and vector control and is presented in @champagne2024.
 
 
-It is an extension of @white2016 and @champagne2022, and can be represented by the following diagram:
+It is an extension of @white2016 and can be represented by the following diagram:
 ```{r pressure, echo=FALSE, fig.cap="Schematic representation of the model", out.width = '80%'}
 knitr::include_graphics("models_delay_cartoon.png")
 ```
@@ -160,7 +161,7 @@ ggplot(simulation_model2)+
 
 ## Additional interventions
 
-In order to use the model without delays in treatment (as in @champagne2022, see vignette for the "simple version"), the option delay=F can be used (default) and the parameter $\sigma$ does not need to be specified. 
+In order to use the model without delays in treatment (see vignette for the "simple version"), the option delay=F can be used (default) and the parameter $\sigma$ does not need to be specified. 
 
 Additional interventions, namely Mass Drug Administration and Reactive Case Detection, can be included in the model.
 
